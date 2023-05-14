@@ -1,10 +1,19 @@
+<?php
+    require ("../Negocio/usuarioReglasNegocio.php");
+
+    if($_SERVER["REQUEST_METHOD"]=="POST") {
+        $usuarioBL = new UsuarioReglasNegocio();
+        $perfil =  $usuarioBL->insertar($_POST['usuario'],$_POST['clave'],'Normal');
+        header("Location: loginVista.php");
+    }
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Crear Cuenta</title>
     <style>
         *{
             padding: 0%;
@@ -116,14 +125,13 @@
             <div class="divRestoCuerpo">
                 <div class="caja_inicio_sesion">
                     <form method = "POST" action = "<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
-                        <h1>Inicia Sesion</h1>
+                        <h1>Crear Cuenta</h1>
                         <input type="text" class="usuario" id="usuario" name = "usuario" placeholder="Usuario">
                         <br>
                         <input type="password" class="contrasena" id = "clave" name = "clave" placeholder="Contraseña">
                         <br>
                         <input type="submit" class="boton" value="Enviar">
                     </form>
-                    <a class="crear_cuenta" href="Crear_Cuenta.html">No tienes cuenta, Createla Clicando aqui!!!</a>
                     <?php
                         if (isset($error))
                         {
