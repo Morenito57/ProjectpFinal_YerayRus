@@ -9,4 +9,9 @@
             $res = $usuariosDAL->verificar($usuario,$clave);           
             return $res;            
         }
+        function insertar($usuario, $clave, $perfil) {
+            $usuariosDAL = new UsuarioAccesoDatos();
+            $res = $usuariosDAL->insertar($usuario, $clave, $perfil);           
+            return $res;            
+        }
 }
