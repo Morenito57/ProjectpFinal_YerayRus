@@ -177,13 +177,23 @@
             font-size: 25px;
         }
 
-        #opciones{
+        .opcionesBuscador{
             padding-top: 10px;
             padding-bottom: 10px;
             font-size: 25px;
             background-color: rgb(61, 9, 9);
             border: 3px solid rgb(173, 32, 32);
             color: white;
+        }
+
+        .opcionesOrden{
+            padding-top: 10px;
+            padding-bottom: 10px;
+            font-size: 25px;
+            background-color: rgb(61, 9, 9);
+            border: 3px solid rgb(173, 32, 32);
+            color: white;
+            float: right;
         }
 
     </style>
@@ -206,12 +216,14 @@
                 <div class="divOrdenar">
                     <label for="busqueda" class="lupa">🔎</label>
                     <input type="text" id="busqueda" onkeyup="buscar()">
-                    <select id="opciones"></select>
-                    <a class="botonOrdenar" href="">Ordenar por precio</a>
+                    <select class="opcionesBuscador"></select>
+                    <a class= "botonOrdenar" href="Inicio_Con_Loggin.php?orden=1">Ordenar por precio + a -</a>
+                    <a class= "botonOrdenar" href="Inicio_Con_Loggin.php?orden=2">Ordenar por precio - a +</a>
                 </div>
                 <div class="cuadroAnuncios">
 
                     <?php
+
                         require("../Negocio/vehiculoReglasNegocio.php");
                         $vehiculosBL = new VehiculosReglasNegocio();
                         $datosVehiculos = $vehiculosBL->obtener();
