@@ -227,25 +227,28 @@
                         require("../Negocio/vehiculoReglasNegocio.php");
                         $vehiculosBL = new VehiculosReglasNegocio();
                         $datosVehiculos = $vehiculosBL->obtener();
-                        for ($i=0; $i < count($datosVehiculos); $i++) { 
+                        $pagina = isset($_GET["pagina"]) ? $_GET["pagina"] : 1;
+                        $datosPagina = ($pagina * 9 - 9);
+                        for ($i = 0 ; $i < 9; $i++) { 
                             echo "
                                 <div class='anuncio'>
                                     <div class='fotoAnuncio'>
-                                        <img class='imagenVehiculo' src='imagenes/FotosVehiculos/".$datosVehiculos[$i]->getImagen().".webp'>
+                                        <img class='imagenVehiculo' src='imagenes/FotosVehiculos/".$datosVehiculos[$datosPagina]->getImagen().".webp'>
                                     </div>
                                     <div class='detallesAnuncio'>
                                         <div class='nombre'>
                                             <a class='enlace_compra' href=''>
-                                                <p class='texto_descripcion'>".$datosVehiculos[$i]->getNombre()."</p>
+                                                <p class='texto_descripcion'>".$datosVehiculos[$datosPagina]->getNombre()."</p>
                                             </a>
                                         </div>
                                         <div class='precio'>
-                                            <p class='texto_precio'>".$datosVehiculos[$i]->getPrecio()."€</p>
+                                            <p class='texto_precio'>".$datosVehiculos[$datosPagina]->getPrecio()."€</p>
                                         </div>
                                     </div>
                                 </div>
+                                
                             ";
-
+                            $datosPagina++;
                         }
                     ?>
 
@@ -255,15 +258,44 @@
         <div class="divPie">
 
             <div class="pestanas">
-                <a class="botonPestanas" href=""><--</a>
+                <a class="botonPestanas" id="anterior" href=""><--</a>
+                <a class="botonPestanas" id="siguiente" href="">--></a>
 
-                <a class="botonPestanas" href="">1</a>
-                <a class="botonPestanas" href="">2</a>
-                <a class="botonPestanas" href="">3</a>
-                <a class="botonPestanas" href="">4</a>
-                <a class="botonPestanas" href="">5</a>
+                <script>
 
-                <a class="botonPestanas" href="">--></a>
+                    var urlActual = window.location.href;
+
+                    var paginaActual = parseInt(getQueryStringValue("pagina"));
+
+                    var totalDatosVehiculos = <?php echo count($datosVehiculos); ?>;
+
+                    if (isNaN(paginaActual)) {
+                        paginaActual = 1;
+                    }
+
+                    if (paginaActual > 1) {
+                        document.getElementById("anterior").href = updateQueryStringParameter(urlActual, "pagina", paginaActual - 1);
+                    }
+                    
+                    if(paginaActual < totalDatosVehiculos/9){
+                    document.getElementById("siguiente").href = updateQueryStringParameter(urlActual, "pagina", paginaActual + 1);
+                    }
+                    
+                    function getQueryStringValue(key) {
+                        var urlParams = new URLSearchParams(window.location.search);
+                        return urlParams.get(key);
+                    }
+
+                    function updateQueryStringParameter(uri, key, value) {
+                        var re = new RegExp("([?&])" + key + "=.*?(&|$)", "i");
+                        var separator = uri.indexOf("?") !== -1 ? "&" : "?";
+                        if (uri.match(re)) {
+                        return uri.replace(re, "$1" + key + "=" + value + "$2");
+                        } else {
+                        return uri + separator + key + "=" + value;
+                        }
+                    }
+                </script>
 
             </div>
         </div>
