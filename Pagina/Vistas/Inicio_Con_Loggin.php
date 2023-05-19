@@ -195,7 +195,6 @@
             color: white;
             float: right;
         }
-
     </style>
 </head>
 <body>
@@ -215,16 +214,23 @@
             <div class="divRestoCuerpo">
                 <div class="divOrdenar">
                     <label for="busqueda" class="lupa">🔎</label>
-                    <input type="text" id="busqueda" onkeyup="buscar()">
-                    <select class="opcionesBuscador"></select>
-                    <a class= "botonOrdenar" href="Inicio_Con_Loggin.php?orden=1">Ordenar por precio + a -</a>
-                    <a class= "botonOrdenar" href="Inicio_Con_Loggin.php?orden=2">Ordenar por precio - a +</a>
+                    <input type="text" id="busqueda" onkeyup="obtenerDatos()">
+                    <select class="opcionesBuscador" id="opcionesBuscador" onchange="redirigirPagina()">
+                        <option value=""></option>
+                    </select>
+                    <select class="opcionesOrden" id="opcionesOrden" onchange="redirigirPagina()">
+                        <option value=""></option>
+                        <option value="Inicio_Con_Loggin.php?orden=1">Ordenar por precio + a -</option>
+                        <option value="Inicio_Con_Loggin.php?orden=2">Ordenar por precio - a +</option>
+                    </select>
                 </div>
                 <div class="cuadroAnuncios">
 
                     <?php
 
                         require("../Negocio/vehiculoReglasNegocio.php");
+                        ini_set('display_errors', 'On');
+                        ini_set('html_errors', 0);
                         $vehiculosBL = new VehiculosReglasNegocio();
                         $datosVehiculos = $vehiculosBL->obtener();
                         $pagina = isset($_GET["pagina"]) ? $_GET["pagina"] : 1;
@@ -300,5 +306,6 @@
             </div>
         </div>
     </div>
+    <script src="Inicio_Con_Loggin.js"></script>
 </body>
 </html> 
