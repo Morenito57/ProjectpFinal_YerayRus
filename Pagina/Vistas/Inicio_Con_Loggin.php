@@ -195,6 +195,17 @@
             color: white;
             float: right;
         }
+
+        .opcionesTipoVehiculo{
+            padding-top: 10px;
+            padding-bottom: 10px;
+            font-size: 25px;
+            background-color: rgb(61, 9, 9);
+            border: 3px solid rgb(173, 32, 32);
+            color: white;
+            float: left;
+            margin-left: 11.2%;
+        }
     </style>
 </head>
 <body>
@@ -205,29 +216,77 @@
         </div>
         <div class="divCuerpo">
             <div class="divCabezeraCuerpo">
-                <a class="botonCategoria" href="">2 PUERTAS</a>
-                <a class="botonCategoria" href="">4 PUERTAS</a>
-                <a class="botonCategoria" href="">MOTOS</a>
-                <a class="botonCategoria" href="">ESPECIALISTAS</a>
+                <select class="opcionesTipoVehiculo" id="opcionesTipoVehiculo" onchange="redirigirPagina()">
+                <option value="">Categoria</option>
+                <?php
+                      require("../Negocio/tipoVehiculoNegocio.php");
+                      ini_set('display_errors', 'On');
+                      ini_set('html_errors', 0);
+                      $tipoVehiculosBL = new TipoVehiculoReglasNegocio();
+                      $datosTipoVehiculos = $tipoVehiculosBL->obtener();
+                      echo "<option value=Inicio_Con_Loggin.php>Todos</option>";
+                      foreach($datosTipoVehiculos as $datosTipoVehiculo){
+                        echo "<option value=Inicio_Con_Loggin.php?tipoVehiculo=".$datosTipoVehiculo->getId().">".$datosTipoVehiculo->getTipoVehiculo()."</option>";
+                      }
+                ?>
+                </select>
                 <a class="inicioSesion" href="Area_Personal_Datos_Personales.html">Zona Socio</a>
             </div>
             <div class="divRestoCuerpo">
                 <div class="divOrdenar">
                     <label for="busqueda" class="lupa">🔎</label>
-                    <input type="text" id="busqueda" onkeyup="obtenerDatos()">
+                    <input type="text" id="busqueda" onkeyup="obtenerDatos()" placeholder="Busca">
                     <select class="opcionesBuscador" id="opcionesBuscador" onchange="redirigirPagina()">
                         <option value=""></option>
                     </select>
                     <select class="opcionesOrden" id="opcionesOrden" onchange="redirigirPagina()">
-                        <option value=""></option>
-                        <option value="Inicio_Con_Loggin.php?orden=1">Ordenar por precio + a -</option>
-                        <option value="Inicio_Con_Loggin.php?orden=2">Ordenar por precio - a +</option>
+                        <option value="" >Ordenar</option>
+                        <?php
+                            $fullUrl = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
+
+                            $url_parts = parse_url($fullUrl);
+
+                            parse_str($url_parts['query'], $query_params);
+
+                            if(!array_key_exists('orden', $query_params)) {
+                                if(empty($query_params)){
+
+                                    echo('
+                                        <option value="Inicio_Con_Loggin.php">Por defecto</option>
+                                        <option value="Inicio_Con_Loggin.php?orden=1">Ordenar por precio + a -</option>
+                                        <option value="Inicio_Con_Loggin.php?orden=2">Ordenar por precio - a +</option>                            
+                                    ');
+                                } else {
+                                    echo('
+                                        <option value="Inicio_Con_Loggin.php">Por defecto</option>
+                                        <option value="'.$fullUrl.'&orden=1">Ordenar por precio + a -</option>
+                                        <option value="'.$fullUrl.'&orden=2">Ordenar por precio - a +</option>                            
+                                    ');
+                                }
+                            } else {
+                                $query_params['orden'] = 1; 
+
+                                $new_query_str = http_build_query($query_params);
+
+                                $new_url = $url_parts['scheme'] . '://' . $url_parts['host'] . $url_parts['path'] . '?' . $new_query_str;
+
+                                echo('
+                                    <option value="Inicio_Con_Loggin.php">Por defecto</option>
+                                    <option value="'.$new_url.'">Ordenar por precio + a -</option>');
+
+                                $query_params['orden'] = 2; 
+
+                                $new_query_str = http_build_query($query_params);
+                                $new_url = $url_parts['scheme'] . '://' . $url_parts['host'] . $url_parts['path'] . '?' . $new_query_str;
+
+                                echo('<option value="'.$new_url.'">Ordenar por precio - a +</option>'); 
+                            }
+                        ?>
                     </select>
                 </div>
                 <div class="cuadroAnuncios">
 
                     <?php
-
                         require("../Negocio/vehiculoReglasNegocio.php");
                         ini_set('display_errors', 'On');
                         ini_set('html_errors', 0);
@@ -235,27 +294,32 @@
                         $datosVehiculos = $vehiculosBL->obtener();
                         $pagina = isset($_GET["pagina"]) ? $_GET["pagina"] : 1;
                         $datosPagina = ($pagina * 9 - 9);
-                        for ($i = 0 ; $i < 9; $i++) { 
-                            echo "
-                                <div class='anuncio'>
-                                    <div class='fotoAnuncio'>
-                                        <img class='imagenVehiculo' src='imagenes/FotosVehiculos/".$datosVehiculos[$datosPagina]->getImagen().".webp'>
-                                    </div>
-                                    <div class='detallesAnuncio'>
-                                        <div class='nombre'>
-                                            <a class='enlace_compra' href=''>
-                                                <p class='texto_descripcion'>".$datosVehiculos[$datosPagina]->getNombre()."</p>
-                                            </a>
+                            for ($i = 0 ; $i < 9; $i++) { 
+                                if(!isset($datosVehiculos[$datosPagina])){
+                                    break;
+                                }else{
+                                echo "
+                                    <div class='anuncio'>
+                                        <div class='fotoAnuncio'>
+                                            <img class='imagenVehiculo' src='imagenes/FotosVehiculos/".$datosVehiculos[$datosPagina]->getImagen().".webp'>
                                         </div>
-                                        <div class='precio'>
-                                            <p class='texto_precio'>".$datosVehiculos[$datosPagina]->getPrecio()."€</p>
+                                        <div class='detallesAnuncio'>
+                                            <div class='nombre'>
+                                                <a class='enlace_compra' href='pantallaCompra_Loggin.php?id=".$datosVehiculos[$datosPagina]->getId()."'>
+                                                    <p class='texto_descripcion'>".$datosVehiculos[$datosPagina]->getNombre()."</p>
+                                                </a>
+                                            </div>
+                                            <div class='precio'>
+                                                <p class='texto_precio'>".$datosVehiculos[$datosPagina]->getPrecio()."€</p>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                                
-                            ";
-                            $datosPagina++;
+                                    
+                                ";
+                                $datosPagina++;
+                                }
                         }
+                        
                     ?>
 
                 </div>

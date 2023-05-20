@@ -17,10 +17,11 @@ require("../AccesoDatos/vehiculoAccesoDatos.php");
         private $_Estado;
         private $_Descripcion;
 
+        
         function __construct(){
         }
 
-        function init($id, $idtipovehiculo, $imagen, $marca, $nombre, $matricula, $caballos, $kilometros, $plazas, $año, $precio, $estado, $descripcion,){
+        function init($id, $idtipovehiculo, $imagen, $marca, $nombre, $matricula, $caballos, $kilometros, $plazas, $año, $precio, $estado, $descripcion){
             $this->_Id = $id;
             $this->_IdTipoVehiculo = $idtipovehiculo;
             $this->_Imagen = $imagen;

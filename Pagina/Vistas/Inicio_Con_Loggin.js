@@ -34,6 +34,7 @@ function obtenerDatos() {
 }
 
 function redirigirPagina(){
+  console.log('va');
   if(document.getElementById("opcionesBuscador")){
     let select = document.getElementById("opcionesBuscador");
     let url = select.value;
@@ -43,6 +44,13 @@ function redirigirPagina(){
   }
   if(document.getElementById("opcionesOrden")){
     let select = document.getElementById("opcionesOrden");
+    let url = select.value;
+    if (url) {
+      window.location.href = url;
+    }
+  }
+  if(document.getElementById("opcionesTipoVehiculo")){
+    let select = document.getElementById("opcionesTipoVehiculo");
     let url = select.value;
     if (url) {
       window.location.href = url;
