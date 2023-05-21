@@ -142,7 +142,7 @@
                         <br>
                         <input type="submit" class="boton" value="Enviar">
                     </form>
-                    <a class="crear_cuenta" href="Crear_Cuenta.html">No tienes cuenta, Createla Clicando aqui!!!</a>
+                    <a class="crear_cuenta" href="signupVista.php">No tienes cuenta, Createla Clicando aqui!!!</a>
                 </div>
             </div>
         </div>

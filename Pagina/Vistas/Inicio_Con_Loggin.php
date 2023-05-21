@@ -1,3 +1,9 @@
+<?php
+    session_start();
+    if (!isset($_SESSION['usuario'])) {
+        header("Location: loginVista.php");
+    }
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -294,30 +300,30 @@
                         $datosVehiculos = $vehiculosBL->obtener();
                         $pagina = isset($_GET["pagina"]) ? $_GET["pagina"] : 1;
                         $datosPagina = ($pagina * 9 - 9);
-                            for ($i = 0 ; $i < 9; $i++) { 
-                                if(!isset($datosVehiculos[$datosPagina])){
-                                    break;
-                                }else{
+                        $datosEnVista = 9;
+                        for ($i = 0; $i < $datosEnVista; $i++) { 
+                            if (!isset($datosVehiculos[$datosPagina]) || $datosVehiculos[$datosPagina]->getEstado() == false) {
+                                $datosPagina++;
+                                $datosEnVista++;
+                            } else {
                                 echo "
-                                    <div class='anuncio'>
-                                        <div class='fotoAnuncio'>
-                                            <img class='imagenVehiculo' src='imagenes/FotosVehiculos/".$datosVehiculos[$datosPagina]->getImagen().".webp'>
+                                <div class='anuncio'>
+                                    <div class='fotoAnuncio'>
+                                        <img class='imagenVehiculo' src='imagenes/FotosVehiculos/".$datosVehiculos[$datosPagina]->getImagen().".webp'>
+                                    </div>
+                                    <div class='detallesAnuncio'>
+                                        <div class='nombre'>
+                                            <a class='enlace_compra' href='pantallaCompra_Loggin.php?id=".$datosVehiculos[$datosPagina]->getId()."'>
+                                                <p class='texto_descripcion'>".$datosVehiculos[$datosPagina]->getNombre()."</p>
+                                            </a>
                                         </div>
-                                        <div class='detallesAnuncio'>
-                                            <div class='nombre'>
-                                                <a class='enlace_compra' href='pantallaCompra_Loggin.php?id=".$datosVehiculos[$datosPagina]->getId()."'>
-                                                    <p class='texto_descripcion'>".$datosVehiculos[$datosPagina]->getNombre()."</p>
-                                                </a>
-                                            </div>
-                                            <div class='precio'>
-                                                <p class='texto_precio'>".$datosVehiculos[$datosPagina]->getPrecio()."€</p>
-                                            </div>
+                                        <div class='precio'>
+                                            <p class='texto_precio'>".$datosVehiculos[$datosPagina]->getPrecio()."€</p>
                                         </div>
                                     </div>
-                                    
-                                ";
+                                </div>";
                                 $datosPagina++;
-                                }
+                            }
                         }
                         
                     ?>

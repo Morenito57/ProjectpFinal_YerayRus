@@ -47,5 +47,29 @@
             return $vehiculos;
         }
 
+        function obtenerVehiculoConcreto($id){
+            $conexion = mysqli_connect('localhost','root','');
+            if (mysqli_connect_errno())
+            {
+                    echo "Error al conectar a MySQL: ". mysqli_connect_error();
+            }
+            mysqli_select_db($conexion, 'LegendaryMotorsport');
+
+            $consulta = mysqli_prepare($conexion, "SELECT Vehiculo.Id as Id, TipoVehiculo.TipoVehiculo as IdTipoVehiculo, Imagen, Marca, Nombre, Matricula, Caballos, Kilometros, Plazas, Año, Precio, Estado, Descripcion FROM Vehiculo INNER JOIN TipoVehiculo ON Vehiculo.IdTipoVehiculo = TipoVehiculo.Id where Vehiculo.Id = (?);");
+            $consulta->bind_param("i",$id);
+            $consulta->execute();
+            $result = $consulta->get_result();
+
+            $vehiculos =  array();
+    
+            while ($myrow = $result->fetch_assoc()) 
+            {
+                array_push($vehiculos,$myrow);
+    
+            }
+            return $vehiculos;
+        }
+
+
     }
 ?>

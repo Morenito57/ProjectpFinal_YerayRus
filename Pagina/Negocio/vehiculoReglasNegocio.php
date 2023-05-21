@@ -102,6 +102,19 @@ require("../AccesoDatos/vehiculoAccesoDatos.php");
             return $listaVehiculos;
         }
 
+        function obtenerVehiculoConcreto($id) {
+            $vehiculosDAL = new VehiculosAccesoDatos();
+            $results = $vehiculosDAL->obtenerVehiculoConcreto($id);
+            $listaVehiculos =  array();
+
+            foreach ($results as $vehiculo) {
+                $oVehiculosReglasNegocio = new VehiculosReglasNegocio();
+                $oVehiculosReglasNegocio->init($vehiculo['Id'], $vehiculo['IdTipoVehiculo'], $vehiculo['Imagen'], $vehiculo['Marca'], $vehiculo['Nombre'], $vehiculo['Matricula'], $vehiculo['Caballos'], $vehiculo['Kilometros'], $vehiculo['Plazas'], $vehiculo['Año'], $vehiculo['Precio'], $vehiculo['Estado'], $vehiculo['Descripcion']);
+                array_push($listaVehiculos,$oVehiculosReglasNegocio);            
+            }            
+            return $listaVehiculos;
+        }
+
     }
 
 ?>
