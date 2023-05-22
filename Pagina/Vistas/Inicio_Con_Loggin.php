@@ -300,11 +300,19 @@
                         $datosVehiculos = $vehiculosBL->obtener();
                         $pagina = isset($_GET["pagina"]) ? $_GET["pagina"] : 1;
                         $datosPagina = ($pagina * 9 - 9);
-                        $datosEnVista = 9;
-                        for ($i = 0; $i < $datosEnVista; $i++) { 
-                            if (!isset($datosVehiculos[$datosPagina]) || $datosVehiculos[$datosPagina]->getEstado() == false) {
-                                $datosPagina++;
-                                $datosEnVista++;
+
+                        for ($i=0; $i < count($datosVehiculos); $i++) { 
+                            if ($datosVehiculos[$i]->getEstado() == false) {
+                                // Elimina el elemento del array
+                                unset($datosVehiculos[$i]);
+                            }
+                        }
+
+                        $datosVehiculos = array_values($datosVehiculos);
+
+                        for ($i = 0; $i < 9; $i++) { 
+                            if (!isset($datosVehiculos[$datosPagina])) {
+                                break;
                             } else {
                                 echo "
                                 <div class='anuncio'>

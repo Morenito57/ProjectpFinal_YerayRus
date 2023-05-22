@@ -18,12 +18,6 @@ CREATE TABLE DatosContacto(
 	Otro varchar(30)
 );
 
-CREATE TABLE Cargo(
-    Id INT auto_increment primary key,
-	FechaDevuelto date,
-	TotalCargo int
-);
-
 CREATE TABLE TipoVehiculo(
     Id INT auto_increment primary key,
 	TipoVehiculo varchar(20)
@@ -31,80 +25,106 @@ CREATE TABLE TipoVehiculo(
 
 CREATE TABLE Seguros(
     Id INT auto_increment primary key,
-	Seguro varchar(20),
+	Seguro varchar(50),
 	Precio int
 );
 
 CREATE TABLE Extras(
     Id INT auto_increment primary key,
-	Extra varchar(20),
+	Extra varchar(50),
 	Precio int
 );
 
 CREATE TABLE Usuario(
-    Id INT auto_increment primary key,
-	IdDatosContacto INT,
-	IdDatosPersonales INT,
-	NombreUsuario varchar(12),
-	Contraseña varchar(12),
-	TipoDeUsuario boolean,
+    NombreUsuario varchar(50) primary key,
+    /*	IdDatosContacto INT,
+	IdDatosPersonales INT,*/
+    /*,
 	Saldo int,
 	FOREIGN KEY (IdDatosContacto)
     	REFERENCES DatosContacto (Id),
 	FOREIGN KEY (IdDatosPersonales)
-    	REFERENCES DatosPersonales (Id)
+    	REFERENCES DatosPersonales (Id)*/
+	Clave varchar(255) not null,
+	TipoDeUsuario varchar(20)
 );
+
+
+
+/*insert into DatosContacto (Telefono,Email,Otro) VALUES (601180116,'yeray@gmail.com', '@tui');
+insert into DatosPersonales (Nombre,Apellidos,FechaNacimiento,Direccion,DNI) VALUES ('yeray', 'Rus','2002-11-30','C albatros n5 bajo a','46397584Y');
+insert into Usuario (IdDatosContacto,IdDatosPersonales,NombreUsuario,Clave,TipoDeUsuario,Saldo) VALUES (1,1,'yeray','12345678', 'Administrador',5000000);*/
+
 
 CREATE TABLE Vehiculo(
     Id INT auto_increment primary key,
+	IdTipoVehiculo int,
     Imagen varchar(50),
     Marca varchar(20),
-	IdTipoVehiculo int,
 	Nombre varchar(50),
-	Matricula varchar(7),
+	Matricula varchar(15),
 	Caballos int,
 	Kilometros int,
 	Plazas int,
 	Año int,
 	Precio int,
     Estado boolean,
-    Descripcion varchar(150),
+    Descripcion varchar(500),
 	FOREIGN KEY (IdTipoVehiculo)
     	REFERENCES TipoVehiculo (Id)
 );
 
 CREATE TABLE Alquiler(
     Id INT auto_increment primary key,
-	IdUser int,
+	IdUser varchar(50),
 	IdVehiculo int,
-	IdCargos int,
-	IdSeguros int,
-	IdExtras int,
-	Disponibilidad boolean,
 	FechaInicio date,
 	FechaFinal date,
 	TotalDelPrecio int,
 	FOREIGN KEY (IdUser)
-    	REFERENCES Usuario (Id),
+    	REFERENCES Usuario (NombreUsuario),
 	FOREIGN KEY (IdVehiculo)
-		REFERENCES Vehiculo (Id),
-	FOREIGN KEY (IdSeguros)
-    	REFERENCES Seguros (Id),
-	FOREIGN KEY (IdExtras)
-    	REFERENCES Extras (Id),
-	FOREIGN KEY (IdCargos)
-    	REFERENCES Cargo (Id)
+		REFERENCES Vehiculo (Id)
 );
-insert into Seguros (Seguro,Precio) VALUES ('Seguro de responsabilidad civil', 40);
-insert into Seguros (Seguro,Precio) VALUES ('Seguro de colisión', 55);
-insert into Seguros (Seguro,Precio) VALUES ('Seguro de robo', 15);
-insert into Seguros (Seguro,Precio) VALUES ('Seguro de daños por vandalismo', 25);
-insert into Seguros (Seguro,Precio) VALUES ('Seguro de protección contra lesiones personales', 20);
 
+CREATE TABLE Cargo(
+    Id INT auto_increment primary key,
+	Alquiler_id INT,
+	FechaDevuelto date,
+	TotalCargo int,
+    Pagado int,
+    Activo boolean,
+	FOREIGN KEY (Alquiler_id) 
+		REFERENCES Alquiler(Id)
+);
+
+CREATE TABLE Alquiler_Seguro (
+    Alquiler_id INT,
+    Seguro_id INT,
+    PRIMARY KEY (Alquiler_id, Seguro_id),
+    FOREIGN KEY (Alquiler_id) REFERENCES Alquiler(Id),
+    FOREIGN KEY (Seguro_id) REFERENCES Seguros(Id)
+);
+
+CREATE TABLE Alquiler_Extra (
+    Alquiler_id INT,
+    Extra_id INT,
+    PRIMARY KEY (Alquiler_id, Extra_id),
+    FOREIGN KEY (Alquiler_id) REFERENCES Alquiler(Id),
+    FOREIGN KEY (Extra_id) REFERENCES Extras(Id)
+);
+
+insert into Seguros (Seguro,Precio) VALUES ('Ninguno', 0);
+insert into Seguros (Seguro,Precio) VALUES ('Responsabilidad civil', 40);
+insert into Seguros (Seguro,Precio) VALUES ('Colisión', 55);
+insert into Seguros (Seguro,Precio) VALUES ('Robo', 15);
+insert into Seguros (Seguro,Precio) VALUES ('Daños Vandalismo', 25);
+insert into Seguros (Seguro,Precio) VALUES ('Protección Lesiones', 20);
+
+insert into Extras (Extra,Precio) VALUES ('Ninguno', 0);
 insert into Extras (Extra,Precio) VALUES ('Combustible lleno', 100);
-insert into Extras (Extra,Precio) VALUES ('Servicio de conductor adicional', 75);
-insert into Extras (Extra,Precio) VALUES ('Wi-Fi portátil', 35);
-insert into Extras (Extra,Precio) VALUES ('Asistencia en carretera', 55);
+insert into Extras (Extra,Precio) VALUES ('Conductor adicional', 75);
+insert into Extras (Extra,Precio) VALUES ('Wi-Fi', 35);
 insert into Extras (Extra,Precio) VALUES ('Baca', 25);
 insert into Extras (Extra,Precio) VALUES ('Silla de bebé', 25);
 insert into Extras (Extra,Precio) VALUES ('GPS', 20);
@@ -127,8 +147,28 @@ insert into Vehiculo (IdTipoVehiculo,Nombre,Marca,Matricula,Caballos,Kilometros,
 insert into Vehiculo (IdTipoVehiculo,Nombre,Marca,Matricula,Caballos,Kilometros,Plazas,Año,Precio,Estado,Descripcion,Imagen) VALUES (3,'Patriot','Mammoth','8623-KLG', 300, 80000, 5, 2018, 350, true, 'El Patriot es tan estadounidense como el pastel de manzana y los hot dogs.', 'img7');
 insert into Vehiculo (IdTipoVehiculo,Nombre,Marca,Matricula,Caballos,Kilometros,Plazas,Año,Precio,Estado,Descripcion,Imagen) VALUES (6,'Romeros Hearse','Declasse','8321 HGG', 120, 75000, 5, 2005, 35, true, 'Vehículo del director de la funeraria. Posiblemente utilizado como tapadera.', 'img8');
 insert into Vehiculo (IdTipoVehiculo,Nombre,Marca,Matricula,Caballos,Kilometros,Plazas,Año,Precio,Estado,Descripcion,Imagen) VALUES (7,'Autobús del festival','Brute','1287-GKL', 190, 400000, 26, 2000, 100, true, 'Seguro que oyes voces que te susurran "es una idea espantosa". Pero ¿sabes qué? En cuanto sintonices nerviosamente Worldwide FM y revientes todas las ventanas en una radio de diez manzanas dejarás de oír esas voces... y todo lo demás.', 'img9');
-/*insert into Vehiculo (IdTipoVehiculo,Nombre,Marca,Matricula,Caballos,Kilometros,Plazas,Año,Precio,Estado,Descripcion,Imagen) VALUES (2,'','','', , , , , , true, '', 'img');*/
 
+insert into Vehiculo (IdTipoVehiculo,Nombre,Marca,Matricula,Caballos,Kilometros,Plazas,Año,Precio,Estado,Descripcion,Imagen) VALUES (6,'Romeros Hearse','Declasse','8321 HGG', 120, 75000, 5, 2005, 35, true, 'Vehículo del director de la funeraria. Posiblemente utilizado como tapadera.', 'img8');
+insert into Vehiculo (IdTipoVehiculo,Nombre,Marca,Matricula,Caballos,Kilometros,Plazas,Año,Precio,Estado,Descripcion,Imagen) VALUES (6,'Romeros Hearse','Declasse','8321 HGG', 120, 75000, 5, 2005, 35, true, 'Vehículo del director de la funeraria. Posiblemente utilizado como tapadera.', 'img8');
+insert into Vehiculo (IdTipoVehiculo,Nombre,Marca,Matricula,Caballos,Kilometros,Plazas,Año,Precio,Estado,Descripcion,Imagen) VALUES (6,'Romeros Hearse','Declasse','8321 HGG', 120, 75000, 5, 2005, 35, true, 'Vehículo del director de la funeraria. Posiblemente utilizado como tapadera.', 'img8');
+insert into Vehiculo (IdTipoVehiculo,Nombre,Marca,Matricula,Caballos,Kilometros,Plazas,Año,Precio,Estado,Descripcion,Imagen) VALUES (6,'Romeros Hearse','Declasse','8321 HGG', 120, 75000, 5, 2005, 35, true, 'Vehículo del director de la funeraria. Posiblemente utilizado como tapadera.', 'img8');
+insert into Vehiculo (IdTipoVehiculo,Nombre,Marca,Matricula,Caballos,Kilometros,Plazas,Año,Precio,Estado,Descripcion,Imagen) VALUES (6,'Romeros Hearse','Declasse','8321 HGG', 120, 75000, 5, 2005, 35, true, 'Vehículo del director de la funeraria. Posiblemente utilizado como tapadera.', 'img8');
+insert into Vehiculo (IdTipoVehiculo,Nombre,Marca,Matricula,Caballos,Kilometros,Plazas,Año,Precio,Estado,Descripcion,Imagen) VALUES (6,'Romeros Hearse','Declasse','8321 HGG', 120, 75000, 5, 2005, 35, true, 'Vehículo del director de la funeraria. Posiblemente utilizado como tapadera.', 'img8');
+insert into Vehiculo (IdTipoVehiculo,Nombre,Marca,Matricula,Caballos,Kilometros,Plazas,Año,Precio,Estado,Descripcion,Imagen) VALUES (6,'Romeros Hearse','Declasse','8321 HGG', 120, 75000, 5, 2005, 35, true, 'Vehículo del director de la funeraria. Posiblemente utilizado como tapadera.', 'img8');
+insert into Vehiculo (IdTipoVehiculo,Nombre,Marca,Matricula,Caballos,Kilometros,Plazas,Año,Precio,Estado,Descripcion,Imagen) VALUES (6,'Romeros Hearse','Declasse','8321 HGG', 120, 75000, 5, 2005, 35, true, 'Vehículo del director de la funeraria. Posiblemente utilizado como tapadera.', 'img8');
+insert into Vehiculo (IdTipoVehiculo,Nombre,Marca,Matricula,Caballos,Kilometros,Plazas,Año,Precio,Estado,Descripcion,Imagen) VALUES (6,'Romeros Hearse','Declasse','8321 HGG', 120, 75000, 5, 2005, 35, true, 'Vehículo del director de la funeraria. Posiblemente utilizado como tapadera.', 'img8');
+
+insert into Vehiculo (IdTipoVehiculo,Nombre,Marca,Matricula,Caballos,Kilometros,Plazas,Año,Precio,Estado,Descripcion,Imagen) VALUES (7,'Autobús del festival','Brute','1287-GKL', 190, 400000, 26, 2000, 100, true, 'Seguro que oyes voces que te susurran "es una idea espantosa". Pero ¿sabes qué? En cuanto sintonices nerviosamente Worldwide FM y revientes todas las ventanas en una radio de diez manzanas dejarás de oír esas voces... y todo lo demás.', 'img9');
+insert into Vehiculo (IdTipoVehiculo,Nombre,Marca,Matricula,Caballos,Kilometros,Plazas,Año,Precio,Estado,Descripcion,Imagen) VALUES (7,'Autobús del festival','Brute','1287-GKL', 190, 400000, 26, 2000, 100, true, 'Seguro que oyes voces que te susurran "es una idea espantosa". Pero ¿sabes qué? En cuanto sintonices nerviosamente Worldwide FM y revientes todas las ventanas en una radio de diez manzanas dejarás de oír esas voces... y todo lo demás.', 'img9');
+insert into Vehiculo (IdTipoVehiculo,Nombre,Marca,Matricula,Caballos,Kilometros,Plazas,Año,Precio,Estado,Descripcion,Imagen) VALUES (7,'Autobús del festival','Brute','1287-GKL', 190, 400000, 26, 2000, 100, true, 'Seguro que oyes voces que te susurran "es una idea espantosa". Pero ¿sabes qué? En cuanto sintonices nerviosamente Worldwide FM y revientes todas las ventanas en una radio de diez manzanas dejarás de oír esas voces... y todo lo demás.', 'img9');
+insert into Vehiculo (IdTipoVehiculo,Nombre,Marca,Matricula,Caballos,Kilometros,Plazas,Año,Precio,Estado,Descripcion,Imagen) VALUES (7,'Autobús del festival','Brute','1287-GKL', 190, 400000, 26, 2000, 100, true, 'Seguro que oyes voces que te susurran "es una idea espantosa". Pero ¿sabes qué? En cuanto sintonices nerviosamente Worldwide FM y revientes todas las ventanas en una radio de diez manzanas dejarás de oír esas voces... y todo lo demás.', 'img9');
+insert into Vehiculo (IdTipoVehiculo,Nombre,Marca,Matricula,Caballos,Kilometros,Plazas,Año,Precio,Estado,Descripcion,Imagen) VALUES (7,'Autobús del festival','Brute','1287-GKL', 190, 400000, 26, 2000, 100, true, 'Seguro que oyes voces que te susurran "es una idea espantosa". Pero ¿sabes qué? En cuanto sintonices nerviosamente Worldwide FM y revientes todas las ventanas en una radio de diez manzanas dejarás de oír esas voces... y todo lo demás.', 'img9');
+insert into Vehiculo (IdTipoVehiculo,Nombre,Marca,Matricula,Caballos,Kilometros,Plazas,Año,Precio,Estado,Descripcion,Imagen) VALUES (7,'Autobús del festival','Brute','1287-GKL', 190, 400000, 26, 2000, 100, true, 'Seguro que oyes voces que te susurran "es una idea espantosa". Pero ¿sabes qué? En cuanto sintonices nerviosamente Worldwide FM y revientes todas las ventanas en una radio de diez manzanas dejarás de oír esas voces... y todo lo demás.', 'img9');
+insert into Vehiculo (IdTipoVehiculo,Nombre,Marca,Matricula,Caballos,Kilometros,Plazas,Año,Precio,Estado,Descripcion,Imagen) VALUES (7,'Autobús del festival','Brute','1287-GKL', 190, 400000, 26, 2000, 100, true, 'Seguro que oyes voces que te susurran "es una idea espantosa". Pero ¿sabes qué? En cuanto sintonices nerviosamente Worldwide FM y revientes todas las ventanas en una radio de diez manzanas dejarás de oír esas voces... y todo lo demás.', 'img9');
+insert into Vehiculo (IdTipoVehiculo,Nombre,Marca,Matricula,Caballos,Kilometros,Plazas,Año,Precio,Estado,Descripcion,Imagen) VALUES (7,'Autobús del festival','Brute','1287-GKL', 190, 400000, 26, 2000, 100, true, 'Seguro que oyes voces que te susurran "es una idea espantosa". Pero ¿sabes qué? En cuanto sintonices nerviosamente Worldwide FM y revientes todas las ventanas en una radio de diez manzanas dejarás de oír esas voces... y todo lo demás.', 'img9');
+insert into Vehiculo (IdTipoVehiculo,Nombre,Marca,Matricula,Caballos,Kilometros,Plazas,Año,Precio,Estado,Descripcion,Imagen) VALUES (7,'Autobús del festival','Brute','1287-GKL', 190, 400000, 26, 2000, 100, true, 'Seguro que oyes voces que te susurran "es una idea espantosa". Pero ¿sabes qué? En cuanto sintonices nerviosamente Worldwide FM y revientes todas las ventanas en una radio de diez manzanas dejarás de oír esas voces... y todo lo demás.', 'img9');
+
+/*insert into Vehiculo (IdTipoVehiculo,Nombre,Marca,Matricula,Caballos,Kilometros,Plazas,Año,Precio,Estado,Descripcion,Imagen) VALUES (2,'','','', , , , , , true, '', 'img');*/
 
 
 
