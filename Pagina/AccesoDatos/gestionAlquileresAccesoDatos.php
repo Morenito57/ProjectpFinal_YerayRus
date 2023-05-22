@@ -43,9 +43,9 @@
             $consulta5->bind_param("i", $IdVehiculo);
             $consulta5->execute();
 
-            /*$consulta6 = mysqli_prepare($conexion, "UPDATE Usuario set Saldo = Saldo - TotalDelPrecio WHERE NombreUsuario = (?);");
-            $consulta6->bind_param("i", $IdUser);
-            $consulta6->execute();*/
+            $consulta6 = mysqli_prepare($conexion, "UPDATE Usuario set Saldo = Saldo - (?) WHERE NombreUsuario = (?);");
+            $consulta6->bind_param("is", $TotalDelPrecio, $IdUser);
+            $consulta6->execute();
 
             $result = $consulta->get_result();
             return $result;

@@ -5,17 +5,33 @@
         function __construct() {
         }
 
-        function insertar($usuario,$clave,$perfil) {
+        function insertar($usuario, $clave, $nombre, $apellidos, $fechaNacimiento, $direccion, $DNI, $telefono, $email, $otro) {
             $conexion = mysqli_connect('localhost','root','');
             if (mysqli_connect_errno()) {
                 echo "Error al conectar a MySQL: ". mysqli_connect_error();
             }
             
             mysqli_select_db($conexion, 'LegendaryMotorsport');
-            $consulta = mysqli_prepare($conexion, "INSERT INTO Usuario(NombreUsuario, Clave, TipoDeUsuario) VALUES (?,?,?);");
+
+            $consulta1 = mysqli_prepare($conexion, "INSERT INTO DatosPersonales(Nombre, Apellidos, FechaNacimiento, Direccion, DNI) VALUES (?,?,?,?,?);");
+            $consulta1->bind_param("sssss", $usuario, $apellidos, $fechaNacimiento, $direccion, $DNI);
+            $consulta1->execute();
+
+            $DatosPersonales_id = $conexion->insert_id;
+
+            $consulta2 = mysqli_prepare($conexion, "INSERT INTO DatosContacto(Telefono, Email, Otro) VALUES (?,?,?);");
+            $consulta2->bind_param("iss", $telefono, $email, $otro);
+            $consulta2->execute();
+
+            $DatosContacto_id = $conexion->insert_id;
+
+            $saldo = 0;
+            $tipoUsuario = 'Normal';
+
+            $consulta3 = mysqli_prepare($conexion, "INSERT INTO Usuario(NombreUsuario, IdDatosContacto, IdDatosPersonales, Saldo, Clave, TipoDeUsuario) VALUES (?,?,?,?,?,?);");
             $hash = password_hash($clave, PASSWORD_DEFAULT);
-            $consulta->bind_param("sss", $usuario,$hash,$perfil);
-            $res = $consulta->execute();
+            $consulta3->bind_param("siiiss", $usuario, $DatosPersonales_id, $DatosContacto_id, $saldo, $hash, $tipoUsuario);
+            $res = $consulta3->execute();
             
             return $res;
         }

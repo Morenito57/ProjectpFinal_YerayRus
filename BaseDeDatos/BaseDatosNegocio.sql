@@ -37,23 +37,16 @@ CREATE TABLE Extras(
 
 CREATE TABLE Usuario(
     NombreUsuario varchar(50) primary key,
-    /*	IdDatosContacto INT,
-	IdDatosPersonales INT,*/
-    /*,
+	IdDatosContacto INT,
+	IdDatosPersonales INT,
 	Saldo int,
+	Clave varchar(255) not null,
+	TipoDeUsuario varchar(20),
 	FOREIGN KEY (IdDatosContacto)
     	REFERENCES DatosContacto (Id),
 	FOREIGN KEY (IdDatosPersonales)
-    	REFERENCES DatosPersonales (Id)*/
-	Clave varchar(255) not null,
-	TipoDeUsuario varchar(20)
+    	REFERENCES DatosPersonales (Id)
 );
-
-
-
-/*insert into DatosContacto (Telefono,Email,Otro) VALUES (601180116,'yeray@gmail.com', '@tui');
-insert into DatosPersonales (Nombre,Apellidos,FechaNacimiento,Direccion,DNI) VALUES ('yeray', 'Rus','2002-11-30','C albatros n5 bajo a','46397584Y');
-insert into Usuario (IdDatosContacto,IdDatosPersonales,NombreUsuario,Clave,TipoDeUsuario,Saldo) VALUES (1,1,'yeray','12345678', 'Administrador',5000000);*/
 
 
 CREATE TABLE Vehiculo(
