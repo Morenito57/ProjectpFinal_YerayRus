@@ -2,6 +2,7 @@
     ini_set('display_errors', 'On');
     ini_set('html_errors', 0);
     require("../AccesoDatos/extrasAccesoDatos.php");
+    
     class ExtrasNegocioNegocio{
         private $_Id;
         private $_Extra;

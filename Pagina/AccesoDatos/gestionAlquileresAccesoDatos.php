@@ -16,8 +16,10 @@
             
             mysqli_select_db($conexion, 'LegendaryMotorsport');
 
-            $consulta = mysqli_prepare($conexion, "INSERT INTO Alquiler (IdUser, IdVehiculo, FechaInicio, FechaFinal, TotalDelPrecio) VALUES (?,?,?,?,?);");
-            $consulta->bind_param("sissi", $IdUser, $IdVehiculo, $FechaInicio, $FechaFinal, $TotalDelPrecio);
+            $estado = true;
+
+            $consulta = mysqli_prepare($conexion, "INSERT INTO Alquiler (IdUser, IdVehiculo, FechaInicio, FechaFinal, TotalDelPrecio, Estado) VALUES (?,?,?,?,?,?);");
+            $consulta->bind_param("sissii", $IdUser, $IdVehiculo, $FechaInicio, $FechaFinal, $TotalDelPrecio, $estado);
             $consulta->execute();
 
             $alquiler_id = $conexion->insert_id;

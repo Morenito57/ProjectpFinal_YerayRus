@@ -1,5 +1,8 @@
 <?php
     session_start();
+    
+    $usuario = $_SESSION['usuario'];
+
     if (!isset($_SESSION['usuario'])) {
         header("Location: loginVista.php");
     }
@@ -7,10 +10,11 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron&display=swap" rel="stylesheet">
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Legendary MOTORSPORT</title>
     <style>
         *{
             padding: 0%;
@@ -167,7 +171,7 @@
             margin-right: 220px;
         }
 
-        #busqueda{
+        .busqueda{
             padding-left: 40px;
             padding-right: 40px;
             padding-top: 10px;
@@ -212,11 +216,42 @@
             float: left;
             margin-left: 11.2%;
         }
+
+
+        .divDinero {
+            position: fixed;
+            top: 0;
+            right: 0;
+            width: 200px;
+            height: 100px;
+            z-index: 1;
+        }
+
+        .dinero{
+            color: green;
+            text-align: center;
+            font-size: 35px;
+            font-weight: 1000;
+            margin: 25px auto;
+            font-family: 'Orbitron', sans-serif;
+            background-color: rgb(77, 5, 5);
+            border: 5px solid rgb(173, 32, 32);
+
+        }
     </style>
 </head>
 <body>
-    <title>Legendary MOTORSPORT</title>
     <div class="divPrincipal">
+        <div class="divDinero">
+            <?php
+                require ("../Negocio/usuarioReglasNegocio.php");
+                ini_set('display_errors', 'On');
+                ini_set('html_errors', 0);
+                $usuarioBL = new UsuarioReglasNegocio();
+                $datosUsuario = $usuarioBL->obtenerUsuario($usuario);               
+                echo'<p class="dinero">'.$datosUsuario[0]->getSaldo().'€</p>';               
+            ?>
+        </div>
         <div class="divCabezera">
             <img class="portada" src="imagenes/Portada.png"> 
         </div>
@@ -236,12 +271,12 @@
                       }
                 ?>
                 </select>
-                <a class="inicioSesion" href="Area_Personal_Datos_Personales.html">Zona Socio</a>
+                <a class="inicioSesion" href="Area_Personal_Datos_Personales_Vista.php">Zona Socio</a>
             </div>
             <div class="divRestoCuerpo">
                 <div class="divOrdenar">
                     <label for="busqueda" class="lupa">🔎</label>
-                    <input type="text" id="busqueda" onkeyup="obtenerDatos()" placeholder="Busca">
+                    <input type="text" class="busqueda" onkeyup="obtenerDatos()" placeholder="Busca">
                     <select class="opcionesBuscador" id="opcionesBuscador" onchange="redirigirPagina()">
                         <option value=""></option>
                     </select>

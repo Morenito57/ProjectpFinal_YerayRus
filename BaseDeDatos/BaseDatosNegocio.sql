@@ -74,6 +74,7 @@ CREATE TABLE Alquiler(
 	FechaInicio date,
 	FechaFinal date,
 	TotalDelPrecio int,
+    Estado boolean,
 	FOREIGN KEY (IdUser)
     	REFERENCES Usuario (NombreUsuario),
 	FOREIGN KEY (IdVehiculo)
