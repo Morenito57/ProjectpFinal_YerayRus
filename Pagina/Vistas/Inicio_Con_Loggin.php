@@ -168,7 +168,12 @@
             color: white;
             font-size: 25px;
             float: right;
-            margin-right: 220px;
+            margin-right: 170px;
+            background-color: rgb(61, 9, 9);
+            text-decoration: none;
+            padding: 10px;
+            border: 3px solid rgb(173, 32, 32);
+            font-size: 25px;
         }
 
         .busqueda{
@@ -271,7 +276,7 @@
                       }
                 ?>
                 </select>
-                <a class="inicioSesion" href="Area_Personal_Datos_Personales_Vista.php">Zona Socio</a>
+                <a class="inicioSesion" href="Area_Personal_Datos_Usuario_Vista.php">Zona Socio</a>
             </div>
             <div class="divRestoCuerpo">
                 <div class="divOrdenar">

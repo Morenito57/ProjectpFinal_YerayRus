@@ -88,7 +88,6 @@
             width: 20%;
             float: left;
             background-color: rgb(77, 5, 5);
-
         }
 
         .contenido{
@@ -211,7 +210,7 @@
                             </tr>
                             <tr class="tr_area">
                                 <td>
-                                    <a href="Area_Personal_Saldo.html" class="boton_area">Saldo</a>
+                                    <a href="Area_Personal_Saldo_Usuario_Vista.php" class="boton_area">Saldo</a>
                                 </td>
                             </tr>
                             <tr class="tr_area">

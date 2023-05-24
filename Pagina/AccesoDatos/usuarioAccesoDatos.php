@@ -160,6 +160,6 @@
                 $consulta5->execute();
             }
                     
-            return header("Location: Area_Personal_Datos_Personales_Vista.php");;
+            return header("Location: Area_Personal_Datos_Usuario_Vista.php");;
         }
     }
