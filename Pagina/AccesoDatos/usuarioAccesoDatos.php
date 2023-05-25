@@ -188,12 +188,24 @@
             if (mysqli_connect_errno()) {
                 echo "Error al conectar a MySQL: ". mysqli_connect_error();
             }
-            
+
             mysqli_select_db($conexion, 'LegendaryMotorsport');
 
-            $consulta1 = mysqli_prepare($conexion,"DELETE FROM Usuario WHERE NombreUsuario = ?");
-            $consulta1->bind_param("s",$usuarioOriginal);
-            $res = $consulta1->execute();
+            mysqli_query($conexion, "SET FOREIGN_KEY_CHECKS=0;");
+            
+            $consulta = mysqli_prepare($conexion, "DELETE FROM DatosContacto WHERE Id = (SELECT IdDatosContacto FROM Usuario WHERE NombreUsuario = ?)");
+            $consulta->bind_param("s", $usuarioOriginal);
+            $consulta->execute();
+        
+            $consulta = mysqli_prepare($conexion, "DELETE FROM DatosPersonales WHERE Id = (SELECT IdDatosPersonales FROM Usuario WHERE NombreUsuario = ?)");
+            $consulta->bind_param("s", $usuarioOriginal);
+            $consulta->execute();
+        
+            $consulta = mysqli_prepare($conexion, "DELETE FROM Usuario WHERE NombreUsuario = ?");
+            $consulta->bind_param("s", $usuarioOriginal);
+            $res = $consulta->execute();
+
+            mysqli_query($conexion, "SET FOREIGN_KEY_CHECKS=1;");
 
             return $res;
 

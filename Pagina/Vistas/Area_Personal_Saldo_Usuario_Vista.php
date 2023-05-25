@@ -79,46 +79,28 @@
         .caja_area_personal{
             width: 100%;
             height: 90%;
-            background-color: rgb(61, 9, 9);
             border: 5px solid rgb(173, 32, 32);
+            display: flex;
         }
 
         .areas{
             height: 100%;
             width: 20%;
             float: left;
-            background-color: rgb(77, 5, 5);
-
+            border-right: 5px solid rgb(173, 32, 32); 
+            background-color: rgb(61, 9, 9);
         }
 
         .contenido{
             height: 100%;
             width: 80%;
-            background-color: rgb(61, 9, 9);
             float: left;
             margin: 0 auto;
-        }
-
-        .tabla_area{
-            width: 100%;
-            height: 100%;
-            text-align: center;
-            border-right: 5px solid rgb(173, 32, 32);            
+            background-color: rgb(77, 5, 5);
         }
 
         .tabla_datos{
             text-align: center;
-            width: 100%;
-
-        }
-        .tr_area{
-            height: 10%;
-            width: 100%;
-            border-bottom: 5px solid rgb(173, 32, 32);            
-        }
-
-        .tr_datos{
-            height: 9%;
             width: 100%;
         }
 
@@ -143,11 +125,16 @@
         }
 
         .boton_area{
-            text-decoration: underline;
+            text-align: center;
+            text-decoration: none;
+            width: 100%;
             color: white;
-            font-size: 25px; 
-            padding-bottom: 50px;        
-            padding-top: 39px;        
+            font-size: 25px;
+            padding: 50px 0;
+            border-bottom: 5px solid rgb(173, 32, 32); 
+            background-color: rgb(117, 13, 13);
+            display: block;  
+            background-color: rgb(61, 9, 9);
         }
 
         .boton{
@@ -188,10 +175,6 @@
             text-align: center;
         }
 
-        .botonEliminar{
-
-        }
-
     </style>
 </head>
 <body>
@@ -207,49 +190,19 @@
             <div class="divRestoCuerpo">
                 <div class="caja_area_personal">
                     <div class="areas">
-                        <table class="tabla_area">
-                            <tr class="tr_area">
-                                <td>
                                     <a href="Area_Personal_Datos_Usuario_Vista.php" class="boton_area">Datos Personales</a>
-                                </td>
-                            </tr>
-                            <tr class="tr_area">
-                                <td>
                                     <a href="Area_Personal_Saldo_Usuario_Vista.php" class="boton_area">Saldo</a>
-                                </td>
-                            </tr>
-                            <tr class="tr_area">
-                                <td>
                                     <a href="Area_Personal_Historial.html" class="boton_area">Historial de compras</a>
-                                </td>
-                            </tr>
-                            <tr class="tr_area">
-                                <td>
                                     <form method = "POST" action = "<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
                                         <?php
                                             ini_set('display_errors', 'On');
                                             ini_set('html_errors', 0);
   
                                             echo'
-                                                <input type="submit" name="eliminar" class="botonEliminar" value="Enviar">
+                                                <input type="submit" name="eliminar" class="boton_area" value="Eliminar Cuenta">
                                             ';
                                         ?>
                                     </form>
-                                </td>
-                            </tr>
-                            <tr class="tr_area">
-                                <td>
-                                </td>
-                            </tr>
-                            <tr class="tr_area">
-                                <td>
-                                </td>
-                            </tr>
-                            <tr class="tr_area">
-                                <td>
-                                </td>
-                            </tr>
-                        </table>
                     </div>
                     <div class="contenido">
                         <h1>Saldo Personales</h1>
