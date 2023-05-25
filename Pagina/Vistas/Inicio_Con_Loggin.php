@@ -227,7 +227,6 @@
             position: fixed;
             top: 0;
             right: 0;
-            width: 200px;
             height: 100px;
             z-index: 1;
         }
@@ -241,7 +240,8 @@
             font-family: 'Orbitron', sans-serif;
             background-color: rgb(77, 5, 5);
             border: 5px solid rgb(173, 32, 32);
-
+            padding-left: 10px;
+            padding-right: 10px;
         }
     </style>
 </head>

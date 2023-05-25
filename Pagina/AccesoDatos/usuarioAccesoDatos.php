@@ -162,4 +162,41 @@
                     
             return header("Location: Area_Personal_Datos_Usuario_Vista.php");;
         }
+
+        function actualizarSalsoUsuario($usuarioOriginal, $saldo) {
+
+            $conexion = mysqli_connect('localhost','root','');
+
+            if (mysqli_connect_errno()) {
+                echo "Error al conectar a MySQL: ". mysqli_connect_error();
+            }
+            
+            mysqli_select_db($conexion, 'LegendaryMotorsport');
+
+            $consulta1 = mysqli_prepare($conexion,"UPDATE Usuario SET Saldo = Saldo + ? WHERE NombreUsuario = ?;");
+            $consulta1->bind_param("is",$saldo,$usuarioOriginal);
+            $res = $consulta1->execute();
+
+            return $res;
+
+        }
+
+        function eliminarUsuario($usuarioOriginal) {
+
+            $conexion = mysqli_connect('localhost','root','');
+
+            if (mysqli_connect_errno()) {
+                echo "Error al conectar a MySQL: ". mysqli_connect_error();
+            }
+            
+            mysqli_select_db($conexion, 'LegendaryMotorsport');
+
+            $consulta1 = mysqli_prepare($conexion,"DELETE FROM Usuario WHERE NombreUsuario = ?");
+            $consulta1->bind_param("s",$usuarioOriginal);
+            $res = $consulta1->execute();
+
+            return $res;
+
+        }
+
     }

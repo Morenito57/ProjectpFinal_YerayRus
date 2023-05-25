@@ -129,4 +129,16 @@
             return $res;            
         }
 
+        function actualizarSalsoUsuario($usuarioOriginal, $saldo) {
+            $usuariosDAL = new UsuarioAccesoDatos();
+            $res = $usuariosDAL->actualizarSalsoUsuario($usuarioOriginal, $saldo);           
+            return $res;            
+        }
+
+        function eliminarUsuario($usuarioOriginal) {
+            $usuariosDAL = new UsuarioAccesoDatos();
+            $res = $usuariosDAL->eliminarUsuario($usuarioOriginal);           
+            return $res;
+        }
+
 }

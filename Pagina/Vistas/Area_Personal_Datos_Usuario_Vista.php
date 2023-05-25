@@ -170,7 +170,6 @@
             margin-top: 20px;
             margin-bottom:35px;
             height: 25px;
-            width: 500px;
         }
 
         .datos_guardados{
