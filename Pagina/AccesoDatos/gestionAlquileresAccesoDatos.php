@@ -18,6 +18,21 @@
 
             $estado = true;
 
+            $consultaSaldo = mysqli_prepare($conexion, "SELECT Saldo FROM Usuario WHERE NombreUsuario = ?;");
+            $consultaSaldo->bind_param("s", $IdUser);
+            $consultaSaldo->execute();
+
+            $resSaldo = $consultaSaldo->get_result();
+            $filaSaldo = $resSaldo->fetch_assoc();
+            $saldoActual = $filaSaldo['Saldo'];
+
+            if ($saldoActual < $TotalDelPrecio) {
+                $protocolo = isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http";
+                $url = "$protocolo://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
+                header("Location: Area_Personal_Saldo_Usuario_Vista.php");
+                exit();
+            }
+
             $consulta = mysqli_prepare($conexion, "INSERT INTO Alquiler (IdUser, IdVehiculo, FechaInicio, FechaFinal, TotalDelPrecio, Estado) VALUES (?,?,?,?,?,?);");
             $consulta->bind_param("sissii", $IdUser, $IdVehiculo, $FechaInicio, $FechaFinal, $TotalDelPrecio, $estado);
             $consulta->execute();
@@ -49,8 +64,8 @@
             $consulta6->bind_param("is", $TotalDelPrecio, $IdUser);
             $consulta6->execute();
 
-            $result = $consulta->get_result();
-            return $result;
+            return header("Location: Inicio_Con_Loggin.php");
+            ;
         }
     }
 ?>

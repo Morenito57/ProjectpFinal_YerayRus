@@ -25,7 +25,6 @@
 
         $FechaFinal = date('Y-m-d', strtotime($FechaInicio . ' + '.$diasAlquiler.' days'));
         $datosAlquiler = $gestionBL->insertarAlquiler($IdUser, $seguro, $extra, $IdVehiculo, $FechaInicio, $FechaFinal, $TotalDelPrecio);
-        header("Location: Inicio_Con_Loggin.php");
     }
 ?>
 <!DOCTYPE html>
