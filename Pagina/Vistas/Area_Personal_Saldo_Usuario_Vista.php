@@ -26,8 +26,17 @@
             $usuarioBL = new UsuarioReglasNegocio();
     
             $perfil =  $usuarioBL->actualizarSalsoUsuario($usuarioOriginal, $Dinero);
+
+        }elseif(isset($_POST['deslogearse'])) {  
+
+            $usuarioBL = new UsuarioReglasNegocio();
+    
+            $perfil =  $usuarioBL->deslogearse();
+
         }
     }
+
+
 
 ?>
 <!DOCTYPE html>
@@ -202,7 +211,9 @@
                                                 <input type="submit" name="eliminar" class="boton_area" value="Eliminar Cuenta">
                                             ';
                                         ?>
+                                        <input type="submit" name="deslogearse" class="boton_area" value="Deslogearse">
                                     </form>
+
                     </div>
                     <div class="contenido">
                         <h1>Saldo Personales</h1>

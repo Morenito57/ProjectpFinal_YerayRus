@@ -204,7 +204,12 @@
             $res = $consulta->execute();
 
             return $res;
-
         }
 
+        function deslogearse() {
+            session_unset();
+            session_destroy();
+            header("Location: loginVista.php");
+            exit();
     }
+}

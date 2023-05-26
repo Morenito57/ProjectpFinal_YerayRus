@@ -141,4 +141,11 @@
             return $res;
         }
 
+        function deslogearse() {
+            $usuariosDAL = new UsuarioAccesoDatos();
+            $res = $usuariosDAL->deslogearse();           
+            return $res;
+        }
+
+
 }
