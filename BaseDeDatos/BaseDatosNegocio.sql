@@ -42,6 +42,7 @@ CREATE TABLE Usuario(
 	Saldo int,
 	Clave varchar(255) not null,
 	TipoDeUsuario varchar(20),
+    Activo boolean default true,
 	FOREIGN KEY (IdDatosContacto)
     	REFERENCES DatosContacto (Id),
 	FOREIGN KEY (IdDatosPersonales)

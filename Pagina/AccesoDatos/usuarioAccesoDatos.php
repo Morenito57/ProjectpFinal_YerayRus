@@ -37,15 +37,21 @@
         }
 
         function verificar($usuario,$clave) {
+
             $conexion = mysqli_connect('localhost','root','');
+
             if (mysqli_connect_errno()) {
                 echo "Error al conectar a MySQL: ". mysqli_connect_error();
             }
+
             mysqli_select_db($conexion, 'LegendaryMotorsport');
-            $consulta = mysqli_prepare($conexion, "SELECT NombreUsuario, Clave, TipoDeUsuario FROM Usuario WHERE NombreUsuario = ?;");
+
+            $consulta = mysqli_prepare($conexion, "SELECT NombreUsuario, Clave, TipoDeUsuario, Activo FROM Usuario WHERE NombreUsuario = ?;");
+
             $sanitized_usuario = mysqli_real_escape_string($conexion, $usuario);       
             $consulta->bind_param("s", $sanitized_usuario);
             $consulta->execute();
+
             $res = $consulta->get_result();
 
             if ($res->num_rows==0) {
@@ -59,8 +65,10 @@
             $myrow = $res->fetch_assoc();
             $x = $myrow['Clave'];
 
-            var_dump($x);
-
+            if (!$myrow['Activo']) {
+                return 'NOT_FOUND';
+            }
+        
             if (password_verify($clave, $x)) {
                 return $myrow['TipoDeUsuario'];
             } else {
@@ -190,22 +198,10 @@
             }
 
             mysqli_select_db($conexion, 'LegendaryMotorsport');
-
-            mysqli_query($conexion, "SET FOREIGN_KEY_CHECKS=0;");
             
-            $consulta = mysqli_prepare($conexion, "DELETE FROM DatosContacto WHERE Id = (SELECT IdDatosContacto FROM Usuario WHERE NombreUsuario = ?)");
-            $consulta->bind_param("s", $usuarioOriginal);
-            $consulta->execute();
-        
-            $consulta = mysqli_prepare($conexion, "DELETE FROM DatosPersonales WHERE Id = (SELECT IdDatosPersonales FROM Usuario WHERE NombreUsuario = ?)");
-            $consulta->bind_param("s", $usuarioOriginal);
-            $consulta->execute();
-        
-            $consulta = mysqli_prepare($conexion, "DELETE FROM Usuario WHERE NombreUsuario = ?");
+            $consulta = mysqli_prepare($conexion, "UPDATE Usuario SET Activo = False WHERE NombreUsuario = ?;");
             $consulta->bind_param("s", $usuarioOriginal);
             $res = $consulta->execute();
-
-            mysqli_query($conexion, "SET FOREIGN_KEY_CHECKS=1;");
 
             return $res;
 
