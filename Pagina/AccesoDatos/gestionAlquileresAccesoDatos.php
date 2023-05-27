@@ -76,6 +76,8 @@
 
         function obtener(){
 
+            actualizarCargosPorFecha();
+
             $conexion = mysqli_connect('localhost','root','');
 
             if (mysqli_connect_errno())
@@ -177,29 +179,31 @@
             exit();
         }
 
-        function actualizacion(){
+        function actualizacionCargos(){
 
             $conexion = mysqli_connect('localhost','root','');
 
             if (mysqli_connect_errno())
             {
-                    echo "Error al conectar a MySQL: ". mysqli_connect_error();
+                echo "Error al conectar a MySQL: ". mysqli_connect_error();
             }
-
+        
             mysqli_select_db($conexion, 'LegendaryMotorsport');
-
-            $consulta = mysqli_prepare($conexion, "SELECT Alquiler.Id AS IdAlquiler, Vehiculo.Nombre AS NombreVehiculo, Vehiculo.Precio AS PrecioVehiculo, Alquiler.FechaInicio, Alquiler.FechaFinal, Cargo.FechaDevuelto, GROUP_CONCAT(DISTINCT Seguros.Seguro) AS Seguros, GROUP_CONCAT(DISTINCT Extras.Extra) AS Extras, Alquiler.TotalDelPrecio, Cargo.Id AS IdCargo, Cargo.TotalCargo, Alquiler.Estado AS ActivoAlquiler, Cargo.Pagado, Cargo.Activo AS ActivoCargo FROM Alquiler LEFT JOIN Vehiculo ON Alquiler.IdVehiculo = Vehiculo.Id LEFT JOIN Cargo ON Alquiler.Id = Cargo.Alquiler_id LEFT JOIN Alquiler_Seguro ON Alquiler.Id = Alquiler_Seguro.Alquiler_id LEFT JOIN Seguros ON Alquiler_Seguro.Seguro_id = Seguros.Id LEFT JOIN Alquiler_Extra ON Alquiler.Id = Alquiler_Extra.Alquiler_id LEFT JOIN Extras ON Alquiler_Extra.Extra_id = Extras.Id;");
+        
+            $fechaActual = date('Y-m-d');
+        
+            $consulta = mysqli_prepare($conexion, "SELECT Id, TotalDelPrecio FROM Alquiler WHERE FechaFinal > ? AND Estado = TRUE;");
+            $consulta->bind_param("s", $fechaActual);
             $consulta->execute();
             $result = $consulta->get_result();
-    
-            $alquileres =  array();
-    
-            while ($myrow = $result->fetch_assoc()) 
-            {
-                array_push($alquileres,$myrow);
-    
+            $alquileres = $result->fetch_all(MYSQLI_ASSOC);
+        
+            foreach ($alquileres as $alquiler) {
+                $totalCargo = $alquiler['TotalDelPrecio'] * 2;
+                $consulta = mysqli_prepare($conexion, "UPDATE Cargo SET TotalCargo = ?, Activo = TRUE, Pagado = FALSE WHERE Alquiler_id = ? AND Activo = FALSE AND Pagado = FALSE;");
+                $consulta->bind_param("ii", $totalCargo, $alquiler['Id']);
+                $consulta->execute();
             }
-            return $alquileres;
         }
 
 
