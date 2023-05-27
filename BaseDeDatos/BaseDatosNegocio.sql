@@ -87,7 +87,7 @@ CREATE TABLE Cargo(
 	Alquiler_id INT,
 	FechaDevuelto date,
 	TotalCargo int,
-    Pagado int,
+    Pagado boolean,
     Activo boolean,
 	FOREIGN KEY (Alquiler_id) 
 		REFERENCES Alquiler(Id)

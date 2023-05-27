@@ -201,7 +201,7 @@
                     <div class="areas">
                                     <a href="Area_Personal_Datos_Usuario_Vista.php" class="boton_area">Datos Personales</a>
                                     <a href="Area_Personal_Saldo_Usuario_Vista.php" class="boton_area">Saldo</a>
-                                    <a href="Area_Personal_Historial.html" class="boton_area">Historial de compras</a>
+                                    <a href="Area_Personal_Historial_Alquileres_Usuario_Vista.php" class="boton_area">Historial de compras</a>
                                     <form method = "POST" action = "<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
                                         <?php
                                             ini_set('display_errors', 'On');
