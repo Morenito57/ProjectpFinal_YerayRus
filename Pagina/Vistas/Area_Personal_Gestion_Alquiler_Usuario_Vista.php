@@ -1,12 +1,19 @@
 <?php
 
+    session_start();
+
     require ("../Negocio/usuarioReglasNegocio.php");
     require('../Negocio/gestionAlquileresNegocio.php');
 
     ini_set('display_errors', 'On');
     ini_set('html_errors', 0);
 
-    session_start();
+    if (isset($_GET['id'])) {
+        $id = $_GET['id'];
+        $idDecodificado = urldecode($id);
+    } else {
+        header("Location: Area_Personal_Historial_Alquileres_Usuario_Vista.php");
+    }
 
     $usuarioOriginal = $_SESSION['usuario'];
 
@@ -34,15 +41,30 @@
     
             $perfil =  $usuarioBL->deslogearse();
 
-        }elseif(isset($_POST['Gestionar'])) {  
+        }elseif(isset($_POST['añadirDias'])) {  
 
-            $id = intval($_POST['idAlquiler']);
+            $usuarioBL = new GestionAlquileresNegocio();
 
-            header("Location: Area_Personal_Gestion_Alquiler_Usuario_Vista.php?id=".urlencode($id));
-            
-            exit();
+            $IdAlquiler = intval($_POST['IdAlquiler']);
+            $TotalDias = intval($_POST['TotalDias']);
+            $TotalPago = intval($_POST['TotalPago']);
+            $diaFinalizacionDelAlquiler = $_POST['diaFinalizacionDelAlquiler'];
+
+            if ($_POST['TotalDias'] === "" || !is_numeric($_POST['TotalDias'])) {
+                echo '<script>alert("El valor de introducido no es válido. Por favor, ingrese un número entero.");</script>';
+            }else{
+
+                $FechaFinal = date('Y-m-d', strtotime($diaFinalizacionDelAlquiler . ' + '.$TotalDias.' days'));
+
+                $perfil =  $usuarioBL->actualizarAlquiler($usuarioOriginal, $IdAlquiler, $FechaFinal, $TotalPago);
+            }
+
+        }elseif(isset($_POST['pagarCargo'])) {  
+
         }
     }
+
+
 
 ?>
 <!DOCTYPE html>
@@ -131,6 +153,7 @@
             font-size: 25px;
             padding: 50px 0;
             border-bottom: 5px solid rgb(173, 32, 32); 
+            background-color: rgb(117, 13, 13);
             display: block;  
             background-color: rgb(61, 9, 9);
         }
@@ -179,8 +202,6 @@
         .accion{
             text-decoration: none;
             text-align: center;
-            padding: 0%;
-            margin: 0%;
         }
 
         .verde{
@@ -191,12 +212,14 @@
             color: red;
         }
 
-        .Gestionar{
+        .acciones{
             height: 100%;
-            width: 100%;
+            width: 47%;
             padding: 15px;
+            text-align: center;
             background-color: rgb(61, 9, 9);
-            color: white;
+            display: inline;
+            font-size: 15px;
         }
 
     </style>
@@ -230,7 +253,7 @@
                     </div>
                     <div class="contenido">
 
-                    <h1>Historial de Alquileres</h1>
+                    <h1>Gestion Alquiler</h1>
                     <table>
                                 <tr>
                                     <th><p class="clase">Id</p></th>
@@ -253,7 +276,7 @@
          
                                      $alquilerBL = new GestionAlquileresNegocio();
                                               
-                                     $datosAlquiler = $alquilerBL->obtener();
+                                     $datosAlquiler = $alquilerBL->obtenerAlquiler($idDecodificado);
 
                                      for ($i = 0; $i < count($datosAlquiler); $i++) {
 
@@ -348,8 +371,16 @@
 
                                                         <form method = "POST" action = "'.htmlspecialchars($_SERVER["PHP_SELF"]).'">
 
-                                                            <input id="idAlquiler" name="idAlquiler" value="'.$Alquiler->getIdAlquiler().'" type="hidden">
-                                                            <input type="submit" name="Gestionar" class="Gestionar" value="Gestionar">
+                                                            <input id="IdAlquiler" name="IdAlquiler" value="'.$Alquiler->getIdAlquiler().'" type="hidden">
+                                                            <input id="TotalDias" name="TotalDias" value="" type="hidden">
+                                                            <input id="TotalPago" name="TotalPago" value="" type="hidden">
+
+
+                                                            <input id="idCargo" name="idCargo" value="'.$Alquiler->getIdCarg().'" type="hidden">
+                                                            <input id="botonAnadirDias" type="submit" name="añadirDias" class="acciones" value="➕" onclick="actualizarDias()">
+
+                                                            <input id="" name="" value="" type="hidden">
+                                                            <input type="submit" name="pagarCargo" class="acciones" value="💲">
 
                                                         </form>
                                                     </p>
@@ -358,6 +389,41 @@
                                         ';
                                      }
                                 ?>
+                                <script>
+
+                                    function actualizarDias() {
+                                        var fechaFinal = new Date("<?php echo $Alquiler->getFechaFinal(); ?>");
+                                        fechaFinal.toISOString().substring(0, 10);
+
+                                        var fechaDevuelto = "<?php echo $Alquiler->getFechaDevuelto(); ?>";
+                                        var precioVehiculoDia = "<?php echo $Alquiler->getPrecioVehiculo(); ?>";
+
+                                        var fechaActual = new Date("<?php echo date('Y-m-d'); ?>");
+                                        fechaActual.toISOString().substring(0, 10);
+
+                                        if (fechaDevuelto != null && fechaDevuelto !== "") {
+                                            var mensaje = 'Este alquiler ya ha sido finalizado y el vehículo ha sido devuelto.';
+                                            alert(mensaje);
+                                        }else if (fechaActual.toISOString().substring(0,10) === fechaFinal.toISOString().substring(0,10)) {
+                                            var mensaje = 'El alquiler finalizó hoy entregalo ya.';
+                                            alert(mensaje);
+                                        }else if (fechaActual > fechaFinal) {
+                                            var mensaje = 'El alquiler finalizó el día ' + fechaFinal.toISOString().substring(0,10) + ' entregalo ya antes de tener mas cargos.';
+                                            alert(mensaje);
+                                        }else {
+                                            var dias = prompt('¿Cuántos días más te gustaría tener el vehículo?' + fechaFinal.toISOString().substring(0,10));
+                                            if (dias != null && Number.isInteger(parseInt(dias)) && dias >= 0) {
+                                                var confirmation = confirm('¿Estás seguro de que quieres alquilar el vehículo por ' + dias + ' días más por ' + (precioVehiculoDia * dias) + '€?');
+                                                if (confirmation) {
+                                                    document.getElementById('TotalDias').value = dias;
+                                                    document.getElementById('TotalPago').value = precioVehiculoDia * dias;
+                                                } 
+                                            } else {
+                                                alert("Por favor, introduce un número válido.");
+                                           }
+                                        }
+                                    }
+                                </script>
                             </table>
                                     
                     </div>
