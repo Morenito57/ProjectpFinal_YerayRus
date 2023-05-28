@@ -138,5 +138,11 @@
             return $listaAlquileres;
         }
 
+        function actualizarCargo($usuario, $idAlquiler, $idCargo, $totalPago){
+            $gestionDAL = new gestionAlquileresAccesoDatos();
+            $res = $gestionDAL->actualizarCargo($usuario, $idAlquiler, $idCargo, $totalPago);
+            return $res; 
+        }
+
     }
 ?>

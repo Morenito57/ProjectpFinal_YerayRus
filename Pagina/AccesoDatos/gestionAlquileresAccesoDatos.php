@@ -32,8 +32,6 @@
             $saldoActual = $filaSaldo['Saldo'];
 
             if ($saldoActual < $TotalDelPrecio) {
-                $protocolo = isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http";
-                $url = "$protocolo://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
                 header("Location: Area_Personal_Saldo_Usuario_Vista.php");
                 exit();
             }
@@ -75,8 +73,6 @@
         }
 
         function obtener(){
-
-            actualizarCargosPorFecha();
 
             $conexion = mysqli_connect('localhost','root','');
 
@@ -129,8 +125,6 @@
             $saldoActual = $filaSaldo['Saldo'];
 
             if ($saldoActual < $TotalPago) {
-                $protocolo = isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http";
-                $url = "$protocolo://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
                 header("Location: Area_Personal_Saldo_Usuario_Vista.php");
                 exit();
             }
@@ -179,7 +173,46 @@
             exit();
         }
 
-        function actualizacionCargos(){
+        function actualizarCargo($usuario, $idAlquiler, $idCargo, $totalPago){
+
+            $conexion = mysqli_connect('localhost','root','');
+
+            if (mysqli_connect_errno()) {
+                echo "Error al conectar a MySQL: " . mysqli_connect_error();
+            }
+
+            mysqli_select_db($conexion, 'LegendaryMotorsport');
+
+            $consultaSaldo = mysqli_prepare($conexion, "SELECT Saldo FROM Usuario WHERE NombreUsuario = ?;");
+            $consultaSaldo->bind_param("s", $usuario);
+            $consultaSaldo->execute();
+
+            $resSaldo = $consultaSaldo->get_result();
+            $filaSaldo = $resSaldo->fetch_assoc();
+            $saldoActual = $filaSaldo['Saldo'];
+
+            if ($saldoActual < $totalPago) {
+                header("Location: Area_Personal_Saldo_Usuario_Vista.php");
+                exit();
+            }
+
+            $consulta2 = mysqli_prepare($conexion, "UPDATE Usuario set Saldo = Saldo - ? WHERE NombreUsuario = ?;");
+            $consulta2->bind_param("is", $totalPago, $usuario);
+            $consulta2->execute();
+
+            $consulta3 = mysqli_prepare($conexion, "UPDATE Cargo SET Pagado = TRUE, Activo = FALSE WHERE Id = ?;");
+            $consulta3->bind_param("i", $idCargo);
+            $consulta3->execute();
+
+            $consulta4 = mysqli_prepare($conexion, "UPDATE Alquiler SET Estado = FALSE WHERE Id = ?;");
+            $consulta4->bind_param("i", $idAlquiler);
+            $consulta4->execute();
+            
+            exit();
+
+        }
+
+        /*function actualizacionCargos($idAlquiler, $idCargo){
 
             $conexion = mysqli_connect('localhost','root','');
 
@@ -204,7 +237,7 @@
                 $consulta->bind_param("ii", $totalCargo, $alquiler['Id']);
                 $consulta->execute();
             }
-        }
+        }*/
 
 
     }

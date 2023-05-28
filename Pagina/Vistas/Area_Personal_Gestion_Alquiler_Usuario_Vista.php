@@ -24,8 +24,8 @@
     if($_SERVER["REQUEST_METHOD"]=="POST") {
         if(isset($_POST['eliminar'])) {
 
-            $usuariosBL = new GestionAlquileresNegocio();
-            $datosUsuario = $usuariosBL->eliminarUsuario($usuarioOriginal); 
+            $usuarioBL = new UsuarioReglasNegocio();
+            $datosUsuario = $usuarioBL->eliminarUsuario($usuarioOriginal); 
             header("Location: loginVista.php");
 
         }elseif(isset($_POST['actualizar_dinero'])) {
@@ -37,7 +37,7 @@
 
         }elseif(isset($_POST['deslogearse'])) {  
 
-            $usuarioBL = new GestionAlquileresNegocio();
+            $usuarioBL = new UsuarioReglasNegocio();
     
             $perfil =  $usuarioBL->deslogearse();
 
@@ -61,10 +61,23 @@
 
         }elseif(isset($_POST['pagarCargo'])) {  
 
+            $usuarioBL = new GestionAlquileresNegocio();
+
+            $permiso = $_POST['permisoParaPagar'];
+            $idAlquiler = $_POST['IdAlquiler'];
+            $idCargo = $_POST['IdCargo'];
+            $totalPago = $_POST['TotalCargo'];
+
+            if ($permiso == "1") {
+                $perfil =  $usuarioBL->actualizarCargo($usuarioOriginal, $idAlquiler, $idCargo, $totalPago);
+            } else {
+                echo '<script>alert("Error.");</script>';
+            }
+
+
+            
         }
     }
-
-
 
 ?>
 <!DOCTYPE html>
@@ -79,13 +92,16 @@
             padding: 0%;
             margin: 0%;
         }
+
         body{
             background-color: rgb(77, 5, 5);
         } 
+
         .divPrincipal{
             width: 1910px;
             height: 925px;
         }
+
         .divCabezera{
             width: 100%;
             height: 480px;
@@ -93,12 +109,13 @@
             margin: 0%;
             border-bottom: 5px solid rgb(173, 32, 32);
         }
+
         .divCuerpo{
             width: 100%;
             height: 100%;
-            padding: 10px;
-            
+            padding: 10px;    
         }
+
         .divCabezeraCuerpo{
             padding: 20px;
             margin-top: 50px;
@@ -156,6 +173,13 @@
             background-color: rgb(117, 13, 13);
             display: block;  
             background-color: rgb(61, 9, 9);
+        }
+
+        .logo_area{
+            width: 100%;
+            height: 19%;
+            display: block;  
+            background-color: rgb(61, 9, 9); 
         }
 
         .divPie{
@@ -250,6 +274,8 @@
                                         ?>
                                         <input type="submit" name="deslogearse" class="boton_area" value="Deslogearse">
                                     </form>
+                                    <img class="logo_area" src="imagenes/Logo.png"> 
+
                     </div>
                     <div class="contenido">
 
@@ -352,17 +378,16 @@
                                                 }
 
                                                 if($Alquiler->getPagado() == 1){
-
-                                                    echo'
-                                                        <td ><p class="dato rojo">NO</p></td>
-                                                    ';                                                
-                                                }else if($Alquiler->getPagado() == 0){
                                                     echo'
                                                         <td ><p class="dato verde">Si</p></td>
-                                                    ';
-                                                }else if($Alquiler->getPagado() == null){
+                                                    ';                                                
+                                                }else if($Alquiler->getPagado() === 0){
                                                     echo'
-                                                        <td ><p class="dato verde">No hay por ahora.</p></td>
+                                                        <td ><p class="dato rojo">No</p></td>
+                                                    ';
+                                                }else if($Alquiler->getPagado() === null){
+                                                    echo'
+                                                        <td ><p class="dato">No hay por ahora.</p></td>
                                                     ';
                                                 }
                                                 echo'
@@ -372,16 +397,17 @@
                                                         <form method = "POST" action = "'.htmlspecialchars($_SERVER["PHP_SELF"]).'">
 
                                                             <input id="IdAlquiler" name="IdAlquiler" value="'.$Alquiler->getIdAlquiler().'" type="hidden">
+                                                            <input id="diaFinalizacionDelAlquiler" name="diaFinalizacionDelAlquiler" value="'.$Alquiler->getFechaFinal().'" type="hidden">
                                                             <input id="TotalDias" name="TotalDias" value="" type="hidden">
                                                             <input id="TotalPago" name="TotalPago" value="" type="hidden">
 
-
-                                                            <input id="idCargo" name="idCargo" value="'.$Alquiler->getIdCarg().'" type="hidden">
                                                             <input id="botonAnadirDias" type="submit" name="añadirDias" class="acciones" value="➕" onclick="actualizarDias()">
 
-                                                            <input id="" name="" value="" type="hidden">
-                                                            <input type="submit" name="pagarCargo" class="acciones" value="💲">
+                                                            <input id="permisoParaPagar" name="permisoParaPagar" value="" type="hidden">
+                                                            <input id="IdCargo" name="IdCargo" value="'.$Alquiler->getIdCarg().'" type="hidden">
+                                                            <input id="TotalCargo" name="TotalCargo" value="'.$Alquiler->getTotalCargo().'" type="hidden">
 
+                                                            <input id="pagarCargo" type="submit" name="pagarCargo" class="acciones" value="💲" onclick="pagarCargos()">
                                                         </form>
                                                     </p>
                                                 </td>
@@ -389,41 +415,7 @@
                                         ';
                                      }
                                 ?>
-                                <script>
 
-                                    function actualizarDias() {
-                                        var fechaFinal = new Date("<?php echo $Alquiler->getFechaFinal(); ?>");
-                                        fechaFinal.toISOString().substring(0, 10);
-
-                                        var fechaDevuelto = "<?php echo $Alquiler->getFechaDevuelto(); ?>";
-                                        var precioVehiculoDia = "<?php echo $Alquiler->getPrecioVehiculo(); ?>";
-
-                                        var fechaActual = new Date("<?php echo date('Y-m-d'); ?>");
-                                        fechaActual.toISOString().substring(0, 10);
-
-                                        if (fechaDevuelto != null && fechaDevuelto !== "") {
-                                            var mensaje = 'Este alquiler ya ha sido finalizado y el vehículo ha sido devuelto.';
-                                            alert(mensaje);
-                                        }else if (fechaActual.toISOString().substring(0,10) === fechaFinal.toISOString().substring(0,10)) {
-                                            var mensaje = 'El alquiler finalizó hoy entregalo ya.';
-                                            alert(mensaje);
-                                        }else if (fechaActual > fechaFinal) {
-                                            var mensaje = 'El alquiler finalizó el día ' + fechaFinal.toISOString().substring(0,10) + ' entregalo ya antes de tener mas cargos.';
-                                            alert(mensaje);
-                                        }else {
-                                            var dias = prompt('¿Cuántos días más te gustaría tener el vehículo?' + fechaFinal.toISOString().substring(0,10));
-                                            if (dias != null && Number.isInteger(parseInt(dias)) && dias >= 0) {
-                                                var confirmation = confirm('¿Estás seguro de que quieres alquilar el vehículo por ' + dias + ' días más por ' + (precioVehiculoDia * dias) + '€?');
-                                                if (confirmation) {
-                                                    document.getElementById('TotalDias').value = dias;
-                                                    document.getElementById('TotalPago').value = precioVehiculoDia * dias;
-                                                } 
-                                            } else {
-                                                alert("Por favor, introduce un número válido.");
-                                           }
-                                        }
-                                    }
-                                </script>
                             </table>
                                     
                     </div>
@@ -434,4 +426,61 @@
         </div>
     </div>
 </body>
+    <script>
+
+    function pagarCargos() {
+
+        var cargoActivo = Boolean("<?php echo $Alquiler->getActivoCargo(); ?>");
+        var valorCargo = "<?php echo $Alquiler->getTotalCargo(); ?>";
+        var fechaDevuelto = "<?php echo $Alquiler->getFechaDevuelto(); ?>";
+
+        if(cargoActivo == true){
+            var confirmation = confirm('Estas apunto de pagar su cargo por valor de ' + valorCargo +'€, asegurese de pagar si solo a entregado el vehixulo.');
+            if (confirmation) {
+                if (fechaDevuelto === null || fechaDevuelto === "" || fechaDevuelto === "null") {
+                    alert("No has entregado el vehiculo");
+                    document.getElementById('permisoParaPagar').value = '0';
+                }else if(fechaDevuelto !== null){
+                    document.getElementById('permisoParaPagar').value = '1';
+                }
+            }
+        }else{
+            alert("No tienes cargos por pagar.");
+            document.getElementById('permisoParaPagar').value = '0';
+        }
+    }
+
+    function actualizarDias() {
+        var fechaFinal = new Date("<?php echo $Alquiler->getFechaFinal(); ?>");
+        fechaFinal.toISOString().substring(0, 10);
+
+        var fechaDevuelto = "<?php echo $Alquiler->getFechaDevuelto(); ?>";
+        var precioVehiculoDia = "<?php echo $Alquiler->getPrecioVehiculo(); ?>";
+
+        var fechaActual = new Date("<?php echo date('Y-m-d'); ?>");
+        fechaActual.toISOString().substring(0, 10);
+
+        if (fechaDevuelto != "null" && fechaDevuelto !== "") {
+            var mensaje = 'Este alquiler ya ha sido finalizado y el vehículo ha sido devuelto.';
+            alert(mensaje);
+        }else if (fechaActual.toISOString().substring(0,10) === fechaFinal.toISOString().substring(0,10)) {
+            var mensaje = 'El alquiler finalizó hoy entregalo ya.';
+            alert(mensaje);
+        }else if (fechaActual > fechaFinal) {
+            var mensaje = 'El alquiler finalizó el día ' + fechaFinal.toISOString().substring(0,10) + ' entregalo ya antes de tener mas cargos.';
+            alert(mensaje);
+        }else {
+            var dias = prompt('¿Cuántos días más te gustaría tener el vehículo?' + fechaFinal.toISOString().substring(0,10));
+            if (dias != null && Number.isInteger(parseInt(dias)) && dias >= 0) {
+                var confirmation = confirm('¿Estás seguro de que quieres alquilar el vehículo por ' + dias + ' días más por ' + (precioVehiculoDia * dias) + '€?');
+                if (confirmation) {
+                    document.getElementById('TotalDias').value = dias;
+                    document.getElementById('TotalPago').value = precioVehiculoDia * dias;
+                } 
+            } else {
+                alert("Por favor, introduce un número válido.");
+        }
+        }
+    }
+    </script>
 </html>

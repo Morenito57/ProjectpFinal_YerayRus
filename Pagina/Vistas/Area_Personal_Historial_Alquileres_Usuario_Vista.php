@@ -17,8 +17,8 @@
     if($_SERVER["REQUEST_METHOD"]=="POST") {
         if(isset($_POST['eliminar'])) {
 
-            $usuariosBL = new GestionAlquileresNegocio();
-            $datosUsuario = $usuariosBL->eliminarUsuario($usuarioOriginal); 
+            $usuarioBL = new UsuarioReglasNegocio();
+            $datosUsuario = $usuarioBL->eliminarUsuario($usuarioOriginal); 
             header("Location: loginVista.php");
 
         }elseif(isset($_POST['actualizar_dinero'])) {
@@ -30,7 +30,7 @@
 
         }elseif(isset($_POST['deslogearse'])) {  
 
-            $usuarioBL = new GestionAlquileresNegocio();
+            $usuarioBL = new UsuarioReglasNegocio();
     
             $perfil =  $usuarioBL->deslogearse();
 
@@ -135,6 +135,13 @@
             background-color: rgb(61, 9, 9);
         }
 
+        .logo_area{
+            width: 100%;
+            height: 19%;
+            display: block;  
+            background-color: rgb(61, 9, 9); 
+        }
+
         .divPie{
             width: 100%;
             height: 10%;
@@ -227,6 +234,7 @@
                                         ?>
                                         <input type="submit" name="deslogearse" class="boton_area" value="Deslogearse">
                                     </form>
+                                    <img class="logo_area" src="imagenes/Logo.png"> 
                     </div>
                     <div class="contenido">
 
@@ -327,19 +335,17 @@
                                                         <td ><p class="dato verde">No hay por ahora.</p></td>
                                                     ';
                                                 }
-
                                                 if($Alquiler->getPagado() == 1){
-
-                                                    echo'
-                                                        <td ><p class="dato rojo">NO</p></td>
-                                                    ';                                                
-                                                }else if($Alquiler->getPagado() == 0){
                                                     echo'
                                                         <td ><p class="dato verde">Si</p></td>
-                                                    ';
-                                                }else if($Alquiler->getPagado() == null){
+                                                    ';                                                
+                                                }else if($Alquiler->getPagado() === 0){
                                                     echo'
-                                                        <td ><p class="dato verde">No hay por ahora.</p></td>
+                                                        <td ><p class="dato rojo">No</p></td>
+                                                    ';
+                                                }else if($Alquiler->getPagado() === null){
+                                                    echo'
+                                                        <td ><p class="dato">No hay por ahora.</p></td>
                                                     ';
                                                 }
                                                 echo'

@@ -36,8 +36,6 @@
         }
     }
 
-
-
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -146,6 +144,13 @@
             background-color: rgb(61, 9, 9);
         }
 
+        .logo_area{
+            width: 100%;
+            height: 19%;
+            display: block;  
+            background-color: rgb(61, 9, 9); 
+        }
+
         .boton{
             color: rgb(255, 255, 255);
             background-color: rgb(61, 9, 9);
@@ -213,7 +218,7 @@
                                         ?>
                                         <input type="submit" name="deslogearse" class="boton_area" value="Deslogearse">
                                     </form>
-
+                                    <img class="logo_area" src="imagenes/Logo.png"> 
                     </div>
                     <div class="contenido">
                         <h1>Saldo Personales</h1>

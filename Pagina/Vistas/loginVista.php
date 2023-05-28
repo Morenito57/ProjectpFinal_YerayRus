@@ -7,7 +7,7 @@
         if($perfil==="Administrador") {
             session_start();
             $_SESSION['usuario'] = $_POST['usuario'];
-            header("Location: Zona_Admin_Usuarios.php");
+            header("Location: Inicio_Con_Loggin_Administrador.php");
         } elseif($perfil==="Normal") {
             session_start();
             $_SESSION['usuario'] = $_POST['usuario'];
@@ -29,26 +29,36 @@
             padding: 0%;
             margin: 0%;
         }
+
+        html, body {
+            height: 100%;
+        }
+
         body{
             background-color: rgb(77, 5, 5);
         } 
+
         .divPrincipal{
-            width: 1910px;
-            height: 800px;
+            width: 100%;
+            height: 100%;
         }
+
         .divCabezera{
             width: 100%;
-            height: 480px;
-            padding: 0%;
-            margin: 0%;
-            border-bottom: 5px solid rgb(173, 32, 32);
+            height: 45%;
         }
+
         .divCuerpo{
             width: 100%;
             height: 100%;
-            padding: 10px;
-            
         }
+
+        .portada{
+            width: 100%;
+            height: 100%;
+            border-bottom: 5px solid rgb(173, 32, 32);
+        }
+
         .divCabezeraCuerpo{
             text-align: center;
             padding: 20px;
@@ -64,7 +74,7 @@
 
         .caja_inicio_sesion{
             width: 80%;
-            height: 80%;
+            height: 50%;
             background-color: rgb(61, 9, 9);
             margin: 0 auto;
             border: 5px solid rgb(173, 32, 32);
@@ -117,11 +127,7 @@
 
         .divPie{
             width: 100%;
-            height: 10%;
         }
-
-
-
     </style>
 </head>
 <body>
