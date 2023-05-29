@@ -18,7 +18,7 @@
         if(isset($_POST['eliminar'])) {
 
             $usuarioBL = new UsuarioReglasNegocio();
-            $datosUsuario = $usuarioBL->eliminarUsuario($usuarioOriginal); 
+            $datosUsuario = $usuarioBL->suspenderUsuario($usuarioOriginal); 
             header("Location: loginVista.php");
 
         }elseif(isset($_POST['actualizar_dinero'])) {

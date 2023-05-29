@@ -8,6 +8,7 @@
         private $_Clave;
         private $_Saldo;
         private $_TipoDeUsuario;
+        private $_Activo;
         private $_Nombre;
         private $_Apellidos;
         private $_FechaNacimiento;
@@ -23,12 +24,13 @@
         }
     
         function init(
-            $nombreUsuario, $clave, $saldo, $tipoDeUsuario, $nombre, $apellidos,$fechaNacimiento, $direccion, $dni, $telefono, $email, $otro, $idDatosContacto, $idDatosPersonales
+            $nombreUsuario, $clave, $saldo, $tipoDeUsuario, $activo, $nombre, $apellidos,$fechaNacimiento, $direccion, $dni, $telefono, $email, $otro, $idDatosContacto, $idDatosPersonales
         ) {
             $this->_NombreUsuario = $nombreUsuario;
             $this->_Clave = $clave;
             $this->_Saldo = $saldo;
             $this->_TipoDeUsuario = $tipoDeUsuario;
+            $this->_Activo = $activo;
             $this->_Nombre = $nombre;
             $this->_Apellidos = $apellidos;
             $this->_FechaNacimiento = $fechaNacimiento;
@@ -56,6 +58,10 @@
     
         function getTipoDeUsuario() {
             return $this->_TipoDeUsuario;
+        }
+
+        function getActivo() {
+            return $this->_Activo;
         }
     
         function getNombre() {
@@ -98,6 +104,20 @@
             return $this->_IdDatosPersonales;
         }
 
+        function obtenerAllUsuario() {
+            $usuarioDAL = new UsuarioAccesoDatos();
+            $results = $usuarioDAL->obtenerAllUsuario();
+            $listaUsuario = array();
+        
+            foreach ($results as $usuarios) {
+                $oUsuarioReglasNegocio = new UsuarioReglasNegocio();
+                $oUsuarioReglasNegocio->init($usuarios['Usuario'],$usuarios['Clave'],$usuarios['Saldo'],$usuarios['TipoUsuario'],$usuarios['Activo'],$usuarios['Nombre'],$usuarios['Apellidos'],$usuarios['FechaNacimiento'],$usuarios['Direccion'],$usuarios['DNI'], $usuarios['Telefono'],$usuarios['Email'],$usuarios['Otro'],$usuarios['IdDatosContacto'],$usuarios['IdDatosPersonales']);
+                array_push($listaUsuario, $oUsuarioReglasNegocio);
+            }
+        
+            return $listaUsuario;
+        }
+
         function obtenerUsuario($usuario) {
             $usuarioDAL = new UsuarioAccesoDatos();
             $results = $usuarioDAL->obtenerUsuario($usuario);
@@ -105,7 +125,7 @@
         
             foreach ($results as $usuarios) {
                 $oUsuarioReglasNegocio = new UsuarioReglasNegocio();
-                $oUsuarioReglasNegocio->init($usuarios['Usuario'],$usuarios['Clave'],$usuarios['Saldo'],$usuarios['TipoUsuario'],$usuarios['Nombre'],$usuarios['Apellidos'],$usuarios['FechaNacimiento'],$usuarios['Direccion'],$usuarios['DNI'], $usuarios['Telefono'],$usuarios['Email'],$usuarios['Otro'],$usuarios['IdDatosContacto'],$usuarios['IdDatosPersonales']);
+                $oUsuarioReglasNegocio->init($usuarios['Usuario'],$usuarios['Clave'],$usuarios['Saldo'],$usuarios['TipoUsuario'],$usuarios['Activo'],$usuarios['Nombre'],$usuarios['Apellidos'],$usuarios['FechaNacimiento'],$usuarios['Direccion'],$usuarios['DNI'], $usuarios['Telefono'],$usuarios['Email'],$usuarios['Otro'],$usuarios['IdDatosContacto'],$usuarios['IdDatosPersonales']);
                 array_push($listaUsuario, $oUsuarioReglasNegocio);
             }
         
@@ -135,9 +155,15 @@
             return $res;            
         }
 
-        function eliminarUsuario($usuarioOriginal) {
+        function eliminarUsuario($Usuario, $idDatosContacto, $idDatosPersonales) {
             $usuariosDAL = new UsuarioAccesoDatos();
-            $res = $usuariosDAL->eliminarUsuario($usuarioOriginal);           
+            $res = $usuariosDAL->eliminarUsuario($Usuario, $idDatosContacto, $idDatosPersonales);           
+            return $res;
+        }
+
+        function suspenderUsuario($usuarioOriginal) {
+            $usuariosDAL = new UsuarioAccesoDatos();
+            $res = $usuariosDAL->suspenderUsuario($usuarioOriginal);           
             return $res;
         }
 

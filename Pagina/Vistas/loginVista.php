@@ -7,7 +7,7 @@
         if($perfil==="Administrador") {
             session_start();
             $_SESSION['usuario'] = $_POST['usuario'];
-            header("Location: Inicio_Con_Loggin_Administrador.php");
+            header("Location: Administrador_Usuarios.php");
         } elseif($perfil==="Normal") {
             session_start();
             $_SESSION['usuario'] = $_POST['usuario'];

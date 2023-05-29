@@ -1,10 +1,32 @@
+<?php
+    session_start();
+
+    ini_set('display_errors', 'On');
+    ini_set('html_errors', 0);
+
+    $usuario = $_SESSION['usuario'];
+
+    if (!isset($_SESSION['usuario'])) {
+        header("Location: loginVista.php");
+    }
+
+    if($_SERVER["REQUEST_METHOD"]=="POST") {
+        if(isset($_POST['Gestionar'])) {
+
+            $id = $_POST['idUsuario'];
+
+            header("Location: Administrador_Usuario_Gestion.php?id=".urlencode($id));
+        }
+    }
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Legendary MOTORSPORT</title>
     <style>
         *{
             padding: 0%;
@@ -147,7 +169,6 @@
 
         table{
             width: 99%;
-            height: 100%;
             border: 2px solid rgb(173, 32, 32);
             margin: auto;
             border-collapse: collapse;
@@ -155,14 +176,12 @@
         }
 
         tr{
-            width: 100%;
-            height: 100%;
             border: 2px solid rgb(173, 32, 32);
         }
 
         th{
             width: 6%;
-            height: 30px;
+            height: 35px;
             border: 2px solid rgb(173, 32, 32);
             background-color: rgb(77, 5, 5);
             color: white;
@@ -173,24 +192,33 @@
             height: 30px;
             border: 2px solid rgb(173, 32, 32);
             color: white;
-            padding-left: 5px;
         }
 
         .accion{
             text-decoration: none;
             text-align: center;
+            padding: 0%;
+            margin: 0%;
+        }
+
+        .Gestionar{
+            height: 100%;
+            width: 100%;
+            padding: 15px;
+            background-color: rgb(61, 9, 9);
+            color: white;
         }
 
         .clase{
         }
 
         .dato{
+            padding-left: 5px;
         }
 
     </style>
 </head>
 <body>
-    <title>Legendary MOTORSPORT</title>
     <div class="divPrincipal">
         <div class="divCabezera">
             <img class="portada" src="imagenes/Portada.png"> 
@@ -198,35 +226,59 @@
         <div class="divCuerpo">
             <div class="divCabezeraCuerpo">
                 <div class="menu">
+
                     <label for="busqueda" class="lupa">🔎</label>
+                    <select class="opcionesBuscador" id="opcionesTablaBuscador">
+                        <option value=""></option>
+                        <option value="NombreUsuario">Usuario</option>
+                        <option value="Clave">Clave</option>
+                        <option value="Saldo">Saldo</option>
+                        <option value="TipoDeUsuario">Tipo</option>
+                        <option value="Activo">Activo</option>
+                        <option value="IdDatosContacto">Id Contacto</option>
+                        <option value="Telefono">Telefono</option>
+                        <option value="Email">Email</option>
+                        <option value="Otro">Otro</option>
+                        <option value="IdDatosPersonales">Id Datos Per</option>
+                        <option value="Nombre">Nombre</option>
+                        <option value="Apellidos">Apellidos</option>
+                        <option value="FechaNacimiento">Nacimiento</option>
+                        <option value="Direccion">Direccio</option>
+                        <option value="DNI">DNI</option>
+                    </select>
                     <input type="text" id="busqueda" onkeyup="obtenerDatos()" placeholder="Busca">
                     <select class="opcionesBuscador" id="opcionesBuscador" onchange="redirigirPagina()">
                         <option value=""></option>
                     </select>
+
                     <select class="pestaña" id="pestañaUsuarios" name="pestañaUsuarios" onchange="redirigirPagina()">
                         <option value="">Usuarios</option>
+                        <option value="Administrador_Usuarios.php?">Usuarios All</option>
                     </select>
                     <select class="pestaña" id="pestañaAlquileres" name="pestañaAlquileres" onchange="redirigirPagina()">
                         <option value="">Alquileres</option>
+                        <option value="">Alquileres All</option>
                         <option value="">Extras</option>
                         <option value="">Seguros</option>
                         <option value="">Cargos</option>
                     </select>
                     <select class="pestaña" id="pestañaVehiculos" name="pestañaVehiculos" onchange="redirigirPagina()">
                         <option value="">Vehiculos</option>
+                        <option value="">Vehiculos All</option>
                         <option value="">Tipo Vehiculo</option>
                     </select>
+
                     <select class="opcionesOrden" id="opcionesOrden" name="opcionesOrden" onchange="redirigirPagina()">
                         <option value="" >Ordenar</option>
                         <option value="" >Edad</option>
                         <option value="" >Ordenar</option>
                     </select>
+
                 </div>
             </div>
             <div class="divRestoCuerpo">
                 <div class="caja_area_personal">
                     <div class="contenido">
-                        <form method = "POST" action = "'.htmlspecialchars($_SERVER['PHP_SELF']).'">
                             <h1>Usuarios</h1>
                             <a class="añadir" href="a">➕</a>
                             <table>
@@ -235,6 +287,7 @@
                                     <th><p class="clase">Clave</p></th>
                                     <th><p class="clase">Saldo</p></th>
                                     <th><p class="clase">Tipo</p></th>
+                                    <th><p class="clase">Activo</p></th>
                                     <th><p class="clase">Id Contacto</p></th> 
                                     <th><p class="clase">Telefono</p></th> 
                                     <th><p class="clase">Email</p></th>
@@ -247,25 +300,52 @@
                                     <th><p class="clase">DNI</p></th>
                                     <th><p class="clase">Acciones</p></th>
                                 </tr>
-                                <tr>
-                                    <td ><p class="dato"></p></td>
-                                    <td ><p class="dato"></p></td>
-                                    <td ><p class="dato"></p></td>
-                                    <td ><p class="dato"></p></td>
-                                    <td ><p class="dato"></p></td>
-                                    <td ><p class="dato"></p></td>
-                                    <td ><p class="dato"></p></td>
-                                    <td ><p class="dato"></p></td>
-                                    <td ><p class="dato"></p></td>
-                                    <td ><p class="dato"></p></td>
-                                    <td ><p class="dato"></p></td>
-                                    <td ><p class="dato"></p></td>
-                                    <td ><p class="dato"></p></td>
-                                    <td ><p class="dato"></p></td>
-                                    <td class="accion"><a class="accion" href="c">🔁</a><a class="accion" href="b">➖</a></td>
-                                </tr>
+
+                                <?php
+                                    require ("../Negocio/usuarioReglasNegocio.php");
+
+                                    ini_set('display_errors', 'On');
+                                    ini_set('html_errors', 0);
+        
+                                    $alquilerBL = new UsuarioReglasNegocio();
+                                             
+                                    $datosUsuario = $alquilerBL->obtenerAllUsuario();
+
+                                    for ($i = 0; $i < count($datosUsuario); $i++) {
+
+                                        $Usuario = $datosUsuario[$i];
+
+                                        echo'
+                                            <tr>
+                                                <td ><p class="dato">'.$Usuario->getNombreUsuario().'</p></td>
+                                                <td ><p class="dato">'.$Usuario->getClave().'</p></td>
+                                                <td ><p class="dato">'.$Usuario->getSaldo().'</p></td>
+                                                <td ><p class="dato">'.$Usuario->getTipoDeUsuario().'</p></td>
+                                                <td ><p class="dato">'.$Usuario->getActivo().'</p></td>
+                                                <td ><p class="dato">'.$Usuario->getIdDatosContacto().'</p></td>
+                                                <td ><p class="dato">'.$Usuario->getTelefono().'</p></td>
+                                                <td ><p class="dato">'.$Usuario->getEmail().'</p></td>
+                                                <td ><p class="dato">'.$Usuario->getOtro().'</p></td>
+                                                <td ><p class="dato">'.$Usuario->getIdDatosPersonales().'</p></td>
+                                                <td ><p class="dato">'.$Usuario->getNombre().'</p></td>
+                                                <td ><p class="dato">'.$Usuario->getApellidos().'</p></td>
+                                                <td ><p class="dato">'.$Usuario->getFechaNacimiento().'</p></td>
+                                                <td ><p class="dato">'.$Usuario->getDireccion().'</p></td>
+                                                <td ><p class="dato">'.$Usuario->getDNI().'</p></td>
+                                                <td>
+                                                    <p class="accion">
+
+                                                        <form method = "POST">
+                                                            <input id="idUsuario" name="idUsuario" value="'.$Usuario->getNombreUsuario().'" type="hidden">
+                                                            <input type="submit" name="Gestionar" class="Gestionar" value="Gestionar">
+                                                        </form>
+                                                    </p>
+                                                </td>
+                                            </tr>
+                                        ';
+                                    }
+                                ?>
                             </table>
-                        </form>
                     </div>
                 </div>
             </div>
@@ -274,5 +354,6 @@
         </div>
         </div>
     </div>
+    <script src="Inicio_Con_Admin.js"></script>
 </body>
 </html>

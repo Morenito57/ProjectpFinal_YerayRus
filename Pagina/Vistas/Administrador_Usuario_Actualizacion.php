@@ -1,39 +1,26 @@
 <?php
+    session_start();
 
     require ("../Negocio/usuarioReglasNegocio.php");
 
     ini_set('display_errors', 'On');
     ini_set('html_errors', 0);
 
-    session_start();
-
-    $usuarioOriginal = $_SESSION['usuario'];
-
     if (!isset($_SESSION['usuario'])) {
         header("Location: loginVista.php");
     }
 
-    if($_SERVER["REQUEST_METHOD"]=="POST") {
-        if(isset($_POST['actualizarUsuario'])) {
-
-            $usuarioBL = new UsuarioReglasNegocio();
-
-            $perfil =  $usuarioBL->actualizarUsuario($usuarioOriginal, $_POST['usuario'], $_POST['clave'], $_POST['nombre'], $_POST['apellidos'], $_POST['fechaNacimiento'], $_POST['direccion'], $_POST['DNI'], $_POST['telefono'], $_POST['email'], $_POST['otro'], $_POST['IdDatosContacto'], $_POST['IdDatosPersonales']);
-
-        }elseif(isset($_POST['eliminar'])) {
-
-            $usuariosBL = new UsuarioReglasNegocio();
-            $datosUsuario = $usuariosBL->suspenderUsuario($usuarioOriginal); 
-            header("Location: loginVista.php");
-
-        }elseif(isset($_POST['deslogearse'])) {  
-
-            $usuarioBL = new UsuarioReglasNegocio();
-    
-            $perfil =  $usuarioBL->deslogearse();
-
-        }
+    if (isset($_GET['id'])) {
+        $id = $_GET['id'];
+        $idDecodificado = urldecode($id);
+    } else {
+        header("Location: Administrador_Usuarios.php");
     }
+
+    if($_SERVER["REQUEST_METHOD"]=="POST") {
+
+    }
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -48,76 +35,81 @@
             margin: 0%;
         }
 
+        html, body {
+        }
+
         body{
             background-color: rgb(77, 5, 5);
         } 
-
         .divPrincipal{
-            width: 1910px;
-            height: 925px;
+            width: 100%;
         }
-
         .divCabezera{
             width: 100%;
-            height: 480px;
-            padding: 0%;
-            margin: 0%;
-            border-bottom: 5px solid rgb(173, 32, 32);
         }
 
         .divCuerpo{
             width: 100%;
-            height: 100%;
-            padding: 10px;
+        }
+
+        .divPie{
+            width: 100%;
+            padding-top: 50px;
+        }
+
+        .portada{
+            width: 100%;
+            border-bottom: 5px solid rgb(173, 32, 32);
         }
 
         .divCabezeraCuerpo{
-            padding: 20px;
-            margin-top: 50px;
-            width: 80%;
-            margin: 25px auto;
-        }
-
-        .volver{
-            background-color: rgb(61, 9, 9);
-            text-decoration: none;
-            color: white;
-            padding: 22px;
-            border: 3px solid rgb(173, 32, 32);
-            font-size: 25px;
+            width: 100%;
+            text-align: center;
+            padding-bottom: 50px;
         }
 
         .divRestoCuerpo{
-            margin: auto;
-            margin-top: 20px;
-            width: 80%;
-            height: 100%;
+            width: 100%;
         }
+
+        .menu{
+            margin: 0 auto;
+            width: 95%;
+        }
+
+        .pestaña{
+            margin-top: 26px;
+            padding-top: 10px;
+            padding-bottom: 10px;
+            padding-right: 10px;
+            padding-left: 10px;
+            font-size: 25px;
+            background-color: rgb(61, 9, 9);
+            border: 3px solid rgb(173, 32, 32);
+            color: white;
+        }
+
 
         .caja_area_personal{
-            width: 100%;
-            height: 90%;
-            border: 5px solid rgb(173, 32, 32);
-            display: flex;
-        }
-
-        .areas{
-            height: 100%;
-            width: 20%;
-            float: left;
-            border-right: 5px solid rgb(173, 32, 32); 
+            margin: auto;
+            width: 95%;
             background-color: rgb(61, 9, 9);
+            border: 5px solid rgb(173, 32, 32);
         }
 
         .contenido{
-            height: 100%;
-            width: 80%;
-            float: left;
-            margin: 0 auto;
-            background-color: rgb(77, 5, 5);
+            width: 100%;
             overflow: auto;
             text-align: center;
+        }
 
+        h1{
+            text-align: center;
+            color: white;
+            width: 90%;
+            margin-top: 30px;
+            margin-bottom: 30px;
+            margin-left: 90px;
         }
 
         .tabla_datos{
@@ -137,49 +129,6 @@
 
         .td_datos_input{
             width: 60%;
-        }
-
-        h1{
-            text-align: center;
-            color: white;
-            margin-top: 100px;
-            margin-bottom: 60px;
-            font-size: 40px;
-        }
-
-        .boton_area{
-            text-align: center;
-            text-decoration: none;
-            width: 100%;
-            color: white;
-            font-size: 25px;
-            padding: 50px 0;
-            border-bottom: 5px solid rgb(173, 32, 32); 
-            display: block;  
-            background-color: rgb(61, 9, 9); 
-        }
-
-        .logo_area{
-            width: 100%;
-            height: 19%;
-            display: block;  
-            background-color: rgb(61, 9, 9); 
-        }
-
-        .boton{
-            width: 25%;
-            height: 40px;
-            color: rgb(255, 255, 255);
-            background-color: rgb(61, 9, 9);
-            border: 3px solid rgb(173, 32, 32);
-            font-size: 25px;
-            margin-top: 50px;
-            margin-bottom: 75px;
-        }
-
-        .divPie{
-            width: 100%;
-            height: 10%;
         }
 
         .inputs{
@@ -203,10 +152,16 @@
             margin-top: 20px;
         }
 
-        .datosUser{
-            margin-left: 20px;
+        .boton{
+            width: 25%;
+            height: 40px;
+            color: rgb(255, 255, 255);
+            background-color: rgb(61, 9, 9);
+            border: 3px solid rgb(173, 32, 32);
+            font-size: 25px;
+            margin-top: 50px;
+            margin-bottom: 75px;
         }
-
 
     </style>
 </head>
@@ -217,35 +172,20 @@
         </div>
         <div class="divCuerpo">
             <div class="divCabezeraCuerpo">
-                <a href="Inicio_Con_Loggin.php" class="volver">Pagina Principal</a>
+                <div class="menu">
+
+                </div>
             </div>
             <div class="divRestoCuerpo">
-            <div class="caja_area_personal">
-                    <div class="areas">
-                                    <a href="Area_Personal_Datos_Usuario_Vista.php" class="boton_area">Datos Personales</a>
-                                    <a href="Area_Personal_Saldo_Usuario_Vista.php" class="boton_area">Saldo</a>
-                                    <a href="Area_Personal_Historial_Alquileres_Usuario_Vista.php" class="boton_area">Historial de compras</a>
-                                    <form method = "POST" action = "<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
-                                        <?php
-                                            ini_set('display_errors', 'On');
-                                            ini_set('html_errors', 0);
-  
-                                            echo'
-                                                <input type="submit" name="eliminar" class="boton_area" value="Eliminar Cuenta">
-                                            ';
-                                        ?>
-                                        <input type="submit" name="deslogearse" class="boton_area" value="Deslogearse">
-                                    </form>
-                                    <img class="logo_area" src="imagenes/Logo.png"> 
-                    </div>
+                <div class="caja_area_personal">
                     <div class="contenido">
-                        <h1>Datos de Usuario</h1>
+                        <h1>Actualizar Usuario</h1>
                         <form method = "POST" action = "<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
                         <?php
                             ini_set('display_errors', 'On');
                             ini_set('html_errors', 0);
                             $usuariosBL = new UsuarioReglasNegocio();
-                            $datosUsuario = $usuariosBL->obtenerUsuario($usuarioOriginal);   
+                            $datosUsuario = $usuariosBL->obtenerUsuario($idDecodificado);   
                             echo'
                                 <table class="tabla_datos">
                                     <tr class="tr_datos">
@@ -306,6 +246,38 @@
                                     </tr>
                                     <tr class="tr_datos">
                                         <td class="td_datos_texto">
+                                            <p class="datos_guardados">Salso: <span class="datosUser">'.$datosUsuario[0]->getSaldo().'</span></p>
+                                        </td>
+                                        <td class="td_datos_input">
+                                            <input type="number" class="inputs" id="saldo" name="saldo" placeholder="Saldo" min="1" max="100000">
+                                        </td>
+                                    </tr>
+                                    <tr class="tr_datos">
+                                        <td class="td_datos_texto">
+                                            <p class="datos_guardados">Tipo de usuario: <span class="datosUser">'.$datosUsuario[0]->getTipoDeUsuario().'</span></p>
+                                        </td>
+                                        <td class="td_datos_input">
+                                            <input type="text" class="inputs" id="tipoUser" name="tipoUser" placeholder="tipoUser" pattern="(Administrador|Normal)">
+                                        </td>
+                                    </tr>
+                                    <tr class="tr_datos">
+                                        <td class="td_datos_texto">;
+
+                                            ';
+                                                if($datosUsuario[0]->getActivo() == 1){
+                                                    echo'<p class="datos_guardados">Activo: <span class="datosUser">True</span></p>';
+                                                }else{
+                                                    echo'<p class="datos_guardados">Activo: <span class="datosUser">False</span></p>';
+                                                }
+                                        echo'
+                                        </td>
+                                        <td class="td_datos_input">
+                                        <p class="datos_guardados">True <input type="checkbox" class="inputs" id="activoUser" name="activoUser" value="true"></p>
+                                        <p class="datos_guardados">False <input type="checkbox" class="inputs" id="activoUser" name="activoUser" value="false"></p>
+                                        </td>
+                                    </tr>
+                                    <tr class="tr_datos">
+                                        <td class="td_datos_texto">
                                             <p class="datos_guardados">Telefono: <span class="datosUser">'.$datosUsuario[0]->getTelefono().'</span></p>
                                         </td>
                                         <td class="td_datos_input">
@@ -340,8 +312,10 @@
                 </div>
             </div>
         </div>
-        <div class="divPie"></div>
+        <div class="divPie">
+        </div>
         </div>
     </div>
+    <script src="Inicio_Con_Admin.js"></script>
 </body>
 </html>

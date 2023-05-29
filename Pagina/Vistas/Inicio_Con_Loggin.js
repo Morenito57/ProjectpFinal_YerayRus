@@ -19,7 +19,6 @@ function obtenerDatos() {
       optionVacio.innerHTML = "";
       select.appendChild(optionVacio);
 
-      // Crear y agregar las opciones al elemento select
       for(let vehiculo of vehiculos){
         let option = document.createElement("option");
         option.value = "pantallaCompra_Loggin.php?id="+vehiculo.Id;
@@ -34,7 +33,6 @@ function obtenerDatos() {
 }
 
 function redirigirPagina(){
-  console.log('va');
   if(document.getElementById("opcionesBuscador")){
     let select = document.getElementById("opcionesBuscador");
     let url = select.value;
@@ -51,6 +49,13 @@ function redirigirPagina(){
   }
   if(document.getElementById("opcionesTipoVehiculo")){
     let select = document.getElementById("opcionesTipoVehiculo");
+    let url = select.value;
+    if (url) {
+      window.location.href = url;
+    }
+  }
+  if(document.getElementById("pestañaUsuarios")){
+    let select = document.getElementById("pestañaUsuarios");
     let url = select.value;
     if (url) {
       window.location.href = url;

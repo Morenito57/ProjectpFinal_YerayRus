@@ -83,8 +83,30 @@
             }
             
             mysqli_select_db($conexion, 'LegendaryMotorsport');
-            $consulta1 = mysqli_prepare($conexion, "SELECT Usuario.NombreUsuario AS Usuario, Usuario.Clave AS Clave, Usuario.Saldo AS Saldo, Usuario.TipoDeUsuario AS TipoUsuario, DatosPersonales.Nombre AS Nombre, DatosPersonales.Apellidos AS Apellidos, DatosPersonales.FechaNacimiento AS FechaNacimiento, DatosPersonales.Direccion AS Direccion, DatosPersonales.DNI AS DNI, DatosContacto.Telefono AS Telefono, DatosContacto.Email AS Email, DatosContacto.Otro AS Otro, IdDatosContacto, IdDatosPersonales FROM Usuario INNER JOIN DatosPersonales ON Usuario.IdDatosPersonales = DatosPersonales.Id INNER JOIN DatosContacto ON Usuario.IdDatosContacto = DatosContacto.Id WHERE Usuario.NombreUsuario like (?);");
+            $consulta1 = mysqli_prepare($conexion, "SELECT Usuario.NombreUsuario AS Usuario, Usuario.Clave AS Clave, Usuario.Saldo AS Saldo, Usuario.TipoDeUsuario AS TipoUsuario, Activo, DatosPersonales.Nombre AS Nombre, DatosPersonales.Apellidos AS Apellidos, DatosPersonales.FechaNacimiento AS FechaNacimiento, DatosPersonales.Direccion AS Direccion, DatosPersonales.DNI AS DNI, DatosContacto.Telefono AS Telefono, DatosContacto.Email AS Email, DatosContacto.Otro AS Otro, IdDatosContacto, IdDatosPersonales FROM Usuario INNER JOIN DatosPersonales ON Usuario.IdDatosPersonales = DatosPersonales.Id INNER JOIN DatosContacto ON Usuario.IdDatosContacto = DatosContacto.Id WHERE Usuario.NombreUsuario like (?);");
             $consulta1->bind_param("s", $usuario);
+            $consulta1->execute();
+            $result = $consulta1->get_result();
+
+            $usuarios =  array();
+    
+            while ($myrow = $result->fetch_assoc()) 
+            {
+                array_push($usuarios,$myrow);
+    
+            }
+
+            return $usuarios;
+        }
+
+        function obtenerAllUsuario(){
+            $conexion = mysqli_connect('localhost','root','');
+            if (mysqli_connect_errno()) {
+                echo "Error al conectar a MySQL: ". mysqli_connect_error();
+            }
+            
+            mysqli_select_db($conexion, 'LegendaryMotorsport');
+            $consulta1 = mysqli_prepare($conexion, "SELECT Usuario.NombreUsuario AS Usuario, Usuario.Clave AS Clave, Usuario.Saldo AS Saldo, Usuario.TipoDeUsuario AS TipoUsuario, Activo, DatosPersonales.Nombre AS Nombre, DatosPersonales.Apellidos AS Apellidos, DatosPersonales.FechaNacimiento AS FechaNacimiento, DatosPersonales.Direccion AS Direccion, DatosPersonales.DNI AS DNI, DatosContacto.Telefono AS Telefono, DatosContacto.Email AS Email, DatosContacto.Otro AS Otro, IdDatosContacto, IdDatosPersonales FROM Usuario INNER JOIN DatosPersonales ON Usuario.IdDatosPersonales = DatosPersonales.Id INNER JOIN DatosContacto ON Usuario.IdDatosContacto = DatosContacto.Id;");
             $consulta1->execute();
             $result = $consulta1->get_result();
 
@@ -189,7 +211,7 @@
 
         }
 
-        function eliminarUsuario($usuarioOriginal) {
+        function suspenderUsuario($usuarioOriginal) {
 
             $conexion = mysqli_connect('localhost','root','');
 
@@ -204,6 +226,34 @@
             $res = $consulta->execute();
 
             return $res;
+        }
+
+        function eliminarUsuario($Usuario, $idDatosContacto, $idDatosPersonales) {
+
+            $conexion = mysqli_connect('localhost','root','');
+
+            if (mysqli_connect_errno()) {
+                echo "Error al conectar a MySQL: ". mysqli_connect_error();
+            }
+
+            mysqli_select_db($conexion, 'LegendaryMotorsport');
+
+            mysqli_query($conexion, "SET FOREIGN_KEY_CHECKS=0;");
+    
+            $consulta2 = mysqli_prepare($conexion, "DELETE FROM DatosContacto WHERE Id = ?");
+            $consulta2->bind_param('i', $idDatosContacto);
+            $consulta2->execute();
+    
+            $consulta3 = mysqli_prepare($conexion, "DELETE FROM DatosPersonales WHERE Id = ?");
+            $consulta3->bind_param('i', $idDatosPersonales);
+            $consulta3->execute();
+
+            $consulta1 = mysqli_prepare($conexion, "DELETE FROM Usuario WHERE NombreUsuario = ?");
+            $consulta1->bind_param('s', $nombreUsuario);
+            $consulta1->execute();
+
+            mysqli_query($conexion, "SET FOREIGN_KEY_CHECKS=1;");
+
         }
 
         function deslogearse() {
