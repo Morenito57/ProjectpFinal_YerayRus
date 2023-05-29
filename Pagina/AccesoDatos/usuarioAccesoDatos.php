@@ -14,7 +14,7 @@
             mysqli_select_db($conexion, 'LegendaryMotorsport');
 
             $consulta1 = mysqli_prepare($conexion, "INSERT INTO DatosPersonales(Nombre, Apellidos, FechaNacimiento, Direccion, DNI) VALUES (?,?,?,?,?);");
-            $consulta1->bind_param("sssss", $usuario, $apellidos, $fechaNacimiento, $direccion, $DNI);
+            $consulta1->bind_param("sssss", $nombre, $apellidos, $fechaNacimiento, $direccion, $DNI);
             $consulta1->execute();
 
             $DatosPersonales_id = $conexion->insert_id;
@@ -317,7 +317,6 @@
         
         if ($activo !== null && $activo !== '') {
             $activo = mysqli_real_escape_string($conexion, $activo);
-            $activo = intval($activo);
             $consulta6 = mysqli_prepare($conexion,"UPDATE Usuario SET Activo = ? WHERE NombreUsuario = ?;");
             $consulta6->bind_param("is",$activo,$usuarioOriginal);
             $consulta6->execute();
@@ -378,6 +377,34 @@
             $consulta14->bind_param("si",$otro,$IdDatosContacto);
             $consulta14->execute();
         }
+    }
+
+    function insertarAdmin($usuario, $saldo, $clave, $tipoDeUsuario, $activo, $nombre, $apellidos, $fechaNacimiento, $direccion, $DNI, $telefono, $email, $otro) {
+        $conexion = mysqli_connect('localhost','root','');
+        if (mysqli_connect_errno()) {
+            echo "Error al conectar a MySQL: ". mysqli_connect_error();
+        }
+        
+        mysqli_select_db($conexion, 'LegendaryMotorsport');
+
+        $consulta1 = mysqli_prepare($conexion, "INSERT INTO DatosPersonales(Nombre, Apellidos, FechaNacimiento, Direccion, DNI) VALUES (?,?,?,?,?);");
+        $consulta1->bind_param("sssss", $nombre, $apellidos, $fechaNacimiento, $direccion, $DNI);
+        $consulta1->execute();
+
+        $DatosPersonales_id = $conexion->insert_id;
+
+        $consulta2 = mysqli_prepare($conexion, "INSERT INTO DatosContacto(Telefono, Email, Otro) VALUES (?,?,?);");
+        $consulta2->bind_param("iss", $telefono, $email, $otro);
+        $consulta2->execute();
+
+        $DatosContacto_id = $conexion->insert_id;
+
+        $consulta3 = mysqli_prepare($conexion, "INSERT INTO Usuario(NombreUsuario, IdDatosContacto, IdDatosPersonales, Saldo, Clave, TipoDeUsuario, Activo) VALUES (?,?,?,?,?,?,?);");
+        $hash = password_hash($clave, PASSWORD_DEFAULT);
+        $consulta3->bind_param("siiissi", $usuario, $DatosPersonales_id, $DatosContacto_id, $saldo, $hash, $tipoDeUsuario, $activo);
+        $res = $consulta3->execute();
+        
+        header("Location: Administrador_Usuarios.php");
     }
     
 }

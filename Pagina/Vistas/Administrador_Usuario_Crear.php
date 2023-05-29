@@ -14,7 +14,7 @@
 
         $usuarioBL = new UsuarioReglasNegocio();
 
-        $perfil =  $usuarioBL->actualizarUsuarioComoAdmin( $_POST['IdUsuario'] ,$_POST['usuario'], $_POST['saldo'], $_POST['clave'], $_POST['tipoUser'], $_POST['activoUser'], $_POST['nombre'], $_POST['apellidos'], $_POST['fechaNacimiento'], $_POST['direccion'], $_POST['DNI'], $_POST['telefono'], $_POST['email'], $_POST['otro'], $_POST['IdDatosContacto'], $_POST['IdDatosPersonales']);
+        $perfil =  $usuarioBL->insertarAdmin($_POST['usuario'], $_POST['saldo'], $_POST['clave'], $_POST['tipoUser'], $_POST['activoUser'], $_POST['nombre'], $_POST['apellidos'], $_POST['fechaNacimiento'], $_POST['direccion'], $_POST['DNI'], $_POST['telefono'], $_POST['email'], $_POST['otro']);
 
     }
 
@@ -176,55 +176,55 @@
             <div class="divRestoCuerpo">
                 <div class="caja_area_personal">
                     <div class="contenido">
-                        <h1>Actualizar Usuario</h1>
+                        <h1>Crear Usuario</h1>
                         <form method = "POST" action = "<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
                                 <table class="tabla_datos">
                                     <tr class="tr_datos">
                                         <td class="td_datos_texto">
-                                            <p class="datos_guardados">Nombre: <span class="datosUser">'.$datosUsuario[0]->getNombre().'</span></p>
+                                            <p class="datos_guardados">Nombre: <span class="datosUser"></span></p>
                                         </td>
                                         <td class="td_datos_input">
-                                            <input type="text" class="inputs" id="nombre" name="nombre" placeholder="Nombre" pattern="[A-Za-z0-9áéíóúÁÉÍÓÚñÑ\s]+" >
+                                            <input type="text" class="inputs" id="nombre" name="nombre" placeholder="Nombre" pattern="[A-Za-z0-9áéíóúÁÉÍÓÚñÑ\s]+" required>
                                         </td>
                                     </tr>
                                     <tr class="tr_datos">
                                         <td class="td_datos_texto">
-                                            <p class="datos_guardados">Apellidos: <span class="datosUser">'.$datosUsuario[0]->getApellidos().'</span></p>
+                                            <p class="datos_guardados">Apellidos: <span class="datosUser"></span></p>
                                         </td>
                                         <td class="td_datos_input">
-                                            <input type="text" class="inputs" id="apellidos" name="apellidos" placeholder="Apellidos" pattern="[A-Za-z0-9áéíóúÁÉÍÓÚñÑ\s]+" >
+                                            <input type="text" class="inputs" id="apellidos" name="apellidos" placeholder="Apellidos" pattern="[A-Za-z0-9áéíóúÁÉÍÓÚñÑ\s]+" required>
                                         </td>
                                     </tr>
                                     <tr class="tr_datos">
                                         <td class="td_datos_texto">
-                                            <p class="datos_guardados">Fecha de Nacimiento: <span class="datosUser">'.$datosUsuario[0]->getFechaNacimiento().'</span></p> 
+                                            <p class="datos_guardados">Fecha de Nacimiento: <span class="datosUser"></span></p> 
                                         </td>
                                         <td class="td_datos_input">
-                                            <input type="date" class="inputs" id="fechaNacimiento" name="fechaNacimiento" placeholder="Fecha de Nacimiento" max="'.date('Y-m-d').'" >
+                                            <input type="date" class="inputs" id="fechaNacimiento" name="fechaNacimiento" placeholder="Fecha de Nacimiento" max="'.date('Y-m-d').'" required>
                                         </td>
                                     </tr>
                                     <tr class="tr_datos">
                                         <td class="td_datos_texto">
-                                            <p class="datos_guardados">Direccion: <span class="datosUser">'.$datosUsuario[0]->getDireccion().'</span></p>
+                                            <p class="datos_guardados">Direccion: <span class="datosUser"></span></p>
                                         </td>
                                         <td class="td_datos_input">
-                                            <input type="text" class="inputs" id="direccion" name="direccion" placeholder="Direccion" >
+                                            <input type="text" class="inputs" id="direccion" name="direccion" placeholder="Direccion" required>
                                         </td>
                                     </tr>
                                     <tr class="tr_datos">
                                         <td class="td_datos_texto">
-                                            <p class="datos_guardados">DNI: <span class="datosUser">'.$datosUsuario[0]->getDNI().'</span></p>
+                                            <p class="datos_guardados">DNI: <span class="datosUser"></span></p>
                                         </td>
                                         <td class="td_datos_input">
-                                            <input type="text" class="inputs" id="DNI" name="DNI" placeholder="DNI" size="10" maxlength="9" pattern="^(\d{8}|\d{8}[A-Z])$" >
+                                            <input type="text" class="inputs" id="DNI" name="DNI" placeholder="DNI" size="10" maxlength="9" pattern="^(\d{8}|\d{8}[A-Z])$" required>
                                         </td>
                                     </tr>
                                     <tr class="tr_datos">
                                         <td class="td_datos_texto">
-                                            <p class="datos_guardados">Nombre de Usuario: <span class="datosUser">'.$datosUsuario[0]->getNombreUsuario().'</span></p>
+                                            <p class="datos_guardados">Nombre de Usuario: <span class="datosUser"></span></p>
                                         </td>
                                         <td class="td_datos_input">
-                                            <input type="text" class="inputs" id="usuario" name="usuario" placeholder="Nombre de Usuario" pattern="[A-Za-z0-9\s]+" >
+                                            <input type="text" class="inputs" id="usuario" name="usuario" placeholder="Nombre de Usuario" pattern="[A-Za-z0-9\s]+" required>
                                         </td>
                                     </tr>
                                     <tr class="tr_datos">
@@ -232,7 +232,7 @@
                                             <p class="datos_guardados">Contraseña: <span class="datosUser"></span></p>
                                         </td>
                                         <td class="td_datos_input">
-                                            <input type="password" class="inputs" id="clave" name="clave" placeholder="Contraseña" pattern="^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d\s]+$" >
+                                            <input type="password" class="inputs" id="clave" name="clave" placeholder="Contraseña" pattern="^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d\s]+$" required>
                                         </td>
                                     </tr>
                                     <tr class="tr_datos">
@@ -240,7 +240,7 @@
                                             <p class="datos_guardados">Salso: <span class="datosUser"></span></p>
                                         </td>
                                         <td class="td_datos_input">
-                                            <input type="number" class="inputs" id="saldo" name="saldo" placeholder="Saldo" min="1" max="100000">
+                                            <input type="number" class="inputs" id="saldo" name="saldo" placeholder="Saldo" min="1" max="100000" required>
                                         </td>
                                     </tr>
                                     <tr class="tr_datos">
@@ -248,43 +248,43 @@
                                             <p class="datos_guardados">Tipo de usuario: <span class="datosUser"></span></p>
                                         </td>
                                         <td class="td_datos_input">
-                                            <input type="text" class="inputs" id="tipoUser" name="tipoUser" placeholder="tipoUser" pattern="(Administrador|Normal)">
+                                            <input type="text" class="inputs" id="tipoUser" name="tipoUser" placeholder="tipoUser" pattern="(Administrador|Normal)" required>
                                         </td>
                                     </tr>
                                     <tr class="tr_datos">
+                                        <td class="td_datos_texto">;
+                                            <p class="datos_guardados">Activo: <span class="datosUser"></span></p>
+                                        </td>
                                         <td class="td_datos_input">
-                                            <p class="datos_guardados">True <input type="radio" class="inputs" id="activoUser" name="activoUser" value="true"></p>
-                                            <p class="datos_guardados">False <input type="radio" class="inputs" id="activoUser" name="activoUser" value="false"></p>
+                                            <p class="datos_guardados">True <input type="radio" class="inputs" id="activoUser" name="activoUser" value="1" required></p>
+                                            <p class="datos_guardados">False <input type="radio" class="inputs" id="activoUserFalse" name="activoUser" value="0" required></p>
                                         </td>
 
                                     </tr>
                                     <tr class="tr_datos">
                                         <td class="td_datos_texto">
-                                            <p class="datos_guardados">Telefono: <span class="datosUser">'.$datosUsuario[0]->getTelefono().'</span></p>
+                                            <p class="datos_guardados">Telefono: <span class="datosUser"></span></p>
                                         </td>
                                         <td class="td_datos_input">
-                                            <input type="tel" class="inputs" id="telefono" name="telefono" placeholder="Telefono" size="12" pattern="[0-9]{9}" >
+                                            <input type="tel" class="inputs" id="telefono" name="telefono" placeholder="Telefono" size="12" pattern="[0-9]{9}" required>
                                         </td>
                                     </tr>
                                     <tr class="tr_datos">
                                         <td class="td_datos_texto">
-                                            <p class="datos_guardados">Email: <span class="datosUser">'.$datosUsuario[0]->getEmail().'</span></p>
+                                            <p class="datos_guardados">Email: <span class="datosUser"></span></p>
                                         </td>
                                         <td class="td_datos_input">
-                                            <input type="email" class="inputs" id="email" name="email" placeholder="Email" pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$" >
+                                            <input type="email" class="inputs" id="email" name="email" placeholder="Email" pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$" required>
                                         </td>
                                     </tr>
                                     <tr class="tr_datos">
                                         <td class="td_datos_texto">
-                                            <p class="datos_guardados">Otro datos de contacto: <span class="datosUser">'.$datosUsuario[0]->getOtro().'</span></p>
+                                            <p class="datos_guardados">Otro datos de contacto: <span class="datosUser"></span></p>
                                         </td>
                                         <td class="td_datos_input">
-                                            <input type="text" class="inputs" id="otro" name="otro" placeholder="Otro dato de contacto" pattern="[A-Za-z0-9\s]+" >
+                                            <input type="text" class="inputs" id="otro" name="otro" placeholder="Otro dato de contacto" pattern="[A-Za-z0-9\s]+" required>
                                         </td>
                                     </tr>
-                                    <input id="IdUsuario" name="IdUsuario" value="'.$datosUsuario[0]->getNombreUsuario().'" type="hidden">
-                                    <input id="IdDatosContacto" name="IdDatosContacto" value="'.$datosUsuario[0]->getIdDatosContacto().'" type="hidden">
-                                    <input id="IdDatosPersonales" name="IdDatosPersonales" value="'.$datosUsuario[0]->getIdDatosPersonales().'" type="hidden">
                             </table>
                             <input type="submit" name="actualizarUsuario" class="boton" value="Enviar">
                         </form>

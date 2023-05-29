@@ -276,8 +276,8 @@
                                         echo'
                                         </td>
                                         <td class="td_datos_input">
-                                            <p class="datos_guardados">True <input type="radio" class="inputs" id="activoUser" name="activoUser" value="true"></p>
-                                            <p class="datos_guardados">False <input type="radio" class="inputs" id="activoUser" name="activoUser" value="false"></p>
+                                            <p class="datos_guardados">True <input type="radio" class="inputs" id="activoUser" name="activoUser" value="1"></p>
+                                            <p class="datos_guardados">False <input type="radio" class="inputs" id="activoUserFalse" name="activoUser" value="0"></p>
                                         </td>
 
                                     </tr>

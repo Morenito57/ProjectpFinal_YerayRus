@@ -179,5 +179,10 @@
             return $res;            
         }
 
+        function insertarAdmin($usuario, $saldo, $clave, $tipoDeUsuario, $activo, $nombre, $apellidos, $fechaNacimiento, $direccion, $DNI, $telefono, $email, $otro) {
+            $usuariosDAL = new UsuarioAccesoDatos();
+            $res = $usuariosDAL->insertarAdmin($usuario, $saldo, $clave, $tipoDeUsuario, $activo, $nombre, $apellidos, $fechaNacimiento, $direccion, $DNI, $telefono, $email, $otro);           
+            return $res;            
+        }
 
 }
