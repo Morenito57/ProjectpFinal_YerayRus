@@ -10,13 +10,6 @@
         header("Location: loginVista.php");
     }
 
-    if (isset($_GET['id'])) {
-        $id = $_GET['id'];
-        $idDecodificado = urldecode($id);
-    } else {
-        header("Location: Administrador_Usuarios.php");
-    }
-
     if($_SERVER["REQUEST_METHOD"]=="POST") {
 
         $usuarioBL = new UsuarioReglasNegocio();
@@ -185,12 +178,6 @@
                     <div class="contenido">
                         <h1>Actualizar Usuario</h1>
                         <form method = "POST" action = "<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
-                        <?php
-                            ini_set('display_errors', 'On');
-                            ini_set('html_errors', 0);
-                            $usuariosBL = new UsuarioReglasNegocio();
-                            $datosUsuario = $usuariosBL->obtenerUsuario($idDecodificado);   
-                            echo'
                                 <table class="tabla_datos">
                                     <tr class="tr_datos">
                                         <td class="td_datos_texto">
@@ -250,7 +237,7 @@
                                     </tr>
                                     <tr class="tr_datos">
                                         <td class="td_datos_texto">
-                                            <p class="datos_guardados">Salso: <span class="datosUser">'.$datosUsuario[0]->getSaldo().'</span></p>
+                                            <p class="datos_guardados">Salso: <span class="datosUser"></span></p>
                                         </td>
                                         <td class="td_datos_input">
                                             <input type="number" class="inputs" id="saldo" name="saldo" placeholder="Saldo" min="1" max="100000">
@@ -258,23 +245,13 @@
                                     </tr>
                                     <tr class="tr_datos">
                                         <td class="td_datos_texto">
-                                            <p class="datos_guardados">Tipo de usuario: <span class="datosUser">'.$datosUsuario[0]->getTipoDeUsuario().'</span></p>
+                                            <p class="datos_guardados">Tipo de usuario: <span class="datosUser"></span></p>
                                         </td>
                                         <td class="td_datos_input">
                                             <input type="text" class="inputs" id="tipoUser" name="tipoUser" placeholder="tipoUser" pattern="(Administrador|Normal)">
                                         </td>
                                     </tr>
                                     <tr class="tr_datos">
-                                        <td class="td_datos_texto">;
-
-                                            ';
-                                                if($datosUsuario[0]->getActivo() == 1){
-                                                    echo'<p class="datos_guardados">Activo: <span class="datosUser">True</span></p>';
-                                                }else{
-                                                    echo'<p class="datos_guardados">Activo: <span class="datosUser">False</span></p>';
-                                                }
-                                        echo'
-                                        </td>
                                         <td class="td_datos_input">
                                             <p class="datos_guardados">True <input type="radio" class="inputs" id="activoUser" name="activoUser" value="true"></p>
                                             <p class="datos_guardados">False <input type="radio" class="inputs" id="activoUser" name="activoUser" value="false"></p>
@@ -308,9 +285,6 @@
                                     <input id="IdUsuario" name="IdUsuario" value="'.$datosUsuario[0]->getNombreUsuario().'" type="hidden">
                                     <input id="IdDatosContacto" name="IdDatosContacto" value="'.$datosUsuario[0]->getIdDatosContacto().'" type="hidden">
                                     <input id="IdDatosPersonales" name="IdDatosPersonales" value="'.$datosUsuario[0]->getIdDatosPersonales().'" type="hidden">
-
-                                ';
-                            ?>  
                             </table>
                             <input type="submit" name="actualizarUsuario" class="boton" value="Enviar">
                         </form>

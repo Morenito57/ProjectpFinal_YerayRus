@@ -280,7 +280,7 @@
                 <div class="caja_area_personal">
                     <div class="contenido">
                             <h1>Usuarios</h1>
-                            <a class="añadir" href="a">➕</a>
+                            <a class="añadir" href="Administrador_Usuario_Crear.php">➕</a>
                             <table>
                                 <tr>
                                     <th><p class="clase">Usuario </p></th>

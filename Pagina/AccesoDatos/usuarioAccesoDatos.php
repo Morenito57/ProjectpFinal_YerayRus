@@ -256,10 +256,128 @@
 
         }
 
-        function deslogearse() {
-            session_unset();
-            session_destroy();
-            header("Location: loginVista.php");
-            exit();
+    function deslogearse() {
+        session_unset();
+        session_destroy();
+        header("Location: loginVista.php");
+        exit();
     }
+
+    function actualizarUsuarioComoAdmin($usuarioOriginal, $usuario, $saldo, $clave, $tipoDeUsuario, $activo, $nombre, $apellidos, $fechaNacimiento, $direccion, $DNI, $telefono, $email, $otro, $IdDatosContacto, $IdDatosPersonales) {
+        $conexion = mysqli_connect('localhost','root','');
+        if (mysqli_connect_errno()) {
+            echo "Error al conectar a MySQL: ". mysqli_connect_error();
+        }
+        
+        mysqli_select_db($conexion, 'LegendaryMotorsport');
+
+        $IdDatosContacto = mysqli_real_escape_string($conexion, (int)$IdDatosContacto);
+        $IdDatosPersonales = mysqli_real_escape_string($conexion, (int)$IdDatosPersonales);
+
+        if ($usuario !== null && $usuario !== '') {
+
+            $usuario = mysqli_real_escape_string($conexion, $usuario);
+
+            mysqli_query($conexion, "SET FOREIGN_KEY_CHECKS=0;");
+
+            $consulta2 = mysqli_prepare($conexion,"UPDATE Usuario SET NombreUsuario = ? WHERE NombreUsuario = ?;");
+            $consulta2->bind_param("ss",$usuario,$usuarioOriginal);
+            $consulta2->execute();
+
+            $consulta1 = mysqli_prepare($conexion,"UPDATE Alquiler SET IdUser = ? WHERE IdUser = ?;");
+            $consulta1->bind_param("ss",$usuario,$usuarioOriginal);
+            $consulta1->execute();
+
+            mysqli_query($conexion, "SET FOREIGN_KEY_CHECKS=1;");
+
+        }
+
+        if ($clave !== null && $clave !== '') {
+            $clave = mysqli_real_escape_string($conexion, $clave);
+            $consulta3 = mysqli_prepare($conexion,"UPDATE Usuario SET Clave = ? WHERE NombreUsuario = ?;");
+            $hash = password_hash($clave, PASSWORD_DEFAULT);
+            $consulta3->bind_param("ss",$hash,$usuarioOriginal);
+            $consulta3->execute();
+        }
+
+        if ($tipoDeUsuario !== null && $tipoDeUsuario !== '') {
+            $tipoDeUsuario = mysqli_real_escape_string($conexion, $tipoDeUsuario);
+            $consulta4 = mysqli_prepare($conexion,"UPDATE Usuario SET TipoDeUsuario = ? WHERE NombreUsuario = ?;");
+            $consulta4->bind_param("ss",$tipoDeUsuario,$usuarioOriginal);
+            $consulta4->execute();
+        }
+
+        if ($saldo !== null && $saldo !== '') {
+            $saldo = mysqli_real_escape_string($conexion, $saldo);
+            $saldo = intval($saldo);
+            $consulta5 = mysqli_prepare($conexion,"UPDATE Usuario SET Saldo = Saldo + ? WHERE NombreUsuario = ?;");
+            $consulta5->bind_param("is", $saldo, $usuarioOriginal);
+            $consulta5->execute();
+        }
+        
+        if ($activo !== null && $activo !== '') {
+            $activo = mysqli_real_escape_string($conexion, $activo);
+            $activo = intval($activo);
+            $consulta6 = mysqli_prepare($conexion,"UPDATE Usuario SET Activo = ? WHERE NombreUsuario = ?;");
+            $consulta6->bind_param("is",$activo,$usuarioOriginal);
+            $consulta6->execute();
+        }
+          
+        if ($nombre !== null && $nombre !== '') {
+            $nombre = mysqli_real_escape_string($conexion, $nombre);
+            $consulta7 = mysqli_prepare($conexion,"UPDATE DatosPersonales SET Nombre = ? WHERE Id IN (SELECT IdDatosPersonales FROM Usuario WHERE IdDatosPersonales = ?);");
+            $consulta7->bind_param("ss",$nombre,$IdDatosPersonales);
+            $consulta7->execute();
+        }
+        
+        if ($apellidos !== null && $apellidos !== '') {
+            $apellidos = mysqli_real_escape_string($conexion, $apellidos);
+            $consulta8 = mysqli_prepare($conexion,"UPDATE DatosPersonales SET Apellidos = ? WHERE Id IN (SELECT IdDatosPersonales FROM Usuario WHERE IdDatosPersonales = ?);");
+            $consulta8->bind_param("ss",$apellidos,$IdDatosPersonales);
+            $consulta8->execute();
+        }
+        
+        if ($fechaNacimiento !== null && $fechaNacimiento !== '' && strtotime($fechaNacimiento) !== false) {
+            $fechaNacimiento = mysqli_real_escape_string($conexion, $fechaNacimiento);
+            $consulta9 = mysqli_prepare($conexion,"UPDATE DatosPersonales SET FechaNacimiento = ? WHERE Id IN (SELECT IdDatosPersonales FROM Usuario WHERE IdDatosPersonales = ?);");
+            $consulta9->bind_param("ss",$fechaNacimiento,$IdDatosPersonales);
+            $consulta9->execute();
+        }
+        
+        if ($direccion !== null && $direccion !== '') {
+            $direccion = mysqli_real_escape_string($conexion, $direccion);
+            $consulta10 = mysqli_prepare($conexion,"UPDATE DatosPersonales SET Direccion = ? WHERE Id IN (SELECT IdDatosPersonales FROM Usuario WHERE IdDatosPersonales = ?);");
+            $consulta10->bind_param("ss",$direccion,$IdDatosPersonales);
+            $consulta10->execute();
+        }
+        
+        if ($DNI !== null && $DNI !== '') {
+            $DNI = mysqli_real_escape_string($conexion, $DNI);
+            $consulta11 = mysqli_prepare($conexion,"UPDATE DatosPersonales SET DNI = ? WHERE Id IN (SELECT IdDatosPersonales FROM Usuario WHERE IdDatosPersonales = ?);");
+            $consulta11->bind_param("ss",$DNI,$IdDatosPersonales);
+            $consulta11->execute();
+        }
+        
+        if ($telefono !== null && $telefono !== '') {
+            $telefono = mysqli_real_escape_string($conexion, $telefono);
+            $consulta12 = mysqli_prepare($conexion,"UPDATE DatosContacto SET Telefono = ? WHERE Id IN (SELECT IdDatosContacto FROM Usuario WHERE IdDatosContacto = ?);");
+            $consulta12->bind_param("ii",$telefono,$IdDatosContacto);
+            $consulta12->execute();
+        }
+
+        if ($email !== null && $email !== '') {
+            $email = mysqli_real_escape_string($conexion, $email);
+            $consulta13 = mysqli_prepare($conexion,"UPDATE DatosContacto SET Email = ? WHERE Id IN (SELECT IdDatosContacto FROM Usuario WHERE IdDatosContacto = ?);");
+            $consulta13->bind_param("si",$email,$IdDatosContacto);
+            $consulta13->execute();
+        }
+
+        if ($otro !== null && $otro !== '') {
+            $otro = mysqli_real_escape_string($conexion, $otro);
+            $consulta14 = mysqli_prepare($conexion,"UPDATE DatosContacto SET Otro = ? WHERE Id IN (SELECT IdDatosContacto FROM Usuario WHERE IdDatosContacto = ?);");
+            $consulta14->bind_param("si",$otro,$IdDatosContacto);
+            $consulta14->execute();
+        }
+    }
+    
 }

@@ -173,5 +173,11 @@
             return $res;
         }
 
+        function actualizarUsuarioComoAdmin($usuarioOriginal, $usuario, $saldo, $clave, $tipoDeUsuario, $activo, $nombre, $apellidos, $fechaNacimiento, $direccion, $DNI, $telefono, $email, $otro, $IdDatosContacto, $IdDatosPersonales) {
+            $usuariosDAL = new UsuarioAccesoDatos();
+            $res = $usuariosDAL->actualizarUsuarioComoAdmin($usuarioOriginal, $usuario, $saldo, $clave, $tipoDeUsuario, $activo, $nombre, $apellidos, $fechaNacimiento, $direccion, $DNI, $telefono, $email, $otro, $IdDatosContacto, $IdDatosPersonales);           
+            return $res;            
+        }
+
 
 }
