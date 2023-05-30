@@ -216,6 +216,11 @@
             padding-left: 5px;
         }
 
+        .imagenVehiculo{
+            height: 100px;
+            width: 100%;
+        }
+
     </style>
 </head>
 <body>
@@ -230,21 +235,18 @@
                     <label for="busqueda" class="lupa">🔎</label>
                     <select class="opcionesBuscador" id="opcionesTablaBuscador">
                         <option value=""></option>
-                        <option value="NombreUsuario">Usuario</option>
-                        <option value="Clave">Clave</option>
-                        <option value="Saldo">Saldo</option>
-                        <option value="TipoDeUsuario">Tipo</option>
-                        <option value="Activo">Activo</option>
-                        <option value="IdDatosContacto">Id Contacto</option>
-                        <option value="Telefono">Telefono</option>
-                        <option value="Email">Email</option>
-                        <option value="Otro">Otro</option>
-                        <option value="IdDatosPersonales">Id Datos Per</option>
+                        <option value="Id">Id</option>
+                        <option value="IdTipoVehiculo">IdTipoVehiculo</option>
+                        <option value="Imagen">Imagen</option>
                         <option value="Nombre">Nombre</option>
-                        <option value="Apellidos">Apellidos</option>
-                        <option value="FechaNacimiento">Nacimiento</option>
-                        <option value="Direccion">Direccio</option>
-                        <option value="DNI">DNI</option>
+                        <option value="Matricula">Matricula</option>
+                        <option value="Caballos">Caballos</option>
+                        <option value="Kilometros">Kilometros</option>
+                        <option value="Plazas">Plazas</option>
+                        <option value="Precio">Precio</option>
+                        <option value="Estado">Estado</option>
+                        <option value="Descripcion">Descripcion</option>
+                        <option value="TipoVehiculo.TipoVehiculo">TipoVehiculo</option>
                     </select>
                     <input type="text" id="busqueda" onkeyup="obtenerDatos()" placeholder="Busca">
                     <select class="opcionesBuscador" id="opcionesBuscador" onchange="redirigirPagina()">
@@ -279,68 +281,74 @@
             <div class="divRestoCuerpo">
                 <div class="caja_area_personal">
                     <div class="contenido">
-                            <h1>Usuarios</h1>
+                            <h1>Vehiculos</h1>
                             <a class="añadir" href="Administrador_Usuario_Crear.php">➕</a>
                             <table>
                                 <tr>
-                                    <th><p class="clase">Usuario </p></th>
-                                    <th><p class="clase">Clave</p></th>
-                                    <th><p class="clase">Saldo</p></th>
-                                    <th><p class="clase">Tipo</p></th>
-                                    <th><p class="clase">Activo</p></th>
-                                    <th><p class="clase">Id Contacto</p></th> 
-                                    <th><p class="clase">Telefono</p></th> 
-                                    <th><p class="clase">Email</p></th>
-                                    <th><p class="clase">Otro</p></th>
-                                    <th><p class="clase">Id Datos Per</p></th>
-                                    <th><p class="clase">Nombre</p></th>
-                                    <th><p class="clase">Apellidos</p></th>
-                                    <th><p class="clase">Nacimiento</p></th>
-                                    <th><p class="clase">Direccio</p></th>
-                                    <th><p class="clase">DNI</p></th>
+                                    <th><p class="clase">Id</p></th>
+                                    <th><p class="clase">Imagen Vehiculo</p></th>
+                                    <th><p class="clase">Nombre</p></th> 
+                                    <th><p class="clase">Marca</p></th>
+                                    <th><p class="clase">Matricula</p></th>
+                                    <th><p class="clase">Año</p></th> 
+                                    <th><p class="clase">Caballos</p></th>
+                                    <th><p class="clase">Kilometros</p></th>
+                                    <th><p class="clase">Plazas</p></th>
+                                    <th><p class="clase">Estado</p></th>
+                                    <th><p class="clase">Precio</p></th>
+                                    <th><p class="clase">Descripcion</p></th>
+                                    <th><p class="clase">Id Tipo Vehiculo</p></th>
+                                    <th><p class="clase">Tipo Vehiculo</p></th>
                                     <th><p class="clase">Acciones</p></th>
                                 </tr>
 
                                 <?php
-                                    require ("../Negocio/usuarioReglasNegocio.php");
+                                    require ("../Negocio/vehiculoReglasNegocio.php");
 
                                     ini_set('display_errors', 'On');
                                     ini_set('html_errors', 0);
-        
-                                    $alquilerBL = new UsuarioReglasNegocio();
+
+                                    $vehiculoBL = new VehiculosReglasNegocio();
                                              
-                                    $datosUsuario = $alquilerBL->obtenerAllUsuario();
+                                    $datosVehiculo = $vehiculoBL->obtener();
 
-                                    for ($i = 0; $i < count($datosUsuario); $i++) {
+                                    for ($i = 0; $i < count($datosVehiculo); $i++) {
 
-                                        $Usuario = $datosUsuario[$i];
+                                        $Vehiculo = $datosVehiculo[$i];
 
                                         echo'
                                             <tr>
-                                                <td ><p class="dato">'.$Usuario->getNombreUsuario().'</p></td>
-                                                <td ><p class="dato">'.$Usuario->getClave().'</p></td>
-                                                <td ><p class="dato">'.$Usuario->getSaldo().'</p></td>
-                                                <td ><p class="dato">'.$Usuario->getTipoDeUsuario().'</p></td>
-                                                <td ><p class="dato">'.$Usuario->getActivo().'</p></td>
-                                                <td ><p class="dato">'.$Usuario->getIdDatosContacto().'</p></td>
-                                                <td ><p class="dato">'.$Usuario->getTelefono().'</p></td>
-                                                <td ><p class="dato">'.$Usuario->getEmail().'</p></td>
-                                                <td ><p class="dato">'.$Usuario->getOtro().'</p></td>
-                                                <td ><p class="dato">'.$Usuario->getIdDatosPersonales().'</p></td>
-                                                <td ><p class="dato">'.$Usuario->getNombre().'</p></td>
-                                                <td ><p class="dato">'.$Usuario->getApellidos().'</p></td>
-                                                <td ><p class="dato">'.$Usuario->getFechaNacimiento().'</p></td>
-                                                <td ><p class="dato">'.$Usuario->getDireccion().'</p></td>
-                                                <td ><p class="dato">'.$Usuario->getDNI().'</p></td>
+                                                <td ><p class="dato">'.$Vehiculo->getId().'</p></td>
+                                                <td ><img class="imagenVehiculo" src="imagenes/FotosVehiculos/'.$Vehiculo->getImagen().'.webp"></td>
+                                                <td ><p class="dato">'.$Vehiculo->getNombre().'</p></td>
+                                                <td ><p class="dato">'.$Vehiculo->getMarca().'</p></td>
+                                                <td ><p class="dato">'.$Vehiculo->getMatricula().'</p></td>
+                                                <td ><p class="dato">'.$Vehiculo->getAño().'</p></td>
+                                                <td ><p class="dato">'.$Vehiculo->getCaballos().'</p></td>
+                                                <td ><p class="dato">'.$Vehiculo->getKilometros().'</p></td>
+                                                <td ><p class="dato">'.$Vehiculo->getPlazas().'</p></td>
+                                                <td ><p class="dato">'.$Vehiculo->getEstado().'</p></td>
+                                                <td ><p class="dato">'.$Vehiculo->getPrecio().'</p></td>
+                                                <td ><p class="dato">';
+                                                $descripcion = $Vehiculo->getDescripcion();
+                                                if (strlen($descripcion) > 90) {
+                                                  echo substr($descripcion, 0, 90) . "...";
+                                                } else {
+                                                  echo $descripcion;
+                                                }
+                                        echo'
+                                                </p>
+                                                <td ><p class="dato">'.$Vehiculo->getIdTipoVehiculo().'</p></td>
+                                                <td ><p class="dato">'.$Vehiculo->getTipoVehiculo().'</p></td>
                                                 <td>
-                                                    <p class="accion">
+                                                <p class="accion">
 
-                                                        <form method = "POST">
-                                                            <input id="idUsuario" name="idUsuario" value="'.$Usuario->getNombreUsuario().'" type="hidden">
-                                                            <input type="submit" name="Gestionar" class="Gestionar" value="Gestionar">
-                                                        </form>
-                                                    </p>
-                                                </td>
+                                                    <form method = "POST">
+                                                        <input id="idUsuario" name="idUsuario" value="'.$Vehiculo->getId().'" type="hidden">
+                                                        <input type="submit" name="Gestionar" class="Gestionar" value="Gestionar">
+                                                    </form>
+                                                </p>
+                                            </td>
                                             </tr>
                                         ';
                                     }
@@ -354,6 +362,6 @@
         </div>
         </div>
     </div>
-    <script src="Inicio_Con_Admin.js"></script>
+    <script src="Inicio_Con_Admin_Vehiculo.js"></script>
 </body>
 </html>

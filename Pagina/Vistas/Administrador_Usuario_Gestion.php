@@ -273,7 +273,7 @@
                     </select>
                     <select class="pestaña" id="pestañaVehiculos" name="pestañaVehiculos" onchange="redirigirPagina()">
                         <option value="">Vehiculos</option>
-                        <option value="">Vehiculos All</option>
+                        <option value="Administrador_Vehiculos.php">Vehiculos All</option>
                         <option value="">Tipo Vehiculo</option>
                     </select>
 

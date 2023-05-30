@@ -16,12 +16,12 @@ require("../AccesoDatos/vehiculoAccesoDatos.php");
         private $_Precio;
         private $_Estado;
         private $_Descripcion;
-
+        private $_TipoVehiculo;
         
         function __construct(){
         }
 
-        function init($id, $idtipovehiculo, $imagen, $marca, $nombre, $matricula, $caballos, $kilometros, $plazas, $año, $precio, $estado, $descripcion){
+        function init($id, $idtipovehiculo, $imagen, $marca, $nombre, $matricula, $caballos, $kilometros, $plazas, $año, $precio, $estado, $descripcion, $tipovehiculo){
             $this->_Id = $id;
             $this->_IdTipoVehiculo = $idtipovehiculo;
             $this->_Imagen = $imagen;
@@ -35,6 +35,7 @@ require("../AccesoDatos/vehiculoAccesoDatos.php");
             $this->_Precio = $precio;
             $this->_Estado = $estado;
             $this->_Descripcion = $descripcion;
+            $this->_TipoVehiculo = $tipovehiculo;
         }
 
         function getId(){
@@ -89,6 +90,10 @@ require("../AccesoDatos/vehiculoAccesoDatos.php");
             return $this->_Descripcion;
         }
 
+        function getTipoVehiculo(){
+            return $this->_TipoVehiculo;
+        }
+
         function obtener() {
             $vehiculosDAL = new VehiculosAccesoDatos();
             $results = $vehiculosDAL->obtener();
@@ -96,7 +101,7 @@ require("../AccesoDatos/vehiculoAccesoDatos.php");
 
             foreach ($results as $vehiculos) {
                 $oVehiculosReglasNegocio = new VehiculosReglasNegocio();
-                $oVehiculosReglasNegocio->init($vehiculos['Id'], $vehiculos['IdTipoVehiculo'], $vehiculos['Imagen'], $vehiculos['Marca'], $vehiculos['Nombre'], $vehiculos['Matricula'], $vehiculos['Caballos'], $vehiculos['Kilometros'], $vehiculos['Plazas'], $vehiculos['Año'], $vehiculos['Precio'], $vehiculos['Estado'], $vehiculos['Descripcion']);
+                $oVehiculosReglasNegocio->init($vehiculos['Id'], $vehiculos['IdTipoVehiculo'], $vehiculos['Imagen'], $vehiculos['Marca'], $vehiculos['Nombre'], $vehiculos['Matricula'], $vehiculos['Caballos'], $vehiculos['Kilometros'], $vehiculos['Plazas'], $vehiculos['Año'], $vehiculos['Precio'], $vehiculos['Estado'], $vehiculos['Descripcion'], $vehiculos['TipoVehiculo']);
                 array_push($listaVehiculos,$oVehiculosReglasNegocio);            
             }            
             return $listaVehiculos;

@@ -34,7 +34,7 @@ function redirigirPagina(){
     let campo = document.getElementById("opcionesTablaBuscador").value;
 
     let xhr = new XMLHttpRequest();
-    let url = "buscadorAdminDatosUsuario.php?letra=" + letra + "&campo=" + campo;
+    let url = "buscadorAdminVehiculosAccesoDatos.php?letra=" + letra + "&campo=" + campo;
   
     xhr.onreadystatechange = function() {
       if (xhr.readyState === 4 && xhr.status === 200) {
@@ -51,7 +51,7 @@ function redirigirPagina(){
   
         for(let dato of datos){
           let option = document.createElement("option");
-          option.value = "Administrador_Usuario_Gestion.php?id="+decodeURIComponent(dato.NombreUsuario);
+          option.value = "Administrador_Vehiculo_Gestion.php?id="+decodeURIComponent(dato.NombreUsuario);
           option.textContent = dato.campo;
           select.appendChild(option);
         }
