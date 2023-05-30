@@ -114,10 +114,16 @@ require("../AccesoDatos/vehiculoAccesoDatos.php");
 
             foreach ($results as $vehiculo) {
                 $oVehiculosReglasNegocio = new VehiculosReglasNegocio();
-                $oVehiculosReglasNegocio->init($vehiculo['Id'], $vehiculo['IdTipoVehiculo'], $vehiculo['Imagen'], $vehiculo['Marca'], $vehiculo['Nombre'], $vehiculo['Matricula'], $vehiculo['Caballos'], $vehiculo['Kilometros'], $vehiculo['Plazas'], $vehiculo['Año'], $vehiculo['Precio'], $vehiculo['Estado'], $vehiculo['Descripcion']);
+                $oVehiculosReglasNegocio->init($vehiculo['Id'], $vehiculo['IdTipoVehiculo'], $vehiculo['Imagen'], $vehiculo['Marca'], $vehiculo['Nombre'], $vehiculo['Matricula'], $vehiculo['Caballos'], $vehiculo['Kilometros'], $vehiculo['Plazas'], $vehiculo['Año'], $vehiculo['Precio'], $vehiculo['Estado'], $vehiculo['Descripcion'], $vehiculo['TipoVehiculo']);
                 array_push($listaVehiculos,$oVehiculosReglasNegocio);            
             }            
             return $listaVehiculos;
+        }
+
+        function eliminarVehiculo($Vehiculo){
+            $vehiculosDAL = new VehiculosAccesoDatos();
+            $results = $vehiculosDAL->eliminarVehiculo($Vehiculo);
+            return $results;
         }
 
     }

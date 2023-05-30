@@ -253,6 +253,7 @@
             $consulta1->execute();
 
             mysqli_query($conexion, "SET FOREIGN_KEY_CHECKS=1;");
+            exit();
 
         }
 

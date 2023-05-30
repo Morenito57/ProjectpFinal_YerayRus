@@ -20,7 +20,7 @@ function redirigirPagina(){
     }
   }
 
-  function eliminarUser(){
+  function eliminarVehiculo(){
     var confirmation = confirm('¿Estás seguro que quieres eliminar estos datos?');
     if (confirmation) {
             document.getElementById('permiso').value = '1';

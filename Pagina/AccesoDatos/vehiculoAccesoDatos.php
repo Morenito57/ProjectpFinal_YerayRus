@@ -105,6 +105,27 @@
             }
             return $vehiculos;
         }
+
+        function eliminarVehiculo($Vehiculo){
+
+            $conexion = mysqli_connect('localhost','root','');
+    
+            if (mysqli_connect_errno()) {
+                echo "Error al conectar a MySQL: ". mysqli_connect_error();
+            }
+    
+            mysqli_select_db($conexion, 'LegendaryMotorsport');
+    
+            mysqli_query($conexion, "SET FOREIGN_KEY_CHECKS=0;");
+    
+            $consulta1 = mysqli_prepare($conexion, "DELETE FROM Vehiculo WHERE Id = ?");
+            $consulta1->bind_param('i', $Vehiculo);
+            $consulta1->execute();
+    
+            mysqli_query($conexion, "SET FOREIGN_KEY_CHECKS=1;");
+            exit();
+
+        }
     }
     
 ?>

@@ -15,7 +15,7 @@
 
             $id = $_POST['idUsuario'];
 
-            header("Location: Administrador_Usuario_Gestion.php?id=".urlencode($id));
+            header("Location: Administrador_Vehiculo_Gestion.php?id=".urlencode($id));
         }
     }
 
