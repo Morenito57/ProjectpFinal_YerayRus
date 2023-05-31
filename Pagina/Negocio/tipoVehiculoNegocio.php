@@ -1,7 +1,7 @@
 <?php
     ini_set('display_errors', 'On');
     ini_set('html_errors', 0);
-require("../AccesoDatos/tipoVehiculoAccesoDatos.php");
+    require("../AccesoDatos/tipoVehiculoAccesoDatos.php");
     class TipoVehiculoReglasNegocio{
         private $_Id;
         private $_TipoVehiculo;
@@ -28,12 +28,13 @@ require("../AccesoDatos/tipoVehiculoAccesoDatos.php");
             $tiposVehiculosDAL = new TipoVehiculoAccesoDatos();
             $results = $tiposVehiculosDAL->obtener();
             $listaTipoVehiculos = array();
-
+            
             foreach ($results as $tipoVehiculos) {
                 $oTipoVehiculosReglasNegocio = new TipoVehiculoReglasNegocio();
                 $oTipoVehiculosReglasNegocio->init($tipoVehiculos['Id'], $tipoVehiculos['TipoVehiculo']);
-                array_push($listaTipoVehiculos,$oTipoVehiculosReglasNegocio);            
-            }            
+                array_push($listaTipoVehiculos, $oTipoVehiculosReglasNegocio);
+            }
+            
             return $listaTipoVehiculos;
         }
 
@@ -51,8 +52,14 @@ require("../AccesoDatos/tipoVehiculoAccesoDatos.php");
         }
 
         function eliminarTipoVehiculo($idDecodificado) {
-            $vehiculosDAL = new TipoVehiculoReglasNegocio();
+            $vehiculosDAL = new TipoVehiculoAccesoDatos();
             $results = $vehiculosDAL->eliminarTipoVehiculo($idDecodificado);
+            return $results;
+        }
+
+        function actualizarTipoVehiculoComoAdmin($id, $tipoVehiculo) {
+            $vehiculosDAL = new TipoVehiculoAccesoDatos();
+            $results = $vehiculosDAL->actualizarTipoVehiculoComoAdmin($id, $tipoVehiculo);
             return $results;
         }
 
