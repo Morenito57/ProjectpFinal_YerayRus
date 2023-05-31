@@ -126,6 +126,97 @@
             exit();
 
         }
+
+        function actualizarVehiculoAdmin($idVehiculo, $nombre, $imagen, $marca, $matricula, $año, $caballos, $kilometros, $plazas, $estado, $precio, $descripcion, $idTipoVehiculo) {
+        
+            $conexion = mysqli_connect('localhost','root','');
+            if (mysqli_connect_errno()) {
+                echo "Error al conectar a MySQL: ". mysqli_connect_error();
+            }
+            
+            mysqli_select_db($conexion, 'LegendaryMotorsport');
+
+            if ($nombre !== null && $nombre !== '') {
+                $nombre = mysqli_real_escape_string($conexion, $nombre);
+                $consulta1 = mysqli_prepare($conexion,"UPDATE Vehiculo SET Nombre = ? WHERE Id = ?;");
+                $consulta1->bind_param("si",$nombre,$idVehiculo);
+                $consulta1->execute();
+            }
+
+            if ($imagen !== null && $imagen !== '') {
+                $imagen = mysqli_real_escape_string($conexion, $imagen);
+                $consulta2 = mysqli_prepare($conexion,"UPDATE Vehiculo SET Imagen = ? WHERE Id = ?;");
+                $consulta2->bind_param("si",$imagen,$idVehiculo);
+                $consulta2->execute();
+            }
+
+            if ($marca !== null && $marca !== '') {
+                $marca = mysqli_real_escape_string($conexion, $marca);
+                $consulta3 = mysqli_prepare($conexion,"UPDATE Vehiculo SET Marca = ? WHERE Id = ?;");
+                $consulta3->bind_param("si",$marca,$idVehiculo);
+                $consulta3->execute();
+            }
+
+            if ($matricula !== null && $matricula !== '') {
+                $matricula = mysqli_real_escape_string($conexion, $matricula);
+                $consulta4 = mysqli_prepare($conexion,"UPDATE Vehiculo SET Matricula = ? WHERE Id = ?;");
+                $consulta4->bind_param("si",$matricula,$idVehiculo);
+                $consulta4->execute();
+            }
+            if ($año !== null && $año !== '') {
+                $año = mysqli_real_escape_string($conexion, $año);
+                $consulta5 = mysqli_prepare($conexion,"UPDATE Vehiculo SET Año = ? WHERE Id = ?;");
+                $consulta5->bind_param("ii",$año,$idVehiculo);
+                $consulta5->execute();
+            }
+
+            if ($caballos !== null && $caballos !== '') {
+                $caballos = mysqli_real_escape_string($conexion, $caballos);
+                $consulta6 = mysqli_prepare($conexion,"UPDATE Vehiculo SET Caballos = ? WHERE Id = ?;");
+                $consulta6->bind_param("ii",$caballos,$idVehiculo);
+                $consulta6->execute();
+            }
+            if ($kilometros !== null && $kilometros !== '') {
+                $kilometros = mysqli_real_escape_string($conexion, $kilometros);
+                $consulta7 = mysqli_prepare($conexion,"UPDATE Vehiculo SET Kilometros = ? WHERE Id = ?;");
+                $consulta7->bind_param("ii",$kilometros,$idVehiculo);
+                $consulta7->execute();
+            }
+            if ($plazas !== null && $plazas !== '') {
+                $plazas = mysqli_real_escape_string($conexion, $plazas);
+                $consulta8 = mysqli_prepare($conexion,"UPDATE Vehiculo SET Plazas = ? WHERE Id = ?;");
+                $consulta8->bind_param("ii",$plazas,$idVehiculo);
+                $consulta8->execute();
+            }
+            if ($estado !== null && $estado !== '') {
+                $estado = mysqli_real_escape_string($conexion, $estado);
+                $consulta9 = mysqli_prepare($conexion,"UPDATE Vehiculo SET Estado = ? WHERE Id = ?;");
+                $consulta9->bind_param("ii",$estado,$idVehiculo);
+                $consulta9->execute();
+            }
+            if ($precio !== null && $precio !== '') {
+                $precio = mysqli_real_escape_string($conexion, $precio);
+                $consulta10 = mysqli_prepare($conexion,"UPDATE Vehiculo SET Precio = ? WHERE Id = ?;");
+                $consulta10->bind_param("ii",$precio,$idVehiculo);
+                $consulta10->execute();
+            }
+            
+            if ($descripcion !== null && $descripcion !== '') {
+                $descripcion = mysqli_real_escape_string($conexion, $descripcion);
+                $consulta11 = mysqli_prepare($conexion,"UPDATE Vehiculo SET Descripcion = ? WHERE Id = ?;");
+                $consulta11->bind_param("si",$descripcion,$idVehiculo);
+                $consulta11->execute();
+            }
+            
+            if ($idTipoVehiculo !== null && $idTipoVehiculo !== '') {
+                $idTipoVehiculo = mysqli_real_escape_string($conexion, $idTipoVehiculo);
+                $consulta12 = mysqli_prepare($conexion,"UPDATE Vehiculo SET IdTipoVehiculo = ? WHERE Id = ?;");
+                $consulta12->bind_param("ii",$idTipoVehiculo,$idVehiculo);
+                $consulta12->execute();
+            }
+
+
+        }
     }
     
 ?>

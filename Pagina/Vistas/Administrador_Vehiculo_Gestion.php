@@ -39,6 +39,8 @@
 
             $Usuario = $_POST['idVehiculo'];
             
+            header("Location: Administrador_Vehiculo_Actualizacion.php?id=".urlencode($Usuario));
+            
             exit();
         }
     }
@@ -243,21 +245,18 @@
                     <label for="busqueda" class="lupa">🔎</label>
                     <select class="opcionesBuscador" id="opcionesTablaBuscador">
                         <option value=""></option>
-                        <option value="NombreUsuario">Usuario</option>
-                        <option value="Clave">Clave</option>
-                        <option value="Saldo">Saldo</option>
-                        <option value="TipoDeUsuario">Tipo</option>
-                        <option value="Activo">Activo</option>
-                        <option value="IdDatosContacto">Id Contacto</option>
-                        <option value="Telefono">Telefono</option>
-                        <option value="Email">Email</option>
-                        <option value="Otro">Otro</option>
-                        <option value="IdDatosPersonales">Id Datos Per</option>
+                        <option value="Id">Id</option>
+                        <option value="IdTipoVehiculo">IdTipoVehiculo</option>
+                        <option value="Imagen">Imagen</option>
                         <option value="Nombre">Nombre</option>
-                        <option value="Apellidos">Apellidos</option>
-                        <option value="FechaNacimiento">Nacimiento</option>
-                        <option value="Direccion">Direccio</option>
-                        <option value="DNI">DNI</option>
+                        <option value="Matricula">Matricula</option>
+                        <option value="Caballos">Caballos</option>
+                        <option value="Kilometros">Kilometros</option>
+                        <option value="Plazas">Plazas</option>
+                        <option value="Precio">Precio</option>
+                        <option value="Estado">Estado</option>
+                        <option value="Descripcion">Descripcion</option>
+                        <option value="TipoVehiculo.TipoVehiculo">TipoVehiculo</option>
                     </select>
                     <input type="text" id="busqueda" onkeyup="obtenerDatos()" placeholder="Busca">
                     <select class="opcionesBuscador" id="opcionesBuscador" onchange="redirigirPagina()">

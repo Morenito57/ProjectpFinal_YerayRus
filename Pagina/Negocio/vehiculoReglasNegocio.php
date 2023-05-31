@@ -126,6 +126,12 @@ require("../AccesoDatos/vehiculoAccesoDatos.php");
             return $results;
         }
 
+        function actualizarVehiculoAdmin($idVehiculo, $nombre, $imagen, $marca, $matricula, $año, $caballos, $kilometros, $plazas, $estado, $precio, $descripcion, $idTipoVehiculo) {
+            $vehiculosDAL = new VehiculosAccesoDatos();
+            $results = $vehiculosDAL->actualizarVehiculoAdmin($idVehiculo, $nombre, $imagen, $marca, $matricula, $año, $caballos, $kilometros, $plazas, $estado, $precio, $descripcion, $idTipoVehiculo);
+            return $results;
+        }
+
     }
 
 ?>
