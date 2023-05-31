@@ -50,6 +50,12 @@ require("../AccesoDatos/tipoVehiculoAccesoDatos.php");
             return $listaTipoVehiculos;
         }
 
+        function eliminarTipoVehiculo($idDecodificado) {
+            $vehiculosDAL = new TipoVehiculoReglasNegocio();
+            $results = $vehiculosDAL->eliminarTipoVehiculo($idDecodificado);
+            return $results;
+        }
+
     }
 
 ?>

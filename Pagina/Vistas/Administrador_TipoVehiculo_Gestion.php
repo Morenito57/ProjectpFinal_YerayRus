@@ -26,11 +26,9 @@
             if ($permiso == "1") {
                 $Vehiculo = $_POST['idVehiculo'];
 
-                $vehiculoBL = new VehiculosReglasNegocio();
+                $vehiculoBL = new TipoVehiculoReglasNegocio();
 
-                $coche =  $vehiculoBL->eliminarVehiculo($Vehiculo);
-
-                header("Location: Administrador_TipoVehiculo.php");
+                $coche =  $vehiculoBL->eliminarTipoVehiculo($Vehiculo);
             }else{
                 echo '<script>alert("Error.");</script>';
             }
