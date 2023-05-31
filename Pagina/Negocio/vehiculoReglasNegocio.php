@@ -132,6 +132,12 @@ require("../AccesoDatos/vehiculoAccesoDatos.php");
             return $results;
         }
 
+        function insertarVehiculoAdmin($nombre, $imagen, $marca, $matricula, $año, $caballos, $kilometros, $plazas, $estado, $precio, $descripcion, $idTipoVehiculo) {
+            $vehiculosDAL = new VehiculosAccesoDatos();
+            $results = $vehiculosDAL->insertarVehiculoAdmin($nombre, $imagen, $marca, $matricula, $año, $caballos, $kilometros, $plazas, $estado, $precio, $descripcion, $idTipoVehiculo);
+            return $results;
+        }
+
     }
 
 ?>

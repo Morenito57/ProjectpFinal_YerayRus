@@ -10,18 +10,11 @@
         header("Location: loginVista.php");
     }
 
-    if (isset($_GET['id'])) {
-        $id = $_GET['id'];
-        $idDecodificado = urldecode($id);
-    } else {
-        header("Location: Administrador_Vehiculos.php");
-    }
-
     if($_SERVER["REQUEST_METHOD"]=="POST") {
 
         $usuarioBL = new VehiculosReglasNegocio();
 
-        $perfil =  $usuarioBL->actualizarVehiculoAdmin( $_POST['idVehiculo'] ,$_POST['nombre'], $_POST['imagen'], $_POST['marca'], $_POST['matricula'], $_POST['año'], $_POST['caballos'], $_POST['kilometros'], $_POST['plazas'], $_POST['estado'], $_POST['precio'], $_POST['descripcion'], $_POST['idTipoVehiculo']);
+        $perfil =  $usuarioBL->insertarVehiculoAdmin($_POST['nombre'], $_POST['imagen'], $_POST['marca'], $_POST['matricula'], $_POST['año'], $_POST['caballos'], $_POST['kilometros'], $_POST['plazas'], $_POST['estado'], $_POST['precio'], $_POST['descripcion'], $_POST['idTipoVehiculo']);
 
     }
 
@@ -183,127 +176,107 @@
             <div class="divRestoCuerpo">
                 <div class="caja_area_personal">
                     <div class="contenido">
-                        <h1>Actualizar Vehiculo</h1>
+                        <h1>Crear Vehiculo</h1>
                         <form method = "POST" action = "<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
-                        <?php
-                            ini_set('display_errors', 'On');
-                            ini_set('html_errors', 0);
-
-                            $vehiculoBL = new VehiculosReglasNegocio();
-                                    
-                            $datosVehiculo = $vehiculoBL->obtenerVehiculoConcreto($idDecodificado); 
-
-                            echo'
                                 <table class="tabla_datos">
                                     <tr class="tr_datos">
                                         <td class="td_datos_texto">
-                                            <p class="datos_guardados">Nombre: <span class="datosUser">'.$datosVehiculo[0]->getNombre().'</span></p>
+                                            <p class="datos_guardados">Nombre: </p>
                                         </td>
                                         <td class="td_datos_input">
-                                            <input type="text" class="inputs" id="nombre" name="nombre" placeholder="Nombre" pattern="[A-Za-z0-25áéíóúÁÉÍÓÚñÑ\s]+" >
+                                            <input type="text" class="inputs" id="nombre" name="nombre" placeholder="Nombre" pattern="[A-Za-z0-25áéíóúÁÉÍÓÚñÑ\s]+" required>
                                         </td>
                                     </tr>
                                     <tr class="tr_datos">
                                         <td class="td_datos_texto">
-                                            <p class="datos_guardados">Imagen: <span class="datosUser">'.$datosVehiculo[0]->getImagen().'</span></p>
+                                            <p class="datos_guardados">Imagen: </p>
                                         </td>
                                         <td class="td_datos_input">
-                                            <input type="text" class="inputs" id="imagen" name="imagen" placeholder="Imagen" pattern="^[A-Za-z0-9]{1,25}$" >
+                                            <input type="text" class="inputs" id="imagen" name="imagen" placeholder="Imagen" pattern="^[A-Za-z0-9]{1,25}$" required>
                                         </td>
                                     </tr>
                                     <tr class="tr_datos">
                                         <td class="td_datos_texto">
-                                            <p class="datos_guardados">Marca: <span class="datosUser">'.$datosVehiculo[0]->getMarca().'</span></p> 
+                                            <p class="datos_guardados">Marca: </p> 
                                         </td>
                                         <td class="td_datos_input">
-                                            <input type="text" class="inputs" id="marca" name="marca" placeholder="Marca" pattern="^[A-Za-z0-9]{1,25}$">
+                                            <input type="text" class="inputs" id="marca" name="marca" placeholder="Marca" pattern="^[A-Za-z0-9]{1,25}$" required>
                                         </td>
                                     </tr>
                                     <tr class="tr_datos">
                                         <td class="td_datos_texto">
-                                            <p class="datos_guardados">Matricula: <span class="datosUser">'.$datosVehiculo[0]->getMatricula().'</span></p>
+                                            <p class="datos_guardados">Matricula: </p>
                                         </td>
                                         <td class="td_datos_input">
-                                            <input type="text" class="inputs" id="matricula" name="matricula" placeholder="Matricula" pattern="^[A-Za-z0-9]{1,25}$">
+                                            <input type="text" class="inputs" id="matricula" name="matricula" placeholder="Matricula" pattern="^[A-Za-z0-9]{1,25}$" required>
                                         </td>
                                     </tr>
                                     <tr class="tr_datos">
                                         <td class="td_datos_texto">
-                                            <p class="datos_guardados">Año: <span class="datosUser">'.$datosVehiculo[0]->getAño().'</span></p>
+                                            <p class="datos_guardados">Año: </p>
                                         </td>
                                         <td class="td_datos_input">
-                                            <input type="number" class="inputs" id="año" name="año" placeholder="Año" max="'.date('Y-m-d').'">
+                                            <input type="number" class="inputs" id="año" name="año" placeholder="Año" max="'.date('Y-m-d').'" required>
                                         </td>
                                     </tr>
                                     <tr class="tr_datos">
                                         <td class="td_datos_texto">
-                                            <p class="datos_guardados">Caballos: <span class="datosUser">'.$datosVehiculo[0]->getCaballos().'</span></p>
+                                            <p class="datos_guardados">Caballos: </p>
                                         </td>
                                         <td class="td_datos_input">
-                                            <input type="number" class="inputs" id="caballos" name="caballos" placeholder="Caballos" min="1" max="2000">
+                                            <input type="number" class="inputs" id="caballos" name="caballos" placeholder="Caballos" min="1" max="2000" required>
                                         </td>
                                     </tr>
                                     <tr class="tr_datos">
                                         <td class="td_datos_texto">
-                                            <p class="datos_guardados">Kilometros: <span class="datosUser">'.$datosVehiculo[0]->getKilometros().'</span></p>
+                                            <p class="datos_guardados">Kilometros: </p>
                                         </td>
                                         <td class="td_datos_input">
-                                            <input type="number" class="inputs" id="kilometros" name="kilometros" placeholder="Kilometros" min="1" max="99999999999">
+                                            <input type="number" class="inputs" id="kilometros" name="kilometros" placeholder="Kilometros" min="1" max="99999999999" required>
                                         </td>
                                     </tr>
                                     <tr class="tr_datos">
                                         <td class="td_datos_texto">
-                                            <p class="datos_guardados">Plazas: <span class="datosUser">'.$datosVehiculo[0]->getPlazas().'</span></p>
+                                            <p class="datos_guardados">Plazas: </p>
                                         </td>
                                         <td class="td_datos_input">
-                                            <input type="number" class="inputs" id="plazas" name="plazas" placeholder="Plazas" min="1" max="40">
+                                            <input type="number" class="inputs" id="plazas" name="plazas" placeholder="Plazas" min="1" max="40" required>
                                         </td>
                                     </tr>
                                     <tr class="tr_datos">
                                         <td class="td_datos_texto">;
-
-                                            ';
-                                                if($datosVehiculo[0]->getEstado() == 1){
-                                                    echo'<p class="datos_guardados">Activo: <span class="datosUser">True</span></p>';
-                                                }else{
-                                                    echo'<p class="datos_guardados">Activo: <span class="datosUser">False</span></p>';
-                                                }
-                                        echo'
+                                            <p class="datos_guardados">Activo: </p>';
                                         </td>
                                         <td class="td_datos_input">
-                                            <p class="datos_guardados">True <input type="radio" class="inputs" id="estado" name="estado" value="1"></p>
-                                            <p class="datos_guardados">False <input type="radio" class="inputs" id="estadoFalse" name="estado" value="0"></p>
+                                            <p class="datos_guardados">True <input type="radio" class="inputs" id="estado" name="estado" value="1" required></p>
+                                            <p class="datos_guardados">False <input type="radio" class="inputs" id="estadoFalse" name="estado" value="0" required></p>
                                         </td>
 
                                     </tr>
                                     <tr class="tr_datos">
                                         <td class="td_datos_texto">
-                                            <p class="datos_guardados">Precio: <span class="datosUser">'.$datosVehiculo[0]->getPrecio().'</span></p>
+                                            <p class="datos_guardados">Precio: </p>
                                         </td>
                                         <td class="td_datos_input">
-                                            <input type="number" class="inputs" id="precio" name="precio" placeholder="Precio" min="1" max="9999999">
+                                            <input type="number" class="inputs" id="precio" name="precio" placeholder="Precio" min="1" max="9999999" required>
                                         </td>
                                     </tr>
                                     <tr class="tr_datos">
                                         <td class="td_datos_texto">
-                                            <p class="datos_guardados">Descripcion: <span class="datosUser">'.$datosVehiculo[0]->getDescripcion().'</span></p>
+                                            <p class="datos_guardados">Descripcion: </p>
                                         </td>
                                         <td class="td_datos_input">
-                                            <input type="text" class="inputs" id="descripcion" name="descripcion" placeholder="Descripcion" min="1" max="500">
+                                            <input type="text" class="inputs" id="descripcion" name="descripcion" placeholder="Descripcion" min="1" max="500" required>
                                         </td>
                                     </tr>
                                     <tr class="tr_datos">
                                         <td class="td_datos_texto">
-                                            <p class="datos_guardados">Id Tipo Vehiculo: <span class="datosUser">'.$datosVehiculo[0]->getTipoVehiculo().' que es : '.$datosVehiculo[0]->getIdTipoVehiculo().'</span></p>
+                                            <p class="datos_guardados">Id Tipo Vehiculo: </p>
                                         </td>
                                         <td class="td_datos_input">
-                                            <input type="number" class="inputs" id="idTipoVehiculo" name="idTipoVehiculo" placeholder="Id Tipo Vehiculo" min="1" max="9999">
+                                            <input type="number" class="inputs" id="idTipoVehiculo" name="idTipoVehiculo" placeholder="Id Tipo Vehiculo" min="1" max="9999" required>
                                         </td>
                                     </tr>
-                                    <input id="idVehiculo" name="idVehiculo" value="'.$datosVehiculo[0]->getId().'" type="hidden">
-
-                                ';
-                            ?>  
                             </table>
                             <input type="submit" name="actualizarUsuario" class="boton" value="Enviar">
                         </form>

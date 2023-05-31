@@ -214,8 +214,42 @@
                 $consulta12->bind_param("ii",$idTipoVehiculo,$idVehiculo);
                 $consulta12->execute();
             }
+        }
+
+        function insertarVehiculoAdmin($nombre, $imagen, $marca, $matricula, $año, $caballos, $kilometros, $plazas, $estado, $precio, $descripcion, $idTipoVehiculo) {
+
+            $conexion = mysqli_connect('localhost','root','');
+    
+            if (mysqli_connect_errno()) {
+                echo "Error al conectar a MySQL: ". mysqli_connect_error();
+            }
+    
+            mysqli_select_db($conexion, 'LegendaryMotorsport');
+    
+    
+            $nombre = mysqli_real_escape_string($conexion, $nombre);
+            $imagen = mysqli_real_escape_string($conexion, $imagen);
+            $marca = mysqli_real_escape_string($conexion, $marca);
+            $matricula = mysqli_real_escape_string($conexion, $matricula);
+            $año = mysqli_real_escape_string($conexion, $año);
+            $caballos = mysqli_real_escape_string($conexion, $caballos);
+            $kilometros = mysqli_real_escape_string($conexion, $kilometros);
+            $plazas = mysqli_real_escape_string($conexion, $plazas);
+            $estado = mysqli_real_escape_string($conexion, $estado);
+            $precio = mysqli_real_escape_string($conexion, $precio);
+            $descripcion = mysqli_real_escape_string($conexion, $descripcion);
+            $idTipoVehiculo = mysqli_real_escape_string($conexion, $idTipoVehiculo);
 
 
+            $consulta = mysqli_prepare($conexion,"INSERT INTO Vehiculo (IdTipoVehiculo, Imagen, Marca, Nombre, Matricula, Caballos, Kilometros, Plazas, Año, Precio, Estado, Descripcion) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);");
+            $consulta->bind_param("issssiiiiiis", $idTipoVehiculo, $imagen, $marca, $nombre, $matricula, $caballos, $kilometros, $plazas, $año, $precio, $estado, $descripcion);
+            $consulta->execute();
+
+            header("Location: Administrador_Vehiculos.php");
+
+            mysqli_close($conexion);
+
+            exit();
         }
     }
     
