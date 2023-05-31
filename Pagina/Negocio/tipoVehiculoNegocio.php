@@ -27,7 +27,20 @@ require("../AccesoDatos/tipoVehiculoAccesoDatos.php");
         function obtener() {
             $tiposVehiculosDAL = new TipoVehiculoAccesoDatos();
             $results = $tiposVehiculosDAL->obtener();
-            $listaTipoVehiculos =  array();
+            $listaTipoVehiculos = array();
+
+            foreach ($results as $tipoVehiculos) {
+                $oTipoVehiculosReglasNegocio = new TipoVehiculoReglasNegocio();
+                $oTipoVehiculosReglasNegocio->init($tipoVehiculos['Id'], $tipoVehiculos['TipoVehiculo']);
+                array_push($listaTipoVehiculos,$oTipoVehiculosReglasNegocio);            
+            }            
+            return $listaTipoVehiculos;
+        }
+
+        function obtenerTipoVehiculo($idDecodificado) {
+            $tiposVehiculosDAL = new TipoVehiculoAccesoDatos();
+            $results = $tiposVehiculosDAL->obtenerTipoVehiculo($idDecodificado);
+            $listaTipoVehiculos = array();
 
             foreach ($results as $tipoVehiculos) {
                 $oTipoVehiculosReglasNegocio = new TipoVehiculoReglasNegocio();

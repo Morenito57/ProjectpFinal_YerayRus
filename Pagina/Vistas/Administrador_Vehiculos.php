@@ -267,7 +267,7 @@
                     <select class="pestaña" id="pestañaVehiculos" name="pestañaVehiculos" onchange="redirigirPagina()">
                         <option value="">Vehiculos</option>
                         <option value="Administrador_Vehiculos.php">Vehiculos All</option>
-                        <option value="">Tipo Vehiculo</option>
+                        <option value="Administrador_TipoVehiculo.php">Tipo Vehiculo</option>
                     </select>
 
                     <select class="opcionesOrden" id="opcionesOrden" name="opcionesOrden" onchange="redirigirPagina()">
@@ -282,7 +282,7 @@
                 <div class="caja_area_personal">
                     <div class="contenido">
                             <h1>Vehiculos</h1>
-                            <a class="añadir" href="Administrador_Vehiculo_Creacion.php">➕</a>
+                            <a class="añadir" href="Administrador_Vehiculo_Crear.php">➕</a>
                             <table>
                                 <tr>
                                     <th><p class="clase">Id</p></th>

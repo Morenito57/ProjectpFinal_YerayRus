@@ -13,9 +13,9 @@
     if($_SERVER["REQUEST_METHOD"]=="POST") {
         if(isset($_POST['Gestionar'])) {
 
-            $id = $_POST['idUsuario'];
+            $id = $_POST['idTipoVehiculo'];
 
-            header("Location: Administrador_Usuario_Gestion.php?id=".urlencode($id));
+            header("Location: Administrador_TipoVehiculo_Gestion.php?id=".urlencode($id));
         }
     }
 
@@ -216,6 +216,11 @@
             padding-left: 5px;
         }
 
+        .imagenVehiculo{
+            height: 100px;
+            width: 100%;
+        }
+
     </style>
 </head>
 <body>
@@ -230,21 +235,8 @@
                     <label for="busqueda" class="lupa">🔎</label>
                     <select class="opcionesBuscador" id="opcionesTablaBuscador">
                         <option value=""></option>
-                        <option value="NombreUsuario">Usuario</option>
-                        <option value="Clave">Clave</option>
-                        <option value="Saldo">Saldo</option>
-                        <option value="TipoDeUsuario">Tipo</option>
-                        <option value="Activo">Activo</option>
-                        <option value="IdDatosContacto">Id Contacto</option>
-                        <option value="Telefono">Telefono</option>
-                        <option value="Email">Email</option>
-                        <option value="Otro">Otro</option>
-                        <option value="IdDatosPersonales">Id Datos Per</option>
-                        <option value="Nombre">Nombre</option>
-                        <option value="Apellidos">Apellidos</option>
-                        <option value="FechaNacimiento">Nacimiento</option>
-                        <option value="Direccion">Direccio</option>
-                        <option value="DNI">DNI</option>
+                        <option value="Id">Id</option>
+                        <option value="TipoVehiculo">Tipo Vehiculo</option>
                     </select>
                     <input type="text" id="busqueda" onkeyup="obtenerDatos()" placeholder="Busca">
                     <select class="opcionesBuscador" id="opcionesBuscador" onchange="redirigirPagina()">
@@ -279,64 +271,37 @@
             <div class="divRestoCuerpo">
                 <div class="caja_area_personal">
                     <div class="contenido">
-                            <h1>Usuarios</h1>
-                            <a class="añadir" href="Administrador_Usuario_Crear.php">➕</a>
+                            <h1>Tipo Vehiculos</h1>
+                            <a class="añadir" href="Administrador_TipoVehiculo_Creacion.php">➕</a>
                             <table>
                                 <tr>
-                                    <th><p class="clase">Usuario </p></th>
-                                    <th><p class="clase">Clave</p></th>
-                                    <th><p class="clase">Saldo</p></th>
-                                    <th><p class="clase">Tipo</p></th>
-                                    <th><p class="clase">Activo</p></th>
-                                    <th><p class="clase">Id Contacto</p></th> 
-                                    <th><p class="clase">Telefono</p></th> 
-                                    <th><p class="clase">Email</p></th>
-                                    <th><p class="clase">Otro</p></th>
-                                    <th><p class="clase">Id Datos Per</p></th>
-                                    <th><p class="clase">Nombre</p></th>
-                                    <th><p class="clase">Apellidos</p></th>
-                                    <th><p class="clase">Nacimiento</p></th>
-                                    <th><p class="clase">Direccio</p></th>
-                                    <th><p class="clase">DNI</p></th>
+                                    <th><p class="clase">Id</p></th>
+                                    <th><p class="clase">Tipo Vehiculo</p></th>
                                     <th><p class="clase">Acciones</p></th>
                                 </tr>
 
                                 <?php
-                                    require ("../Negocio/usuarioReglasNegocio.php");
+                                    require ("../Negocio/tipoVehiculoNegocio.php");
 
                                     ini_set('display_errors', 'On');
                                     ini_set('html_errors', 0);
-        
-                                    $alquilerBL = new UsuarioReglasNegocio();
+
+                                    $tipoVehiculoBL = new TipoVehiculoReglasNegocio();
                                              
-                                    $datosUsuario = $alquilerBL->obtenerAllUsuario();
+                                    $datosVehiculo = $tipoVehiculoBL->obtener();
 
-                                    for ($i = 0; $i < count($datosUsuario); $i++) {
+                                    for ($i = 0; $i < count($datosVehiculo); $i++) {
 
-                                        $Usuario = $datosUsuario[$i];
+                                        $tipoVehiculo = $datosVehiculo[$i];
 
                                         echo'
                                             <tr>
-                                                <td ><p class="dato">'.$Usuario->getNombreUsuario().'</p></td>
-                                                <td ><p class="dato">'.$Usuario->getClave().'</p></td>
-                                                <td ><p class="dato">'.$Usuario->getSaldo().'</p></td>
-                                                <td ><p class="dato">'.$Usuario->getTipoDeUsuario().'</p></td>
-                                                <td ><p class="dato">'.$Usuario->getActivo().'</p></td>
-                                                <td ><p class="dato">'.$Usuario->getIdDatosContacto().'</p></td>
-                                                <td ><p class="dato">'.$Usuario->getTelefono().'</p></td>
-                                                <td ><p class="dato">'.$Usuario->getEmail().'</p></td>
-                                                <td ><p class="dato">'.$Usuario->getOtro().'</p></td>
-                                                <td ><p class="dato">'.$Usuario->getIdDatosPersonales().'</p></td>
-                                                <td ><p class="dato">'.$Usuario->getNombre().'</p></td>
-                                                <td ><p class="dato">'.$Usuario->getApellidos().'</p></td>
-                                                <td ><p class="dato">'.$Usuario->getFechaNacimiento().'</p></td>
-                                                <td ><p class="dato">'.$Usuario->getDireccion().'</p></td>
-                                                <td ><p class="dato">'.$Usuario->getDNI().'</p></td>
-                                                <td>
+                                                <td ><p class="dato">'.$tipoVehiculo->getId().'</p></td>
+                                                <td ><p class="dato">'.$tipoVehiculo->getTipoVehiculo().'</p></td>
+                                                <td >
                                                     <p class="accion">
-
                                                         <form method = "POST">
-                                                            <input id="idUsuario" name="idUsuario" value="'.$Usuario->getNombreUsuario().'" type="hidden">
+                                                            <input id="idTipoVehiculo" name="idTipoVehiculo" value="'.$tipoVehiculo->getId().'" type="hidden">
                                                             <input type="submit" name="Gestionar" class="Gestionar" value="Gestionar">
                                                         </form>
                                                     </p>
@@ -354,6 +319,6 @@
         </div>
         </div>
     </div>
-    <script src="Inicio_Con_Admin.js"></script>
+    <script src="Inicio_Con_Admin_TipoVehiculo.js"></script>
 </body>
 </html>
