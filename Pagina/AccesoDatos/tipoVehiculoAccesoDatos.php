@@ -77,8 +77,10 @@
     
             mysqli_query($conexion, "SET FOREIGN_KEY_CHECKS=1;");
 
-            header("Location: Administrador_TipoVehiculos.php");
+            header("Location: Administrador_TipoVehiculo.php");
 
+            mysqli_close($conexion);
+            exit();
         }
 
         function actualizarTipoVehiculoComoAdmin($id, $tipoVehiculo) {
@@ -98,6 +100,26 @@
                 $consulta1->execute();
             }
         
+        }
+
+        function creacionTipoVehiculo($tipoVehiculo) {
+        
+            $conexion = mysqli_connect('localhost','root','');
+    
+            if (mysqli_connect_errno()) {
+                echo "Error al conectar a MySQL: ". mysqli_connect_error();
+            }
+    
+            mysqli_select_db($conexion, 'LegendaryMotorsport');
+
+            $tipoVehiculo = mysqli_real_escape_string($conexion, $tipoVehiculo);
+
+            $consulta1 = mysqli_prepare($conexion, "INSERT INTO TipoVehiculo(TipoVehiculo) VALUES (?);");
+            $consulta1->bind_param("s", $tipoVehiculo);
+            $consulta1->execute();    
+            header("Location: Administrador_TipoVehiculo.php");
+            mysqli_close($conexion);
+            exit();
         }
 
 

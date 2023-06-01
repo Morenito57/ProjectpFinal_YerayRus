@@ -272,7 +272,7 @@
                 <div class="caja_area_personal">
                     <div class="contenido">
                             <h1>Tipo Vehiculos</h1>
-                            <a class="añadir" href="Administrador_TipoVehiculo_Creacion.php">➕</a>
+                            <a class="añadir" href="Administrador_TipoVehiculo_Crear.php">➕</a>
                             <table>
                                 <tr>
                                     <th><p class="clase">Id</p></th>

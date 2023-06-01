@@ -63,6 +63,12 @@
             return $results;
         }
 
+        function creacionTipoVehiculo($tipoVehiculo){
+            $vehiculosDAL = new TipoVehiculoAccesoDatos();
+            $results = $vehiculosDAL->creacionTipoVehiculo($tipoVehiculo);
+            return $results;
+        }
+
     }
 
 ?>
