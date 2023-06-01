@@ -82,5 +82,32 @@
 
         }
 
+        function actualizarExtra($id, $extra, $precio) {
+
+            $conexion = mysqli_connect('localhost','root','');
+            if (mysqli_connect_errno())
+            {
+                    echo "Error al conectar a MySQL: ". mysqli_connect_error();
+            }
+            mysqli_select_db($conexion, 'LegendaryMotorsport');
+
+            $id = mysqli_real_escape_string($conexion, $id);
+
+            if ($extra !== null && $extra !== '') {
+                $extra = mysqli_real_escape_string($conexion, $extra);
+                $consulta1 = mysqli_prepare($conexion,"UPDATE Extras SET Extra = ? WHERE Id = ?;");
+                $consulta1->bind_param("si",$extra,$id);
+                $consulta1->execute();
+            }
+
+            if ($precio !== null && $precio !== '') {
+                $precio = mysqli_real_escape_string($conexion, $precio);
+                $consulta2 = mysqli_prepare($conexion,"UPDATE Extras SET Precio = ? WHERE Id = ?;");
+                $consulta2->bind_param("ii",$precio,$id);
+                $consulta2->execute();
+            }
+
+        }
+
     }
 ?>

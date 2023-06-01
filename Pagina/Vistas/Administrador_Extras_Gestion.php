@@ -26,7 +26,7 @@
             if ($permiso == "1") {
                 $id = $_POST['idExtra'];
 
-                $extraBL = new ExtrasNegocioNegocio();
+                $extraBL = new ExtrasNegocio();
 
                 $coche =  $extraBL->eliminarExtra($id);
             }else{
@@ -36,7 +36,7 @@
 
             $id = $_POST['idExtra'];
             
-            header("Location: Administrador_TipoVehiculo_Actualizacion.php?id=".urlencode($id));
+            header("Location: Administrador_Extras_Actualizacion.php?id=".urlencode($id));
             
             exit();
         }

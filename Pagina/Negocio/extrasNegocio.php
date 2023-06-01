@@ -61,6 +61,12 @@
             return $results;
         }
 
+        function actualizarExtra($id, $extra, $precio) {
+            $extrasDAL = new ExtrasAccesoDatos();
+            $results = $extrasDAL->actualizarExtra($id, $extra, $precio);
+            return $results;
+        }
+
     }
 
 ?>
