@@ -1,21 +1,44 @@
 <?php
     session_start();
 
+    require ("../Negocio/extrasNegocio.php");
+
     ini_set('display_errors', 'On');
     ini_set('html_errors', 0);
-
-    $usuario = $_SESSION['usuario'];
 
     if (!isset($_SESSION['usuario'])) {
         header("Location: loginVista.php");
     }
 
+    if (isset($_GET['id'])) {
+        $id = $_GET['id'];
+        $idDecodificado = urldecode($id);
+    } else {
+        header("Location: Administrador_Extras.php");
+    }
+
     if($_SERVER["REQUEST_METHOD"]=="POST") {
-        if(isset($_POST['Gestionar'])) {
 
-            $id = $_POST['idExtra'];
+        if (isset($_POST['eliminar'])) {
 
-            header("Location: Administrador_Extras_Gestion.php?id=".urlencode($id));
+            $permiso = $_POST['permiso'];
+
+            if ($permiso == "1") {
+                $Vehiculo = $_POST['idVehiculo'];
+
+                $vehiculoBL = new TipoVehiculoReglasNegocio();
+
+                $coche =  $vehiculoBL->eliminarTipoVehiculo($Vehiculo);
+            }else{
+                echo '<script>alert("Error.");</script>';
+            }
+        }elseif (isset($_POST['actualizar'])){
+
+            $Usuario = $_POST['idVehiculo'];
+            
+            header("Location: Administrador_TipoVehiculo_Actualizacion.php?id=".urlencode($Usuario));
+            
+            exit();
         }
     }
 
@@ -124,19 +147,6 @@
             float: left;
         }
 
-        .opcionesOrden{
-            margin-top: 26px;
-            padding-top: 10px;
-            padding-bottom: 10px;
-            padding-right: 10px;
-            padding-left: 10px;
-            font-size: 25px;
-            background-color: rgb(61, 9, 9);
-            border: 3px solid rgb(173, 32, 32);
-            color: white;
-            float: right;
-        }
-
         .caja_area_personal{
             margin: auto;
             width: 95%;
@@ -154,17 +164,10 @@
         h1{
             text-align: center;
             color: white;
-            margin-top: 30px;
             width: 90%;
-            margin-left: 90px;
-        }
-
-        .añadir{
+            margin-top: 30px;
             margin-bottom: 30px;
-            text-decoration: none;
-            float: right;
-            margin-right: 25px;
-            font-size: 40px;
+            margin-left: 90px;
         }
 
         table{
@@ -197,8 +200,6 @@
         .accion{
             text-decoration: none;
             text-align: center;
-            padding: 0%;
-            margin: 0%;
         }
 
         .Gestionar{
@@ -208,17 +209,23 @@
             background-color: rgb(61, 9, 9);
             color: white;
         }
-
-        .clase{
+        .Eliminar{
+            background-color: rgb(61, 9, 9);
         }
 
-        .dato{
-            padding-left: 5px;
+        .Actualizar{
+            background-color: rgb(61, 9, 9);
         }
 
         .imagenVehiculo{
             height: 100px;
             width: 100%;
+        }
+
+        .clase{
+        }
+
+        .dato{
         }
 
     </style>
@@ -236,17 +243,16 @@
                     <select class="opcionesBuscador" id="opcionesTablaBuscador">
                         <option value=""></option>
                         <option value="Id">Id</option>
-                        <option value="Extra">Extra</option>
-                        <option value="Precio">Precio</option>
+                        <option value="TipoVehiculo">Tipo Vehiculo</option>
                     </select>
-                    <input type="text" id="busqueda" onkeyup="obtenerDatosExtras()" placeholder="Busca">
+                    <input type="text" id="busqueda" onkeyup="obtenerDatos()" placeholder="Busca">
                     <select class="opcionesBuscador" id="opcionesBuscador" onchange="redirigirPagina()">
                         <option value=""></option>
                     </select>
 
                     <select class="pestaña" id="pestañaUsuarios" name="pestañaUsuarios" onchange="redirigirPagina()">
                         <option value="">Usuarios</option>
-                        <option value="Administrador_Usuarios.php">Usuarios All</option>
+                        <option value="Administrador_Usuarios.php?">Usuarios All</option>
                     </select>
                     <select class="pestaña" id="pestañaAlquileres" name="pestañaAlquileres" onchange="redirigirPagina()">
                         <option value="">Alquileres</option>
@@ -261,36 +267,27 @@
                         <option value="Administrador_TipoVehiculo.php">Tipo Vehiculo</option>
                     </select>
 
-                    <select class="opcionesOrden" id="opcionesOrden" name="opcionesOrden" onchange="redirigirPagina()">
-                        <option value="" >Ordenar</option>
-                        <option value="" >Edad</option>
-                        <option value="" >Ordenar</option>
-                    </select>
-
                 </div>
             </div>
             <div class="divRestoCuerpo">
                 <div class="caja_area_personal">
                     <div class="contenido">
-                            <h1>Extra</h1>
-                            <a class="añadir" href="Administrador_Extras_Crear.php">➕</a>
+                            <h1>Gestion Tipo Vehiculo</h1>
                             <table>
                                 <tr>
                                     <th><p class="clase">Id</p></th>
-                                    <th><p class="clase">Extra</p></th>
-                                    <th><p class="clase">Precio</p></th>
+                                    <th><p class="clase">Tipo Vehiculo</p></th>
                                     <th><p class="clase">Acciones</p></th>
                                 </tr>
 
                                 <?php
-                                    require ("../Negocio/extrasNegocio.php");
 
                                     ini_set('display_errors', 'On');
                                     ini_set('html_errors', 0);
 
                                     $extraBL = new ExtrasNegocioNegocio();
                                              
-                                    $extras = $extraBL->obtener();
+                                    $extras = $extraBL->obtenerExtra($idDecodificado);
 
                                     for ($i = 0; $i < count($extras); $i++) {
 
@@ -301,14 +298,20 @@
                                                 <td ><p class="dato">'.$extra->getId().'</p></td>
                                                 <td ><p class="dato">'.$extra->getExtra().'</p></td>
                                                 <td ><p class="dato">'.$extra->getPrecio().'</p></td>
-                                                <td >
-                                                    <p class="accion">
-                                                        <form method = "POST">
-                                                            <input id="idExtra" name="idExtra" value="'.$extra->getId().'" type="hidden">
-                                                            <input type="submit" name="Gestionar" class="Gestionar" value="Gestionar">
-                                                        </form>
-                                                    </p>
-                                                </td>
+                                                <td class="accion">
+                                                <p class="accion">
+                                                    <form method = "POST" action = "'.htmlspecialchars($_SERVER["PHP_SELF"]).'">
+                                                        <input id="permiso" name="permiso" value="" type="hidden">
+
+                                                        <input type="submit" id="actualizar" name="actualizar" class="Actualizar" value="🔁">
+
+                                                        <input id="idVehiculo" name="idVehiculo" value="'.$extra->getId().'" type="hidden">
+
+                                                        <input type="submit" id="eliminar" name="eliminar" class="Eliminar" value="➖" onclick="eliminar()">
+                                                    </form>
+                                                <p>
+                                            </td>
+                                            </tr>
                                             </tr>
                                         ';
                                     }
@@ -322,6 +325,6 @@
         </div>
         </div>
     </div>
-    <script src="JS_Admin.js"></script>
+    <script src="Inicio_Con_Admin_TipoVehiculo.js"></script>
 </body>
 </html>

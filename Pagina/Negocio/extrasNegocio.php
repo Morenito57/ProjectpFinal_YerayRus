@@ -42,6 +42,19 @@
             return $listaExtras;
         }
 
+        function obtenerExtra($id) {
+            $extrasDAL = new ExtrasAccesoDatos();
+            $results = $extrasDAL->obtenerExtra($id);
+            $listaExtras =  array();
+
+            foreach ($results as $extra) {
+                $oExtrasReglasNegocio = new ExtrasNegocioNegocio();
+                $oExtrasReglasNegocio->init($extra['Id'], $extra['Extra'], $extra['Precio']);
+                array_push($listaExtras,$oExtrasReglasNegocio);            
+            }            
+            return $listaExtras;
+        }
+
     }
 
 ?>
