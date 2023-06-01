@@ -272,7 +272,7 @@
             <div class="divRestoCuerpo">
                 <div class="caja_area_personal">
                     <div class="contenido">
-                            <h1>Extra</h1>
+                            <h1>Extras</h1>
                             <a class="añadir" href="Administrador_Extras_Crear.php">➕</a>
                             <table>
                                 <tr>
@@ -322,6 +322,6 @@
         </div>
         </div>
     </div>
-    <script src="JS_Admin.js"></script>
+    <script src="JS_Admin_Extras.js"></script>
 </body>
 </html>

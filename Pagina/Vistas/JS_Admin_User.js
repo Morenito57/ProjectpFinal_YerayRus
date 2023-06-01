@@ -1,26 +1,38 @@
 function redirigirPagina(){
-    if(document.getElementById("pestañaUsuarios")){
-      let select = document.getElementById("pestañaUsuarios");
+  if(document.getElementById("pestañaUsuarios")){
+    let select = document.getElementById("pestañaUsuarios");
+    let url = select.value;
+    if (url) {
+      window.location.href = url;
+    }
+  }if(document.getElementById("opcionesBuscador")){
+      let select = document.getElementById("opcionesBuscador");
       let url = select.value;
       if (url) {
         window.location.href = url;
       }
-    }if(document.getElementById("opcionesBuscador")){
-        let select = document.getElementById("opcionesBuscador");
-        let url = select.value;
-        if (url) {
-          window.location.href = url;
-        }
-    }if(document.getElementById("pestañaVehiculos")){
-        let select = document.getElementById("pestañaVehiculos");
-        let url = select.value;
-        if (url) {
-          window.location.href = url;
-        }
+  }if(document.getElementById("pestañaVehiculos")){
+      let select = document.getElementById("pestañaVehiculos");
+      let url = select.value;
+      if (url) {
+        window.location.href = url;
+      }
+  }if(document.getElementById("pestañaAlquileres")){
+    let select = document.getElementById("pestañaAlquileres");
+    let url = select.value;
+    if (url) {
+      window.location.href = url;
     }
+}if(document.getElementById("opcionesOrden")){
+  let select = document.getElementById("opcionesOrden");
+  let url = select.value;
+  if (url) {
+    window.location.href = url;
   }
+}
+}
 
-  function eliminarTipoVehiculo(){
+  function eliminarUser(){
     var confirmation = confirm('¿Estás seguro que quieres eliminar estos datos?');
     if (confirmation) {
             document.getElementById('permiso').value = '1';
@@ -34,7 +46,7 @@ function redirigirPagina(){
     let campo = document.getElementById("opcionesTablaBuscador").value;
 
     let xhr = new XMLHttpRequest();
-    let url = "buscadorAdminTipoVehiculosAccesoDatos.php?letra=" + letra + "&campo=" + campo;
+    let url = "buscadorAdminDatosUsuario.php?letra=" + letra + "&campo=" + campo;
   
     xhr.onreadystatechange = function() {
       if (xhr.readyState === 4 && xhr.status === 200) {
@@ -51,7 +63,7 @@ function redirigirPagina(){
   
         for(let dato of datos){
           let option = document.createElement("option");
-          option.value = "Administrador_TipoVehiculo_Gestion.php?id="+decodeURIComponent(dato.NombreUsuario);
+          option.value = "Administrador_Usuario_Gestion.php?id="+decodeURIComponent(dato.NombreUsuario);
           option.textContent = dato.campo;
           select.appendChild(option);
         }

@@ -55,6 +55,12 @@
             return $listaExtras;
         }
 
+        function eliminarExtra($id) {
+            $extrasDAL = new ExtrasAccesoDatos();
+            $results = $extrasDAL->eliminarExtra($id);
+            return $results;
+        }
+
     }
 
 ?>

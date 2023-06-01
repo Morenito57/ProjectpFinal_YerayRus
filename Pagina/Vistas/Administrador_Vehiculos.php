@@ -248,7 +248,7 @@
                         <option value="Descripcion">Descripcion</option>
                         <option value="TipoVehiculo.TipoVehiculo">TipoVehiculo</option>
                     </select>
-                    <input type="text" id="busqueda" onkeyup="obtenerDatosVehiculo()" placeholder="Busca">
+                    <input type="text" id="busqueda" onkeyup="obtenerDatos()" placeholder="Busca">
                     <select class="opcionesBuscador" id="opcionesBuscador" onchange="redirigirPagina()">
                         <option value=""></option>
                     </select>
@@ -362,6 +362,6 @@
         </div>
         </div>
     </div>
-    <script src="JS_Admin.js"></script>
+    <script src="JS_Admin_Vehiculo.js"></script>
 </body>
 </html>

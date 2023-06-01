@@ -246,7 +246,7 @@
                         <option value="Direccion">Direccio</option>
                         <option value="DNI">DNI</option>
                     </select>
-                    <input type="text" id="busqueda" onkeyup="obtenerDatosUser()" placeholder="Busca">
+                    <input type="text" id="busqueda" onkeyup="obtenerDatos()" placeholder="Busca">
                     <select class="opcionesBuscador" id="opcionesBuscador" onchange="redirigirPagina()">
                         <option value=""></option>
                     </select>
@@ -354,6 +354,6 @@
         </div>
         </div>
     </div>
-    <script src="JS_Admin.js"></script>
+    <script src="JS_Admin_User.js"></script>
 </body>
 </html>

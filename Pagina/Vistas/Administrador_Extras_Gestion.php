@@ -24,19 +24,19 @@
             $permiso = $_POST['permiso'];
 
             if ($permiso == "1") {
-                $Vehiculo = $_POST['idVehiculo'];
+                $id = $_POST['idExtra'];
 
-                $vehiculoBL = new TipoVehiculoReglasNegocio();
+                $extraBL = new ExtrasNegocioNegocio();
 
-                $coche =  $vehiculoBL->eliminarTipoVehiculo($Vehiculo);
+                $coche =  $extraBL->eliminarExtra($id);
             }else{
                 echo '<script>alert("Error.");</script>';
             }
         }elseif (isset($_POST['actualizar'])){
 
-            $Usuario = $_POST['idVehiculo'];
+            $id = $_POST['idExtra'];
             
-            header("Location: Administrador_TipoVehiculo_Actualizacion.php?id=".urlencode($Usuario));
+            header("Location: Administrador_TipoVehiculo_Actualizacion.php?id=".urlencode($id));
             
             exit();
         }
@@ -243,7 +243,8 @@
                     <select class="opcionesBuscador" id="opcionesTablaBuscador">
                         <option value=""></option>
                         <option value="Id">Id</option>
-                        <option value="TipoVehiculo">Tipo Vehiculo</option>
+                        <option value="Extra">Extra</option>
+                        <option value="Precio">Precio</option>
                     </select>
                     <input type="text" id="busqueda" onkeyup="obtenerDatos()" placeholder="Busca">
                     <select class="opcionesBuscador" id="opcionesBuscador" onchange="redirigirPagina()">
@@ -272,11 +273,12 @@
             <div class="divRestoCuerpo">
                 <div class="caja_area_personal">
                     <div class="contenido">
-                            <h1>Gestion Tipo Vehiculo</h1>
+                            <h1>Gestion Extras</h1>
                             <table>
                                 <tr>
                                     <th><p class="clase">Id</p></th>
                                     <th><p class="clase">Tipo Vehiculo</p></th>
+                                    <th><p class="clase">Precio</p></th>
                                     <th><p class="clase">Acciones</p></th>
                                 </tr>
 
@@ -299,19 +301,18 @@
                                                 <td ><p class="dato">'.$extra->getExtra().'</p></td>
                                                 <td ><p class="dato">'.$extra->getPrecio().'</p></td>
                                                 <td class="accion">
-                                                <p class="accion">
-                                                    <form method = "POST" action = "'.htmlspecialchars($_SERVER["PHP_SELF"]).'">
-                                                        <input id="permiso" name="permiso" value="" type="hidden">
+                                                    <p class="accion">
+                                                        <form method = "POST" action = "'.htmlspecialchars($_SERVER["PHP_SELF"]).'">
+                                                            <input id="permiso" name="permiso" value="" type="hidden">
 
-                                                        <input type="submit" id="actualizar" name="actualizar" class="Actualizar" value="🔁">
+                                                            <input type="submit" id="actualizar" name="actualizar" class="Actualizar" value="🔁">
 
-                                                        <input id="idVehiculo" name="idVehiculo" value="'.$extra->getId().'" type="hidden">
+                                                            <input id="idExtra" name="idExtra" value="'.$extra->getId().'" type="hidden">
 
-                                                        <input type="submit" id="eliminar" name="eliminar" class="Eliminar" value="➖" onclick="eliminar()">
-                                                    </form>
-                                                <p>
-                                            </td>
-                                            </tr>
+                                                            <input type="submit" id="eliminar" name="eliminar" class="Eliminar" value="➖" onclick="eliminarUser()">
+                                                        </form>
+                                                    <p>
+                                                </td>
                                             </tr>
                                         ';
                                     }
@@ -325,6 +326,6 @@
         </div>
         </div>
     </div>
-    <script src="Inicio_Con_Admin_TipoVehiculo.js"></script>
+    <script src="JS_Admin_Extras.js"></script>
 </body>
 </html>

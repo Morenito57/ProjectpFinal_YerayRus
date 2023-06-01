@@ -17,10 +17,22 @@ function redirigirPagina(){
         if (url) {
           window.location.href = url;
         }
+    }if(document.getElementById("pestañaAlquileres")){
+      let select = document.getElementById("pestañaAlquileres");
+      let url = select.value;
+      if (url) {
+        window.location.href = url;
+      }
+  }if(document.getElementById("opcionesOrden")){
+    let select = document.getElementById("opcionesOrden");
+    let url = select.value;
+    if (url) {
+      window.location.href = url;
     }
   }
+}
 
-  function eliminarVehiculo(){
+  function eliminarTipoVehiculo(){
     var confirmation = confirm('¿Estás seguro que quieres eliminar estos datos?');
     if (confirmation) {
             document.getElementById('permiso').value = '1';
@@ -34,7 +46,7 @@ function redirigirPagina(){
     let campo = document.getElementById("opcionesTablaBuscador").value;
 
     let xhr = new XMLHttpRequest();
-    let url = "buscadorAdminVehiculosAccesoDatos.php?letra=" + letra + "&campo=" + campo;
+    let url = "buscadorAdminTipoVehiculosAccesoDatos.php?letra=" + letra + "&campo=" + campo;
   
     xhr.onreadystatechange = function() {
       if (xhr.readyState === 4 && xhr.status === 200) {
@@ -51,7 +63,7 @@ function redirigirPagina(){
   
         for(let dato of datos){
           let option = document.createElement("option");
-          option.value = "Administrador_Vehiculo_Gestion.php?id="+decodeURIComponent(dato.NombreUsuario);
+          option.value = "Administrador_TipoVehiculo_Gestion.php?id="+decodeURIComponent(dato.NombreUsuario);
           option.textContent = dato.campo;
           select.appendChild(option);
         }

@@ -17,8 +17,20 @@ function redirigirPagina(){
         if (url) {
           window.location.href = url;
         }
-    }
+    }if(document.getElementById("opcionesOrden")){
+        let select = document.getElementById("opcionesOrden");
+        let url = select.value;
+        if (url) {
+          window.location.href = url;
+        }
+    }if(document.getElementById("pestañaAlquileres")){
+      let select = document.getElementById("pestañaAlquileres");
+      let url = select.value;
+      if (url) {
+        window.location.href = url;
+      }
   }
+}
 
   function eliminarUser(){
     var confirmation = confirm('¿Estás seguro que quieres eliminar estos datos?');
@@ -28,13 +40,13 @@ function redirigirPagina(){
         document.getElementById('permiso').value = '0';
     }
   }
-  
-  function obtenerDatos() {
+
+  function obtenerDatosExtras() {
     let letra = document.getElementById("busqueda").value;
     let campo = document.getElementById("opcionesTablaBuscador").value;
 
     let xhr = new XMLHttpRequest();
-    let url = "buscadorAdminDatosUsuario.php?letra=" + letra + "&campo=" + campo;
+    let url = "buscadorAdminExtrasAccesoDatos.php?letra=" + letra + "&campo=" + campo;
   
     xhr.onreadystatechange = function() {
       if (xhr.readyState === 4 && xhr.status === 200) {
@@ -51,7 +63,7 @@ function redirigirPagina(){
   
         for(let dato of datos){
           let option = document.createElement("option");
-          option.value = "Administrador_Usuario_Gestion.php?id="+decodeURIComponent(dato.NombreUsuario);
+          option.value = "Administrador_Extras_Gestion.php?id="+decodeURIComponent(dato.NombreUsuario);
           option.textContent = dato.campo;
           select.appendChild(option);
         }

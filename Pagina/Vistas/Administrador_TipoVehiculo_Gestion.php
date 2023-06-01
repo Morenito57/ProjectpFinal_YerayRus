@@ -252,12 +252,12 @@
 
                     <select class="pestaña" id="pestañaUsuarios" name="pestañaUsuarios" onchange="redirigirPagina()">
                         <option value="">Usuarios</option>
-                        <option value="Administrador_Usuarios.php?">Usuarios All</option>
+                        <option value="Administrador_Usuarios.php">Usuarios All</option>
                     </select>
                     <select class="pestaña" id="pestañaAlquileres" name="pestañaAlquileres" onchange="redirigirPagina()">
                         <option value="">Alquileres</option>
                         <option value="">Alquileres All</option>
-                        <option value="">Extras</option>
+                        <option value="Administrador_Extras.php">Extras</option>
                         <option value="">Seguros</option>
                         <option value="">Cargos</option>
                     </select>
@@ -307,7 +307,7 @@
 
                                                         <input id="idVehiculo" name="idVehiculo" value="'.$tipoVehiculo->getId().'" type="hidden">
 
-                                                        <input type="submit" id="eliminar" name="eliminar" class="Eliminar" value="➖" onclick="eliminar()">
+                                                        <input type="submit" id="eliminar" name="eliminar" class="Eliminar" value="➖" onclick="eliminarTipoVehiculo()">
                                                     </form>
                                                 <p>
                                             </td>
@@ -324,6 +324,6 @@
         </div>
         </div>
     </div>
-    <script src="Inicio_Con_Admin_TipoVehiculo.js"></script>
+    <script src="JS_Admin_TipoVehiculo.js"></script>
 </body>
 </html>
