@@ -246,7 +246,7 @@
                         <option value="Direccion">Direccio</option>
                         <option value="DNI">DNI</option>
                     </select>
-                    <input type="text" id="busqueda" onkeyup="obtenerDatos()" placeholder="Busca">
+                    <input type="text" id="busqueda" onkeyup="obtenerDatosUser()" placeholder="Busca">
                     <select class="opcionesBuscador" id="opcionesBuscador" onchange="redirigirPagina()">
                         <option value=""></option>
                     </select>
@@ -258,7 +258,7 @@
                     <select class="pestaña" id="pestañaAlquileres" name="pestañaAlquileres" onchange="redirigirPagina()">
                         <option value="">Alquileres</option>
                         <option value="">Alquileres All</option>
-                        <option value="">Extras</option>
+                        <option value="Administrador_Extras.php">Extras</option>
                         <option value="">Seguros</option>
                         <option value="">Cargos</option>
                     </select>
@@ -354,6 +354,6 @@
         </div>
         </div>
     </div>
-    <script src="Inicio_Con_Admin.js"></script>
+    <script src="JS_Admin.js"></script>
 </body>
 </html>

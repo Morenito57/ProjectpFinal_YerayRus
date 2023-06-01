@@ -345,7 +345,7 @@
                                                             <input id="idDatosContacto" name="idDatosContacto" value="'.$Usuario->getIdDatosContacto().'" type="hidden">
                                                             <input id="idDatosPersonales" name="idDatosPersonales" value="'.$Usuario->getIdDatosPersonales().'" type="hidden">
 
-                                                            <input type="submit" id="eliminar" name="eliminar" class="Eliminar" value="➖" onclick="eliminarUser()">
+                                                            <input type="submit" id="eliminar" name="eliminar" class="Eliminar" value="➖" onclick="eliminar()">
                                                         </form>
                                                     <p>
                                                 </td>

@@ -13,7 +13,7 @@
     if($_SERVER["REQUEST_METHOD"]=="POST") {
         if(isset($_POST['Gestionar'])) {
 
-            $id = $_POST['idTipoVehiculo'];
+            $id = $_POST['idExtra'];
 
             header("Location: Administrador_TipoVehiculo_Gestion.php?id=".urlencode($id));
         }
@@ -236,9 +236,10 @@
                     <select class="opcionesBuscador" id="opcionesTablaBuscador">
                         <option value=""></option>
                         <option value="Id">Id</option>
-                        <option value="TipoVehiculo">Tipo Vehiculo</option>
+                        <option value="Extra">Extra</option>
+                        <option value="Precio">Precio</option>
                     </select>
-                    <input type="text" id="busqueda" onkeyup="obtenerDatosTipoVehiculo()" placeholder="Busca">
+                    <input type="text" id="busqueda" onkeyup="obtenerDatosExtras()" placeholder="Busca">
                     <select class="opcionesBuscador" id="opcionesBuscador" onchange="redirigirPagina()">
                         <option value=""></option>
                     </select>
@@ -250,7 +251,7 @@
                     <select class="pestaña" id="pestañaAlquileres" name="pestañaAlquileres" onchange="redirigirPagina()">
                         <option value="">Alquileres</option>
                         <option value="">Alquileres All</option>
-                        <option value="">Extras</option>
+                        <option value="Administrador_Extras.php">Extras</option>
                         <option value="">Seguros</option>
                         <option value="">Cargos</option>
                     </select>
@@ -271,37 +272,39 @@
             <div class="divRestoCuerpo">
                 <div class="caja_area_personal">
                     <div class="contenido">
-                            <h1>Tipo Vehiculos</h1>
-                            <a class="añadir" href="Administrador_TipoVehiculo_Crear.php">➕</a>
+                            <h1>Extra</h1>
+                            <a class="añadir" href="Administrador_Extras_Crear.php">➕</a>
                             <table>
                                 <tr>
                                     <th><p class="clase">Id</p></th>
-                                    <th><p class="clase">Tipo Vehiculo</p></th>
+                                    <th><p class="clase">Extra</p></th>
+                                    <th><p class="clase">Precio</p></th>
                                     <th><p class="clase">Acciones</p></th>
                                 </tr>
 
                                 <?php
-                                    require ("../Negocio/tipoVehiculoNegocio.php");
+                                    require ("../Negocio/extrasNegocio.php");
 
                                     ini_set('display_errors', 'On');
                                     ini_set('html_errors', 0);
 
-                                    $tipoVehiculoBL = new TipoVehiculoReglasNegocio();
+                                    $extraBL = new ExtrasNegocioNegocio();
                                              
-                                    $datosVehiculo = $tipoVehiculoBL->obtener();
+                                    $extras = $extraBL->obtener();
 
-                                    for ($i = 0; $i < count($datosVehiculo); $i++) {
+                                    for ($i = 0; $i < count($extras); $i++) {
 
-                                        $tipoVehiculo = $datosVehiculo[$i];
+                                        $extra = $extras[$i];
 
                                         echo'
                                             <tr>
-                                                <td ><p class="dato">'.$tipoVehiculo->getId().'</p></td>
-                                                <td ><p class="dato">'.$tipoVehiculo->getTipoVehiculo().'</p></td>
+                                                <td ><p class="dato">'.$extra->getId().'</p></td>
+                                                <td ><p class="dato">'.$extra->getExtra().'</p></td>
+                                                <td ><p class="dato">'.$extra->getPrecio().'</p></td>
                                                 <td >
                                                     <p class="accion">
                                                         <form method = "POST">
-                                                            <input id="idTipoVehiculo" name="idTipoVehiculo" value="'.$tipoVehiculo->getId().'" type="hidden">
+                                                            <input id="idExtra" name="idExtra" value="'.$extra->getId().'" type="hidden">
                                                             <input type="submit" name="Gestionar" class="Gestionar" value="Gestionar">
                                                         </form>
                                                     </p>

@@ -352,7 +352,7 @@
 
                                                             <input id="idVehiculo" name="idVehiculo" value="'.$Vehiculo->getId().'" type="hidden">
 
-                                                            <input type="submit" id="eliminar" name="eliminar" class="Eliminar" value="➖" onclick="eliminarVehiculo()">
+                                                            <input type="submit" id="eliminar" name="eliminar" class="Eliminar" value="➖" onclick="eliminar()">
                                                         </form>
                                                     <p>
                                                 </td>
