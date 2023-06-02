@@ -2,7 +2,7 @@
     ini_set('display_errors', 'On');
     ini_set('html_errors', 0);
     require("../AccesoDatos/segurosAccesoDatos.php");
-    class SegurosNegocioNegocio{
+    class SegurosNegocio{
         private $_Id;
         private $_Seguro;
         private $_Precio;
@@ -34,7 +34,7 @@
             $listaSeguro =  array();
 
             foreach ($results as $seguro) {
-                $oSeguroReglasNegocio = new SegurosNegocioNegocio();
+                $oSeguroReglasNegocio = new SegurosNegocio();
                 $oSeguroReglasNegocio->init($seguro['Id'], $seguro['Seguro'], $seguro['Precio']);
                 array_push($listaSeguro,$oSeguroReglasNegocio);            
             }            

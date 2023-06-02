@@ -3,7 +3,7 @@
     ini_set('html_errors', 0);
     require("../AccesoDatos/extrasAccesoDatos.php");
     
-    class ExtrasNegocioNegocio{
+    class ExtrasNegocio{
         private $_Id;
         private $_Extra;
         private $_Precio;
@@ -35,7 +35,7 @@
             $listaExtras =  array();
 
             foreach ($results as $extra) {
-                $oExtrasReglasNegocio = new ExtrasNegocioNegocio();
+                $oExtrasReglasNegocio = new ExtrasNegocio();
                 $oExtrasReglasNegocio->init($extra['Id'], $extra['Extra'], $extra['Precio']);
                 array_push($listaExtras,$oExtrasReglasNegocio);            
             }            
@@ -48,7 +48,7 @@
             $listaExtras =  array();
 
             foreach ($results as $extra) {
-                $oExtrasReglasNegocio = new ExtrasNegocioNegocio();
+                $oExtrasReglasNegocio = new ExtrasNegocio();
                 $oExtrasReglasNegocio->init($extra['Id'], $extra['Extra'], $extra['Precio']);
                 array_push($listaExtras,$oExtrasReglasNegocio);            
             }            
@@ -64,6 +64,12 @@
         function actualizarExtra($id, $extra, $precio) {
             $extrasDAL = new ExtrasAccesoDatos();
             $results = $extrasDAL->actualizarExtra($id, $extra, $precio);
+            return $results;
+        }
+
+        function crearExtra($extra, $precio) {
+            $extrasDAL = new ExtrasAccesoDatos();
+            $results = $extrasDAL->crearExtra($extra, $precio);
             return $results;
         }
 

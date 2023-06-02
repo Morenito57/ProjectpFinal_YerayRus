@@ -219,7 +219,7 @@
 
                                                     require("../Negocio/segurosNegocio.php");
 
-                                                    $segurosBL = new SegurosNegocioNegocio();
+                                                    $segurosBL = new SegurosNegocio();
                                                     $datosSeguros = $segurosBL->obtener();
 
                                                     foreach($datosSeguros as $datosSeguro){
@@ -233,7 +233,7 @@
                                 ';
                                                 require("../Negocio/extrasNegocio.php");
 
-                                                $extrasBL = new ExtrasNegocioNegocio();
+                                                $extrasBL = new ExtrasNegocio();
                                                 $datosExtras = $extrasBL->obtener();
 
                                                 foreach($datosExtras as $datosExtra){

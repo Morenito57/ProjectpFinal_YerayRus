@@ -10,20 +10,11 @@
         vheader("Location: loginVista.php");
     }
 
-    if (isset($_GET['id'])) {
-        $id = $_GET['id'];
-        $idDecodificado = urldecode($id);
-    } else {
-        header("Location: Administrador_Extras.php");
-    }
-
     if($_SERVER["REQUEST_METHOD"]=="POST") {
 
         $TipoVehiculoBL = new ExtrasNegocio();
 
-        $perfil =  $TipoVehiculoBL->actualizarExtra( $_POST['idExtra'], $_POST['extra'], $_POST['precio']);
-
-        header("Location: Administrador_Extras.php");
+        $perfil =  $TipoVehiculoBL->crearExtra($_POST['extra'], $_POST['precio']);
 
     }
 
@@ -185,43 +176,25 @@
             <div class="divRestoCuerpo">
                 <div class="caja_area_personal">
                     <div class="contenido">
-                        <h1>Actualizar Extra</h1>
+                        <h1>Crear Extra</h1>
                         <form method = "POST" action = "<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
-                        <?php
-                            ini_set('display_errors', 'On');
-                            ini_set('html_errors', 0);
-
-                            $extraBL = new ExtrasNegocio();
-                                    
-                            $extras = $extraBL->obtenerExtra($idDecodificado);
-
-                            for ($i = 0; $i < count($extras); $i++) {
-
-                                $extra = $extras[$i];
-                            echo'
                                 <table class="tabla_datos">
                                     <tr class="tr_datos">
                                         <td class="td_datos_texto">
-                                            <p class="datos_guardados">Extra: <span class="datosUser">'.$extra->getExtra().'</span></p>
+                                            <p class="datos_guardados">Extra: </p>
                                         </td>
                                         <td class="td_datos_input">
-                                            <input type="text" class="inputs" id="extra" name="extra" placeholder="Extra" pattern="[A-Za-z0-9áéíóúÁÉÍÓÚñÑ\s\-,.]+">
+                                            <input type="text" class="inputs" id="extra" name="extra" placeholder="Extra" pattern="[A-Za-z0-9áéíóúÁÉÍÓÚñÑ\s\-,.]+" required>
                                         </td>
                                     </tr>
                                     <tr class="tr_datos">
                                         <td class="td_datos_texto">
-                                            <p class="datos_guardados">Nombre: <span class="datosUser">'.$extra->getPrecio().'</span></p>
+                                            <p class="datos_guardados">Nombre: </p>
                                         </td>
                                         <td class="td_datos_input">
-                                            <input type="number" class="inputs" id="precio" name="precio" placeholder="Precio" min="1" max="9999">
+                                            <input type="number" class="inputs" id="precio" name="precio" placeholder="Precio" min="1" max="9999" required>
                                         </td>
                                     </tr>
-
-                                    <input id="idExtra" name="idExtra" value="'.$extra->getId().'" type="hidden">
-
-                                ';
-                            }
-                            ?>  
                             </table>
                             <input type="submit" name="actualizarTipoVehiculo" class="boton" value="Enviar">
                         </form>
