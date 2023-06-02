@@ -51,7 +51,10 @@ function redirigirPagina(){
     xhr.onreadystatechange = function() {
       if (xhr.readyState === 4 && xhr.status === 200) {
         let datos = JSON.parse(this.responseText);
-  
+        for (let dato of datos) {
+          console.log("Id: " + dato.id);
+          console.log("Campo: " + dato.campo);
+      }  
         let select = document.getElementById("opcionesBuscador");
   
         while (select.firstChild) {
@@ -63,7 +66,7 @@ function redirigirPagina(){
   
         for(let dato of datos){
           let option = document.createElement("option");
-          option.value = "Administrador_Vehiculo_Gestion.php?id="+decodeURIComponent(dato.NombreUsuario);
+          option.value = "Administrador_Vehiculo_Gestion.php?id="+decodeURIComponent(dato.id);
           option.textContent = dato.campo;
           select.appendChild(option);
         }

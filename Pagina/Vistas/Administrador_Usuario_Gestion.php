@@ -268,7 +268,7 @@
                         <option value="">Alquileres</option>
                         <option value="">Alquileres All</option>
                         <option value="Administrador_Extras.php">Extras</option>
-                        <option value="">Seguros</option>
+                        <option value="Administrador_Seguros.php">Seguros</option>
                         <option value="">Cargos</option>
                     </select>
                     <select class="pestaña" id="pestañaVehiculos" name="pestañaVehiculos" onchange="redirigirPagina()">

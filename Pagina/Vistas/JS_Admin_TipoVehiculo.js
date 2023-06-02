@@ -63,7 +63,7 @@ function redirigirPagina(){
   
         for(let dato of datos){
           let option = document.createElement("option");
-          option.value = "Administrador_TipoVehiculo_Gestion.php?id="+decodeURIComponent(dato.NombreUsuario);
+          option.value = "Administrador_TipoVehiculo_Gestion.php?id="+decodeURIComponent(dato.Id);
           option.textContent = dato.campo;
           select.appendChild(option);
         }

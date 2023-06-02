@@ -235,7 +235,7 @@
                     <label for="busqueda" class="lupa">🔎</label>
                     <select class="opcionesBuscador" id="opcionesTablaBuscador">
                         <option value=""></option>
-                        <option value="Id">Id</option>
+                        <option value="Vehiculo.Id">Id</option>
                         <option value="IdTipoVehiculo">IdTipoVehiculo</option>
                         <option value="Imagen">Imagen</option>
                         <option value="Nombre">Nombre</option>
@@ -261,7 +261,7 @@
                         <option value="">Alquileres</option>
                         <option value="">Alquileres All</option>
                         <option value="Administrador_Extras.php">Extras</option>
-                        <option value="">Seguros</option>
+                        <option value="Administrador_Seguros.php">Seguros</option>
                         <option value="">Cargos</option>
                     </select>
                     <select class="pestaña" id="pestañaVehiculos" name="pestañaVehiculos" onchange="redirigirPagina()">

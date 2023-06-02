@@ -41,12 +41,12 @@ function redirigirPagina(){
     }
   }
 
-  function obtenerDatosExtras() {
+  function obtenerDatosSeguros() {
     let letra = document.getElementById("busqueda").value;
     let campo = document.getElementById("opcionesTablaBuscador").value;
 
     let xhr = new XMLHttpRequest();
-    let url = "buscadorAdminExtrasAccesoDatos.php?letra=" + letra + "&campo=" + campo;
+    let url = "buscadorAdminSegurosAccesoDatos.php?letra=" + letra + "&campo=" + campo;
   
     xhr.onreadystatechange = function() {
       if (xhr.readyState === 4 && xhr.status === 200) {
@@ -63,7 +63,7 @@ function redirigirPagina(){
   
         for(let dato of datos){
           let option = document.createElement("option");
-          option.value = "Administrador_Extras_Gestion.php?id="+decodeURIComponent(dato.Id);
+          option.value = "Administrador_Seguros_Gestion.php?id="+decodeURIComponent(dato.Id);
           option.textContent = dato.campo;
           select.appendChild(option);
         }
