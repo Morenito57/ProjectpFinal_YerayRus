@@ -53,6 +53,11 @@
             }            
             return $listaSeguro;
         }
+        function eliminarSeguro($id){
+            $seguroDAL = new SegurosAccesoDatos();
+            $results = $seguroDAL->eliminarSeguro($id);
+            return $results;
+        }
 
     }
 

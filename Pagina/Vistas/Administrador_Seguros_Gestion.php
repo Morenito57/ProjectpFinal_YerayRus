@@ -24,17 +24,17 @@
             $permiso = $_POST['permiso'];
 
             if ($permiso == "1") {
-                $Vehiculo = $_POST['idVehiculo'];
+                $id = $_POST['idSeguro'];
 
-                $vehiculoBL = new SeguroNegocio();
+                $seguroBL = new SegurosNegocio();
 
-                $coche =  $vehiculoBL->eliminarSeguro($Vehiculo);
+                $coche =  $seguroBL->eliminarSeguro($id);
             }else{
                 echo '<script>alert("Error.");</script>';
             }
         }elseif (isset($_POST['actualizar'])){
 
-            $Usuario = $_POST['idVehiculo'];
+            $Usuario = $_POST['idSeguro'];
             
             header("Location: Administrador_Seguros_Actualizacion.php?id=".urlencode($Usuario));
             
@@ -273,7 +273,7 @@
             <div class="divRestoCuerpo">
                 <div class="caja_area_personal">
                     <div class="contenido">
-                            <h1>Gestion Tipo Vehiculo</h1>
+                            <h1>Gestion Seguro</h1>
                             <table>
                                 <tr>
                                 <th><p class="clase">Id</p></th>
@@ -307,7 +307,7 @@
 
                                                         <input type="submit" id="actualizar" name="actualizar" class="Actualizar" value="🔁">
 
-                                                        <input id="idVehiculo" name="idVehiculo" value="'.$seguro->getId().'" type="hidden">
+                                                        <input id="idSeguro" name="idSeguro" value="'.$seguro->getId().'" type="hidden">
 
                                                         <input type="submit" id="eliminar" name="eliminar" class="Eliminar" value="➖" onclick="eliminarSeguro()">
                                                     </form>
