@@ -15,7 +15,7 @@
 
             $id = $_POST['idSeguro'];
 
-            header("Location: Administrador_Sugros_Gestion.php?id=".urlencode($id));
+            header("Location: Administrador_Seguros_Gestion.php?id=".urlencode($id));
         }
     }
 

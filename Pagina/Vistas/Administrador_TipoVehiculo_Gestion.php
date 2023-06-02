@@ -26,7 +26,7 @@
             if ($permiso == "1") {
                 $Vehiculo = $_POST['idVehiculo'];
 
-                $vehiculoBL = new TipoVehiculoReglasNegocio();
+                $vehiculoBL = new TipoVehiculoNegocio();
 
                 $coche =  $vehiculoBL->eliminarTipoVehiculo($Vehiculo);
             }else{
@@ -285,7 +285,7 @@
                                     ini_set('display_errors', 'On');
                                     ini_set('html_errors', 0);
 
-                                    $tipoVehiculoBL = new TipoVehiculoReglasNegocio();
+                                    $tipoVehiculoBL = new TipoVehiculoNegocio();
                                              
                                     $datosVehiculo = $tipoVehiculoBL->obtenerTipoVehiculo($idDecodificado);
 

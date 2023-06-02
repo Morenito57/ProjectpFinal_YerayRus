@@ -12,7 +12,7 @@
 
     if($_SERVER["REQUEST_METHOD"]=="POST") {
 
-        $TipoVehiculoBL = new TipoVehiculoReglasNegocio();
+        $TipoVehiculoBL = new TipoVehiculoNegocio();
 
         $perfil =  $TipoVehiculoBL->creacionTipoVehiculo($_POST['tipoVehiculo']);
 

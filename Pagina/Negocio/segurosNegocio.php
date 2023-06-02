@@ -41,6 +41,19 @@
             return $listaSeguro;
         }
 
+        function obtenerSeguro($id) {
+            $seguroDAL = new SegurosAccesoDatos();
+            $results = $seguroDAL->obtenerSeguro($id);
+            $listaSeguro =  array();
+
+            foreach ($results as $seguro) {
+                $oSeguroReglasNegocio = new SegurosNegocio();
+                $oSeguroReglasNegocio->init($seguro['Id'], $seguro['Seguro'], $seguro['Precio']);
+                array_push($listaSeguro,$oSeguroReglasNegocio);            
+            }            
+            return $listaSeguro;
+        }
+
     }
 
 ?>

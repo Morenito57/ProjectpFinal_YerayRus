@@ -1,21 +1,44 @@
 <?php
     session_start();
 
+    require ("../Negocio/segurosNegocio.php");
+
     ini_set('display_errors', 'On');
     ini_set('html_errors', 0);
-
-    $usuario = $_SESSION['usuario'];
 
     if (!isset($_SESSION['usuario'])) {
         header("Location: loginVista.php");
     }
 
+    if (isset($_GET['id'])) {
+        $id = $_GET['id'];
+        $idDecodificado = urldecode($id);
+    } else {
+        header("Location: Administrador_Seguros.php");
+    }
+
     if($_SERVER["REQUEST_METHOD"]=="POST") {
-        if(isset($_POST['Gestionar'])) {
 
-            $id = $_POST['idTipoVehiculo'];
+        if (isset($_POST['eliminar'])) {
 
-            header("Location: Administrador_TipoVehiculo_Gestion.php?id=".urlencode($id));
+            $permiso = $_POST['permiso'];
+
+            if ($permiso == "1") {
+                $Vehiculo = $_POST['idVehiculo'];
+
+                $vehiculoBL = new SeguroNegocio();
+
+                $coche =  $vehiculoBL->eliminarSeguro($Vehiculo);
+            }else{
+                echo '<script>alert("Error.");</script>';
+            }
+        }elseif (isset($_POST['actualizar'])){
+
+            $Usuario = $_POST['idVehiculo'];
+            
+            header("Location: Administrador_Seguros_Actualizacion.php?id=".urlencode($Usuario));
+            
+            exit();
         }
     }
 
@@ -124,19 +147,6 @@
             float: left;
         }
 
-        .opcionesOrden{
-            margin-top: 26px;
-            padding-top: 10px;
-            padding-bottom: 10px;
-            padding-right: 10px;
-            padding-left: 10px;
-            font-size: 25px;
-            background-color: rgb(61, 9, 9);
-            border: 3px solid rgb(173, 32, 32);
-            color: white;
-            float: right;
-        }
-
         .caja_area_personal{
             margin: auto;
             width: 95%;
@@ -154,17 +164,10 @@
         h1{
             text-align: center;
             color: white;
-            margin-top: 30px;
             width: 90%;
-            margin-left: 90px;
-        }
-
-        .añadir{
+            margin-top: 30px;
             margin-bottom: 30px;
-            text-decoration: none;
-            float: right;
-            margin-right: 25px;
-            font-size: 40px;
+            margin-left: 90px;
         }
 
         table{
@@ -197,8 +200,6 @@
         .accion{
             text-decoration: none;
             text-align: center;
-            padding: 0%;
-            margin: 0%;
         }
 
         .Gestionar{
@@ -208,17 +209,23 @@
             background-color: rgb(61, 9, 9);
             color: white;
         }
-
-        .clase{
+        .Eliminar{
+            background-color: rgb(61, 9, 9);
         }
 
-        .dato{
-            padding-left: 5px;
+        .Actualizar{
+            background-color: rgb(61, 9, 9);
         }
 
         .imagenVehiculo{
             height: 100px;
             width: 100%;
+        }
+
+        .clase{
+        }
+
+        .dato{
         }
 
     </style>
@@ -232,13 +239,14 @@
             <div class="divCabezeraCuerpo">
                 <div class="menu">
 
-                    <label for="busqueda" class="lupa">🔎</label>
+                <label for="busqueda" class="lupa">🔎</label>
                     <select class="opcionesBuscador" id="opcionesTablaBuscador">
                         <option value=""></option>
                         <option value="Id">Id</option>
-                        <option value="TipoVehiculo">Tipo Vehiculo</option>
+                        <option value="Seguro">Seguro</option>
+                        <option value="Precio">Precio</option>
                     </select>
-                    <input type="text" id="busqueda" onkeyup="obtenerDatos()" placeholder="Busca">
+                    <input type="text" id="busqueda" onkeyup="obtenerDatosSeguros()" placeholder="Busca">
                     <select class="opcionesBuscador" id="opcionesBuscador" onchange="redirigirPagina()">
                         <option value=""></option>
                     </select>
@@ -259,53 +267,52 @@
                         <option value="Administrador_Vehiculos.php">Vehiculos All</option>
                         <option value="Administrador_TipoVehiculo.php">Tipo Vehiculo</option>
                     </select>
-                    
-                    <select class="opcionesOrden" id="opcionesOrden" name="opcionesOrden" onchange="redirigirPagina()">
-                        <option value="" >Ordenar</option>
-                        <option value="" >Edad</option>
-                        <option value="" >Ordenar</option>
-                    </select>
 
                 </div>
             </div>
             <div class="divRestoCuerpo">
                 <div class="caja_area_personal">
                     <div class="contenido">
-                            <h1>Tipo Vehiculos</h1>
-                            <a class="añadir" href="Administrador_TipoVehiculo_Crear.php">➕</a>
+                            <h1>Gestion Tipo Vehiculo</h1>
                             <table>
                                 <tr>
-                                    <th><p class="clase">Id</p></th>
-                                    <th><p class="clase">Tipo Vehiculo</p></th>
+                                <th><p class="clase">Id</p></th>
+                                    <th><p class="clase">Seguro</p></th>
+                                    <th><p class="clase">Precio</p></th>
                                     <th><p class="clase">Acciones</p></th>
                                 </tr>
 
                                 <?php
-                                    require ("../Negocio/tipoVehiculoNegocio.php");
 
                                     ini_set('display_errors', 'On');
                                     ini_set('html_errors', 0);
 
-                                    $tipoVehiculoBL = new TipoVehiculoNegocio();
+                                    $seguroBL = new SegurosNegocio();
                                              
-                                    $datosVehiculo = $tipoVehiculoBL->obtener();
+                                    $seguros = $seguroBL->obtenerSeguro($idDecodificado);
 
-                                    for ($i = 0; $i < count($datosVehiculo); $i++) {
+                                    for ($i = 0; $i < count($seguros); $i++) {
 
-                                        $tipoVehiculo = $datosVehiculo[$i];
+                                        $seguro = $seguros[$i];
 
                                         echo'
                                             <tr>
-                                                <td ><p class="dato">'.$tipoVehiculo->getId().'</p></td>
-                                                <td ><p class="dato">'.$tipoVehiculo->getTipoVehiculo().'</p></td>
-                                                <td >
-                                                    <p class="accion">
-                                                        <form method = "POST">
-                                                            <input id="idTipoVehiculo" name="idTipoVehiculo" value="'.$tipoVehiculo->getId().'" type="hidden">
-                                                            <input type="submit" name="Gestionar" class="Gestionar" value="Gestionar">
-                                                        </form>
-                                                    </p>
-                                                </td>
+                                            <td ><p class="dato">'.$seguro->getId().'</p></td>
+                                            <td ><p class="dato">'.$seguro->getSeguro().'</p></td>
+                                            <td ><p class="dato">'.$seguro->getPrecio().'</p></td>
+                                            <td class="accion">
+                                                <p class="accion">
+                                                    <form method = "POST" action = "'.htmlspecialchars($_SERVER["PHP_SELF"]).'">
+                                                        <input id="permiso" name="permiso" value="" type="hidden">
+
+                                                        <input type="submit" id="actualizar" name="actualizar" class="Actualizar" value="🔁">
+
+                                                        <input id="idVehiculo" name="idVehiculo" value="'.$seguro->getId().'" type="hidden">
+
+                                                        <input type="submit" id="eliminar" name="eliminar" class="Eliminar" value="➖" onclick="eliminarSeguro()">
+                                                    </form>
+                                                <p>
+                                            </td>
                                             </tr>
                                         ';
                                     }
@@ -319,6 +326,6 @@
         </div>
         </div>
     </div>
-    <script src="JS_Admin_TipoVehiculo.js"></script>
+    <script src="JS_Admin_Seguros.js"></script>
 </body>
 </html>

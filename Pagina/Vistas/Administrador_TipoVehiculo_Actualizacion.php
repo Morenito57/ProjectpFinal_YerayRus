@@ -19,7 +19,7 @@
 
     if($_SERVER["REQUEST_METHOD"]=="POST") {
 
-        $TipoVehiculoBL = new TipoVehiculoReglasNegocio();
+        $TipoVehiculoBL = new TipoVehiculoNegocio();
 
         $perfil =  $TipoVehiculoBL->actualizarTipoVehiculoComoAdmin( $_POST['idTipoVehiculo'], $_POST['tipoVehiculo']);
 
@@ -191,7 +191,7 @@
                             ini_set('display_errors', 'On');
                             ini_set('html_errors', 0);
 
-                            $TipoVehiculosBL = new TipoVehiculoReglasNegocio();
+                            $TipoVehiculosBL = new TipoVehiculoNegocio();
 
                             $datosTipoVehiculo = $TipoVehiculosBL->obtenerTipoVehiculo($idDecodificado);   
                             echo'

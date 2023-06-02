@@ -268,7 +268,7 @@
                       require("../Negocio/tipoVehiculoNegocio.php");
                       ini_set('display_errors', 'On');
                       ini_set('html_errors', 0);
-                      $tipoVehiculosBL = new TipoVehiculoReglasNegocio();
+                      $tipoVehiculosBL = new TipoVehiculoNegocio();
                       $datosTipoVehiculos = $tipoVehiculosBL->obtener();
                       echo "<option value=Inicio_Con_Loggin.php>Todos</option>";
                       foreach($datosTipoVehiculos as $datosTipoVehiculo){

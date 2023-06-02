@@ -2,7 +2,7 @@
     ini_set('display_errors', 'On');
     ini_set('html_errors', 0);
     require("../AccesoDatos/tipoVehiculoAccesoDatos.php");
-    class TipoVehiculoReglasNegocio{
+    class TipoVehiculoNegocio{
         private $_Id;
         private $_TipoVehiculo;
 
@@ -30,7 +30,7 @@
             $listaTipoVehiculos = array();
             
             foreach ($results as $tipoVehiculos) {
-                $oTipoVehiculosReglasNegocio = new TipoVehiculoReglasNegocio();
+                $oTipoVehiculosReglasNegocio = new TipoVehiculoNegocio();
                 $oTipoVehiculosReglasNegocio->init($tipoVehiculos['Id'], $tipoVehiculos['TipoVehiculo']);
                 array_push($listaTipoVehiculos, $oTipoVehiculosReglasNegocio);
             }
@@ -44,7 +44,7 @@
             $listaTipoVehiculos = array();
 
             foreach ($results as $tipoVehiculos) {
-                $oTipoVehiculosReglasNegocio = new TipoVehiculoReglasNegocio();
+                $oTipoVehiculosReglasNegocio = new TipoVehiculoNegocio();
                 $oTipoVehiculosReglasNegocio->init($tipoVehiculos['Id'], $tipoVehiculos['TipoVehiculo']);
                 array_push($listaTipoVehiculos,$oTipoVehiculosReglasNegocio);            
             }            

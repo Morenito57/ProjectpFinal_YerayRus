@@ -32,7 +32,7 @@ function redirigirPagina(){
   }
 }
 
-  function eliminarUser(){
+  function eliminarSeguro(){
     var confirmation = confirm('¿Estás seguro que quieres eliminar estos datos?');
     if (confirmation) {
             document.getElementById('permiso').value = '1';
