@@ -257,7 +257,7 @@
                     </select>
                     <select class="pestaña" id="pestañaAlquileres" name="pestañaAlquileres" onchange="redirigirPagina()">
                         <option value="">Alquileres</option>
-                        <option value="">Alquileres All</option>
+                        <option value="Administrador_Alquileres.php">Alquileres All</option>
                         <option value="Administrador_Extras.php">Extras</option>
                         <option value="Administrador_Seguros.php">Seguros</option>
                         <option value="">Cargos</option>

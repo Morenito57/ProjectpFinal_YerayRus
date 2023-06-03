@@ -1,47 +1,21 @@
 <?php
     session_start();
 
-    require ("../Negocio/vehiculoReglasNegocio.php");
-
-
     ini_set('display_errors', 'On');
     ini_set('html_errors', 0);
+
+    $usuario = $_SESSION['usuario'];
 
     if (!isset($_SESSION['usuario'])) {
         header("Location: loginVista.php");
     }
 
-    if (isset($_GET['id'])) {
-        $id = $_GET['id'];
-        $idDecodificado = urldecode($id);
-    } else {
-        header("Location: Administrador_Vehiculos.php");
-    }
-
     if($_SERVER["REQUEST_METHOD"]=="POST") {
+        if(isset($_POST['Gestionar'])) {
 
-        if (isset($_POST['eliminar'])) {
+            $id = $_POST['idAlquiler'];
 
-            $permiso = $_POST['permiso'];
-
-            if ($permiso == "1") {
-                $Vehiculo = $_POST['idVehiculo'];
-
-                $vehiculoBL = new VehiculosReglasNegocio();
-
-                $coche =  $vehiculoBL->eliminarVehiculo($Vehiculo);
-
-                header("Location: Administrador_Vehiculos.php");
-            }else{
-                echo '<script>alert("Error.");</script>';
-            }
-        }elseif (isset($_POST['actualizar'])){
-
-            $Usuario = $_POST['idVehiculo'];
-            
-            header("Location: Administrador_Vehiculo_Actualizacion.php?id=".urlencode($Usuario));
-            
-            exit();
+            header("Location: Administrador_Alquileres_Gestion.php?id=".urlencode($id));
         }
     }
 
@@ -150,6 +124,19 @@
             float: left;
         }
 
+        .opcionesOrden{
+            margin-top: 26px;
+            padding-top: 10px;
+            padding-bottom: 10px;
+            padding-right: 10px;
+            padding-left: 10px;
+            font-size: 25px;
+            background-color: rgb(61, 9, 9);
+            border: 3px solid rgb(173, 32, 32);
+            color: white;
+            float: right;
+        }
+
         .caja_area_personal{
             margin: auto;
             width: 95%;
@@ -167,10 +154,17 @@
         h1{
             text-align: center;
             color: white;
-            width: 90%;
             margin-top: 30px;
-            margin-bottom: 30px;
+            width: 90%;
             margin-left: 90px;
+        }
+
+        .añadir{
+            margin-bottom: 30px;
+            text-decoration: none;
+            float: right;
+            margin-right: 25px;
+            font-size: 40px;
         }
 
         table{
@@ -203,6 +197,8 @@
         .accion{
             text-decoration: none;
             text-align: center;
+            padding: 0%;
+            margin: 0%;
         }
 
         .Gestionar{
@@ -212,23 +208,17 @@
             background-color: rgb(61, 9, 9);
             color: white;
         }
-        .Eliminar{
-            background-color: rgb(61, 9, 9);
-        }
-
-        .Actualizar{
-            background-color: rgb(61, 9, 9);
-        }
-
-        .imagenVehiculo{
-            height: 100px;
-            width: 100%;
-        }
 
         .clase{
         }
 
         .dato{
+            padding-left: 5px;
+        }
+
+        .imagenVehiculo{
+            height: 100px;
+            width: 100%;
         }
 
     </style>
@@ -245,20 +235,19 @@
                     <label for="busqueda" class="lupa">🔎</label>
                     <select class="opcionesBuscador" id="opcionesTablaBuscador">
                         <option value=""></option>
-                        <option value="Vehiculo.Id">Id</option>
-                        <option value="IdTipoVehiculo">IdTipoVehiculo</option>
-                        <option value="Imagen">Imagen</option>
-                        <option value="Nombre">Nombre</option>
-                        <option value="Matricula">Matricula</option>
-                        <option value="Caballos">Caballos</option>
-                        <option value="Kilometros">Kilometros</option>
-                        <option value="Plazas">Plazas</option>
-                        <option value="Precio">Precio</option>
-                        <option value="Estado">Estado</option>
-                        <option value="Descripcion">Descripcion</option>
-                        <option value="TipoVehiculo.TipoVehiculo">TipoVehiculo</option>
+                        <option value="Alquiler.Id">IdAlquiler</option>
+                        <option value="Alquiler.IdUser">IdUser</option>
+                        <option value="Alquiler.IdVehiculo">IdVehiculo</option>
+                        <option value="Cargo.Id">IdCargo</option>
+                        <option value="Seguros.Id">IdSeguros</option>
+                        <option value="Extras.Id">IdExtras</option>
+                        <option value="Alquiler.FechaInicio">FechaInicio</option>
+                        <option value="Alquiler.FechaFinal">FechaFinal</option>
+                        <option value="Alquiler.TotalDelPrecio">TotalDelPrecio</option>
+                        <option value="Alquiler.Estado">Estado</option>
+
                     </select>
-                    <input type="text" id="busqueda" onkeyup="obtenerDatos()" placeholder="Busca">
+                    <input type="text" id="busqueda" onkeyup="obtenerDatosAlquileres()" placeholder="Busca">
                     <select class="opcionesBuscador" id="opcionesBuscador" onchange="redirigirPagina()">
                         <option value=""></option>
                     </select>
@@ -280,82 +269,68 @@
                         <option value="Administrador_TipoVehiculo.php">Tipo Vehiculo</option>
                     </select>
 
+                    <select class="opcionesOrden" id="opcionesOrden" name="opcionesOrden" onchange="redirigirPagina()">
+                        <option value="" >Ordenar</option>
+                        <option value="" >Edad</option>
+                        <option value="" >Ordenar</option>
+                    </select>
+
                 </div>
             </div>
             <div class="divRestoCuerpo">
                 <div class="caja_area_personal">
                     <div class="contenido">
-                            <h1>Gestion Vehiculo</h1>
+                            <h1>Alquileres</h1>
+                            <a class="añadir" href="Administrador_Alquileres_Crear.php">➕</a>
                             <table>
                                 <tr>
                                     <th><p class="clase">Id</p></th>
-                                    <th><p class="clase">Imagen Vehiculo</p></th>
-                                    <th><p class="clase">Nombre</p></th> 
-                                    <th><p class="clase">Marca</p></th>
-                                    <th><p class="clase">Matricula</p></th>
-                                    <th><p class="clase">Año</p></th> 
-                                    <th><p class="clase">Caballos</p></th>
-                                    <th><p class="clase">Kilometros</p></th>
-                                    <th><p class="clase">Plazas</p></th>
-                                    <th><p class="clase">Estado</p></th>
-                                    <th><p class="clase">Precio</p></th>
-                                    <th><p class="clase">Descripcion</p></th>
-                                    <th><p class="clase">Id Tipo Vehiculo</p></th>
-                                    <th><p class="clase">Tipo Vehiculo</p></th>
+                                    <th><p class="clase">Id User</p></th>
+                                    <th><p class="clase">Id Vehiculo</p></th>
+                                    <th><p class="clase">Id Cargo</p></th>
+                                    <th><p class="clase">Seguro Id </p></th> 
+                                    <th><p class="clase">Extra Id </p></th> 
+                                    <th><p class="clase">Fecha Inicio </p></th>
+                                    <th><p class="clase">Fecha Final</p></th> 
+                                    <th><p class="clase">Precio Total</p></th>
+                                    <th><p class="clase">Activo</p></th> 
                                     <th><p class="clase">Acciones</p></th>
                                 </tr>
 
                                 <?php
+                                    require ("../Negocio/alquileresNegocio.php");
 
                                     ini_set('display_errors', 'On');
                                     ini_set('html_errors', 0);
 
-                                    $vehiculoBL = new VehiculosReglasNegocio();
+                                    $AlquilerBL = new AlquileresNegocio();
                                              
-                                    $datosVehiculo = $vehiculoBL->obtenerVehiculoConcreto($idDecodificado);
+                                    $alquileres = $AlquilerBL->obtener();
 
-                                    for ($i = 0; $i < count($datosVehiculo); $i++) {
+                                    for ($i = 0; $i < count($alquileres); $i++) {
 
-                                        $Vehiculo = $datosVehiculo[$i];
+                                        $alquiler = $alquileres[$i];
 
                                         echo'
                                             <tr>
-                                                <td ><p class="dato">'.$Vehiculo->getId().'</p></td>
-                                                <td ><img class="imagenVehiculo" src="imagenes/FotosVehiculos/'.$Vehiculo->getImagen().'.webp"></td>
-                                                <td ><p class="dato">'.$Vehiculo->getNombre().'</p></td>
-                                                <td ><p class="dato">'.$Vehiculo->getMarca().'</p></td>
-                                                <td ><p class="dato">'.$Vehiculo->getMatricula().'</p></td>
-                                                <td ><p class="dato">'.$Vehiculo->getAño().'</p></td>
-                                                <td ><p class="dato">'.$Vehiculo->getCaballos().'</p></td>
-                                                <td ><p class="dato">'.$Vehiculo->getKilometros().'</p></td>
-                                                <td ><p class="dato">'.$Vehiculo->getPlazas().'</p></td>
-                                                <td ><p class="dato">'.$Vehiculo->getEstado().'</p></td>
-                                                <td ><p class="dato">'.$Vehiculo->getPrecio().'</p></td>
-                                                <td ><p class="dato">';
-                                                $descripcion = $Vehiculo->getDescripcion();
-                                                if (strlen($descripcion) > 90) {
-                                                  echo substr($descripcion, 0, 90) . "...";
-                                                } else {
-                                                  echo $descripcion;
-                                                }
-                                        echo'
+                                            <td ><p class="dato">'.$alquiler->getIdAlquiler().'</p></td>
+                                            <td ><p class="dato">'.$alquiler->getIdUser().'</p></td>
+                                            <td ><p class="dato">'.$alquiler->getIdVehiculo().'</p></td>
+                                            <td ><p class="dato">'.$alquiler->getIdCargo().'</p></td>
+                                            <td ><p class="dato">'.$alquiler->getIdSeguros().'</p></td>
+                                            <td ><p class="dato">'.$alquiler->getIdExtras().'</p></td>
+                                            <td ><p class="dato">'.$alquiler->getFechaInicio().'</p></td>
+                                            <td ><p class="dato">'.$alquiler->getFechaFinal().'</p></td>
+                                            <td ><p class="dato">'.$alquiler->getTotalDelPrecio().'</p></td>
+                                            <td ><p class="dato">'.$alquiler->getEstado().'</p></td>
+                                            <td >
+                                                <p class="accion">
+                                                    <form method = "POST">
+                                                        <input id="idAlquiler" name="idAlquiler" value="'.$alquiler->getIdAlquiler().'" type="hidden">
+                                                        <input type="submit" name="Gestionar" class="Gestionar" value="Gestionar">
+                                                    </form>
                                                 </p>
-                                                <td ><p class="dato">'.$Vehiculo->getIdTipoVehiculo().'</p></td>
-                                                <td ><p class="dato">'.$Vehiculo->getTipoVehiculo().'</p></td>
-                                                <td class="accion">
-                                                    <p class="accion">
-
-                                                        <form method = "POST" action = "'.htmlspecialchars($_SERVER["PHP_SELF"]).'">
-                                                            <input id="permiso" name="permiso" value="" type="hidden">
-
-                                                            <input type="submit" id="actualizar" name="actualizar" class="Actualizar" value="🔁">
-
-                                                            <input id="idVehiculo" name="idVehiculo" value="'.$Vehiculo->getId().'" type="hidden">
-
-                                                            <input type="submit" id="eliminar" name="eliminar" class="Eliminar" value="➖" onclick="eliminarVehiculo()">
-                                                        </form>
-                                                    <p>
-                                                </td>
+                                            </td>
                                             </tr>
                                         ';
                                     }
@@ -369,6 +344,6 @@
         </div>
         </div>
     </div>
-    <script src="JS_Admin_Vehiculo.js"></script>
+    <script src="JS_Admin_Alquileres.js"></script>
 </body>
 </html>
