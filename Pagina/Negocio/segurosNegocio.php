@@ -65,6 +65,12 @@
             return $results;
         }
 
+        function crearSeguro($seguro, $precio) {
+            $seguroDAL = new SegurosAccesoDatos();
+            $results = $seguroDAL->crearSeguro($seguro, $precio);
+            return $results;
+        }
+
     }
 
 ?>

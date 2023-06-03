@@ -122,7 +122,7 @@
             $extra = mysqli_real_escape_string($conexion, $extra);
             $precio = mysqli_real_escape_string($conexion, $precio);
 
-            $consulta1 = mysqli_prepare($conexion, "INSERT INTO Extras(Extra, Precio) VALUES (??);");
+            $consulta1 = mysqli_prepare($conexion, "INSERT INTO Extras(Extra, Precio) VALUES (?,?);");
             $consulta1->bind_param("si", $extra, $precio);
             $consulta1->execute();    
             header("Location: Administrador_Extras.php");

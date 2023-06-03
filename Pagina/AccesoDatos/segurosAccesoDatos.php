@@ -110,5 +110,26 @@
 
         }
 
+        function crearSeguro($seguro, $precio) {
+        
+            $conexion = mysqli_connect('localhost','root','');
+        
+            if (mysqli_connect_errno()) {
+                echo "Error al conectar a MySQL: ". mysqli_connect_error();
+            }
+        
+            mysqli_select_db($conexion, 'LegendaryMotorsport');
+    
+            $seguro = mysqli_real_escape_string($conexion, $seguro);
+            $precio = mysqli_real_escape_string($conexion, $precio);
+
+            $consulta1 = mysqli_prepare($conexion, "INSERT INTO Seguros(Seguro, Precio) VALUES (?,?);");
+            $consulta1->bind_param("si", $seguro, $precio);
+            $consulta1->execute();    
+            header("Location: Administrador_Seguros.php");
+            mysqli_close($conexion);
+            exit();
+        }
+
     }
 ?>
