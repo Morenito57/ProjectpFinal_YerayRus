@@ -1,7 +1,7 @@
 <?php
     session_start();
 
-    require ("../Negocio/extrasNegocio.php");
+    require ("../Negocio/segurosNegocio.php");
 
     ini_set('display_errors', 'On');
     ini_set('html_errors', 0);
@@ -14,16 +14,16 @@
         $id = $_GET['id'];
         $idDecodificado = urldecode($id);
     } else {
-        header("Location: Administrador_Extras.php");
+        header("Location: Administrador_Seguros.php");
     }
 
     if($_SERVER["REQUEST_METHOD"]=="POST") {
 
-        $TipoVehiculoBL = new ExtrasNegocio();
+        $TipoVehiculoBL = new SegurosNegocio();
 
-        $perfil =  $TipoVehiculoBL->actualizarExtra( $_POST['idExtra'], $_POST['extra'], $_POST['precio']);
+        $perfil =  $TipoVehiculoBL->actualizarSeguro( $_POST['idSeguro'], $_POST['seguro'], $_POST['precio']);
 
-        header("Location: Administrador_Extras.php");
+        header("Location: Administrador_Seguros.php");
 
     }
 
@@ -185,39 +185,39 @@
             <div class="divRestoCuerpo">
                 <div class="caja_area_personal">
                     <div class="contenido">
-                        <h1>Actualizar Extra</h1>
+                        <h1>Actualizar Seguro</h1>
                         <form method = "POST" action = "<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
                         <?php
                             ini_set('display_errors', 'On');
                             ini_set('html_errors', 0);
 
-                            $extraBL = new ExtrasNegocio();
+                            $seguroBL = new SegurosNegocio();
                                     
-                            $extras = $extraBL->obtenerExtra($idDecodificado);
+                            $seguros = $seguroBL->obtenerSeguro($idDecodificado);
 
-                            for ($i = 0; $i < count($extras); $i++) {
+                            for ($i = 0; $i < count($seguros); $i++) {
 
-                                $extra = $extras[$i];
+                                $seguro = $seguros[$i];
                             echo'
                                 <table class="tabla_datos">
                                     <tr class="tr_datos">
                                         <td class="td_datos_texto">
-                                            <p class="datos_guardados">Extra: <span class="datosUser">'.$extra->getExtra().'</span></p>
+                                            <p class="datos_guardados">Seguro: <span class="datosUser">'.$seguro->getSeguro().'</span></p>
                                         </td>
                                         <td class="td_datos_input">
-                                            <input type="text" class="inputs" id="extra" name="extra" placeholder="Extra" pattern="[A-Za-z0-9áéíóúÁÉÍÓÚñÑ\s\-,.]+">
+                                            <input type="text" class="inputs" id="seguro" name="seguro" placeholder="Seguro" pattern="[A-Za-z0-9áéíóúÁÉÍÓÚñÑ\s\-,.]+">
                                         </td>
                                     </tr>
                                     <tr class="tr_datos">
                                         <td class="td_datos_texto">
-                                            <p class="datos_guardados">Nombre: <span class="datosUser">'.$extra->getPrecio().'</span></p>
+                                            <p class="datos_guardados">Nombre: <span class="datosUser">'.$seguro->getPrecio().'</span></p>
                                         </td>
                                         <td class="td_datos_input">
                                             <input type="number" class="inputs" id="precio" name="precio" placeholder="Precio" min="0" max="9999">
                                         </td>
                                     </tr>
 
-                                    <input id="idExtra" name="idExtra" value="'.$extra->getId().'" type="hidden">
+                                    <input id="idSeguro" name="idSeguro" value="'.$seguro->getId().'" type="hidden">
 
                                 ';
                             }

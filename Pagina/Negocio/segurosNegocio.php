@@ -59,6 +59,12 @@
             return $results;
         }
 
+        function actualizarSeguro($id, $seguro, $precio) {
+            $seguroDAL = new SegurosAccesoDatos();
+            $results = $seguroDAL->actualizarSeguro($id, $seguro, $precio);
+            return $results;
+        }
+
     }
 
 ?>

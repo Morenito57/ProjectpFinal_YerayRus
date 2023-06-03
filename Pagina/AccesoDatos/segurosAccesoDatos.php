@@ -83,5 +83,32 @@
             exit();
         }
 
+        function actualizarSeguro($id, $seguro, $precio) {
+
+            $conexion = mysqli_connect('localhost','root','');
+            if (mysqli_connect_errno())
+            {
+                    echo "Error al conectar a MySQL: ". mysqli_connect_error();
+            }
+            mysqli_select_db($conexion, 'LegendaryMotorsport');
+
+            $id = mysqli_real_escape_string($conexion, $id);
+
+            if ($seguro !== null && $seguro !== '') {
+                $seguro = mysqli_real_escape_string($conexion, $seguro);
+                $consulta1 = mysqli_prepare($conexion,"UPDATE Seguros SET Seguro = ? WHERE Id = ?;");
+                $consulta1->bind_param("si",$seguro,$id);
+                $consulta1->execute();
+            }
+
+            if ($precio !== null && $precio !== '') {
+                $precio = mysqli_real_escape_string($conexion, $precio);
+                $consulta2 = mysqli_prepare($conexion,"UPDATE Seguros SET Precio = ? WHERE Id = ?;");
+                $consulta2->bind_param("ii",$precio,$id);
+                $consulta2->execute();
+            }
+
+        }
+
     }
 ?>
