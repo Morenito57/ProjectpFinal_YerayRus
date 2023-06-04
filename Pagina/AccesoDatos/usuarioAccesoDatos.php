@@ -83,7 +83,7 @@
             }
             
             mysqli_select_db($conexion, 'LegendaryMotorsport');
-            $consulta1 = mysqli_prepare($conexion, "SELECT Usuario.NombreUsuario AS Usuario, Usuario.Clave AS Clave, Usuario.Saldo AS Saldo, Usuario.TipoDeUsuario AS TipoUsuario, Activo, DatosPersonales.Nombre AS Nombre, DatosPersonales.Apellidos AS Apellidos, DatosPersonales.FechaNacimiento AS FechaNacimiento, DatosPersonales.Direccion AS Direccion, DatosPersonales.DNI AS DNI, DatosContacto.Telefono AS Telefono, DatosContacto.Email AS Email, DatosContacto.Otro AS Otro, IdDatosContacto, IdDatosPersonales FROM Usuario INNER JOIN DatosPersonales ON Usuario.IdDatosPersonales = DatosPersonales.Id INNER JOIN DatosContacto ON Usuario.IdDatosContacto = DatosContacto.Id WHERE Usuario.NombreUsuario like (?);");
+            $consulta1 = mysqli_prepare($conexion, "SELECT Usuario.NombreUsuario AS Usuario, Usuario.Clave AS Clave, Usuario.Saldo AS Saldo, Usuario.TipoDeUsuario AS TipoUsuario, Usuario.Activo as Activo, DatosPersonales.Nombre AS Nombre, DatosPersonales.Apellidos AS Apellidos, DatosPersonales.FechaNacimiento AS FechaNacimiento, DatosPersonales.Direccion AS Direccion, DatosPersonales.DNI AS DNI, DatosContacto.Telefono AS Telefono, DatosContacto.Email AS Email, DatosContacto.Otro AS Otro, Usuario.IdDatosContacto as IdDatosContacto, Usuario.IdDatosPersonales as IdDatosPersonales FROM Usuario INNER JOIN DatosPersonales ON Usuario.IdDatosPersonales = DatosPersonales.Id INNER JOIN DatosContacto ON Usuario.IdDatosContacto = DatosContacto.Id WHERE Usuario.NombreUsuario like (?);");
             $consulta1->bind_param("s", $usuario);
             $consulta1->execute();
             $result = $consulta1->get_result();

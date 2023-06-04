@@ -9,7 +9,7 @@
             $letra = $_GET['letra'];
             $campo = $_GET['campo'];
 
-            $columnas_permitidas = ["NombreUsuario", "Clave", "Saldo", "TipoDeUsuario", "Activo", "IdDatosContacto", "Telefono", "Email", "Otro", "IdDatosPersonales", "Nombre", "Apellidos", "FechaNacimiento", "Direccion", "DNI"];
+            $columnas_permitidas = ["Usuario.NombreUsuario", "Usuario.Clave", "Usuario.Saldo", "Usuario.TipoDeUsuario", "Usuario.Activo", "Usuario.IdDatosContacto", "DatosContacto.Telefono", "DatosContacto.Email", "DatosContacto.Otro", "Usuario.IdDatosPersonales", "DatosPersonales.Nombre", "DatosPersonales.Apellidos", "DatosPersonales.FechaNacimiento", "DatosPersonales.Direccion", "DatosPersonales.DNI"];
             if (!in_array($campo, $columnas_permitidas)) {
                 die('Nombre de la columna no permitido');
             }

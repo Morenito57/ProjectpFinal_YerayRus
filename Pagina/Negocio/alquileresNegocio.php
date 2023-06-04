@@ -83,5 +83,18 @@
             return $listaAlquileres;
         } 
 
+        function obtenerAlquiler($id) {
+            $alquilerDAL = new AlquileresAccesoDatos();
+            $results = $alquilerDAL->obtenerAlquiler($id);
+            $listaAlquileres = array();
+        
+            foreach ($results as $alquileres) {
+                $oAlquilerReglasNegocio = new AlquileresNegocio();
+                $oAlquilerReglasNegocio->init($alquileres['IdAlquiler'], $alquileres['IdUser'], $alquileres['IdVehiculo'],$alquileres['IdCargo'], $alquileres['IdSeguros'], $alquileres['IdExtras'], $alquileres['FechaInicio'], $alquileres['FechaFinal'], $alquileres['TotalDelPrecio'], $alquileres['Estado']);
+                array_push($listaAlquileres, $oAlquilerReglasNegocio);
+            }
+            return $listaAlquileres;
+        } 
+
     }
 ?>
