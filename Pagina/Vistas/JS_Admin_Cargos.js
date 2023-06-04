@@ -47,6 +47,24 @@ function eliminarCargo(){
     }
   }
 
+  function entrgaCoche(){
+    let estado = document.getElementById('estado').value;
+    if(estado == ''){
+        let resultado = prompt('En que fecha se ha entregado el vehiculo, escribelo con el siguiente formato: yyyy-mm-dd');
+        let resultadoFecha = Date.parse(resultado);
+        if(isNaN(resultadoFecha)){
+            alert('El formato de la fecha no es el correcto');
+            document.getElementById('permiso').value = '0';
+        }else{
+            document.getElementById('permiso').value = '1';
+            document.getElementById('fechaDevolucion').value = resultado;
+        }
+    }else{
+        alert('Ya hay una fecha establecida');
+    }
+    
+  }
+
   function obtenerDatosCargos() {
     let letra = document.getElementById("busqueda").value;
     let campo = document.getElementById("opcionesTablaBuscador").value;

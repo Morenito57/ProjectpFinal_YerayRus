@@ -78,9 +78,9 @@
             return $results;
         }
 
-        function actualizarcargo($id, $estado) {
+        function entregaCocghe($idCargo, $idAlquiler, $fecha) {
             $cargoDAL = new CargosAccesoDatos();
-            $results = $cargoDAL->actualizarcargo($id, $estado);
+            $results = $cargoDAL->entregaCocghe($idCargo, $idAlquiler, $fecha);
             return $results;
         }
     }

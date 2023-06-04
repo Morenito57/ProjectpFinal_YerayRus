@@ -85,7 +85,7 @@
 
         }
 
-        function actualizarcargo($id, $estado) {
+        function entregaCocghe($idCargo, $idAlquiler, $fecha) {
 
             $conexion = mysqli_connect('localhost','root','');
             if (mysqli_connect_errno())
@@ -94,23 +94,54 @@
             }
             mysqli_select_db($conexion, 'LegendaryMotorsport');
 
-            $id = mysqli_real_escape_string($conexion, $id);
+            $idCargo = mysqli_real_escape_string($conexion, $idCargo);
+            $idAlquiler = mysqli_real_escape_string($conexion, $idAlquiler);
+            $fecha = mysqli_real_escape_string($conexion, $fecha);
+            $fecha = date('Y-m-d', strtotime($fecha));
 
-            if ($estado !== '') {
-                if ($estado === Null || $estado == "Null" || $estado == "null" || $estado === null) {
-                    $estado = mysqli_real_escape_string($conexion, $estado);
-                    $consulta1 = mysqli_prepare($conexion,"UPDATE cargo SET Estado = Null WHERE Id = ?;");
-                    $consulta1->bind_param("i",$id);
-                    $consulta1->execute();
-                }else{
-                    $estado = mysqli_real_escape_string($conexion, $estado);
-                    $consulta1 = mysqli_prepare($conexion,"UPDATE cargo SET Estado = ? WHERE Id = ?;");
-                    $consulta1->bind_param("si",$estado,$id);
-                    $consulta1->execute();
-                }
+            $consulta1 = mysqli_prepare($conexion, "UPDATE Cargo JOIN Alquiler ON Cargo.Alquiler_id = Alquiler.Id SET Cargo.Activo = 1, Cargo.Pagado = 0 WHERE CURDATE() > Alquiler.FechaFinal AND Cargo.FechaDevuelto IS NULL AND Alquiler.Id = ?;");
+            $consulta1->bind_param('i', $idAlquiler);
+            $consulta1->execute();
 
+            $consulta2 = mysqli_prepare($conexion, "UPDATE Cargo SET FechaDevuelto = ? WHERE Alquiler_id = ?;");
+            $consulta2->bind_param('si', $fecha, $idAlquiler);
+            $consulta2->execute();
+
+            $consulta3 = mysqli_prepare($conexion, "SELECT FechaFinal FROM Alquiler WHERE Id = ?;");
+            $consulta3->bind_param('i', $idAlquiler);
+            $consulta3->execute();
+
+            $resultado = mysqli_stmt_get_result($consulta3);
+            $registro = mysqli_fetch_assoc($resultado);
+            $fechaFinal = $registro['FechaFinal'];
+
+            if ($fecha > $fechaFinal){
+                $consulta4 = mysqli_prepare($conexion, "UPDATE Cargo JOIN (SELECT Alquiler.Id, (DATEDIFF(?, Alquiler.FechaFinal) * 2) * (Vehiculo.Precio + (IFNULL(SUM(Seguros.Precio), 0) + IFNULL(SUM(Extras.Precio), 0))) AS Total FROM Alquiler JOIN Vehiculo ON Alquiler.IdVehiculo = Vehiculo.Id LEFT JOIN Alquiler_Seguro ON Alquiler.Id = Alquiler_Seguro.Alquiler_id LEFT JOIN Seguros ON Alquiler_Seguro.Seguro_id = Seguros.Id LEFT JOIN Alquiler_Extra ON Alquiler.Id = Alquiler_Extra.Alquiler_id LEFT JOIN Extras ON Alquiler_Extra.Extra_id = Extras.Id WHERE Alquiler.Id = ?) subquery ON Cargo.Alquiler_id = subquery.Id SET Cargo.TotalCargo = subquery.Total WHERE Cargo.Alquiler_id = ?;");
+                $consulta4->bind_param('sii', $fecha, $idAlquiler, $idAlquiler);
+                $consulta4->execute();
+            }else{
+                $consulta4 = mysqli_prepare($conexion, "UPDATE Cargo SET TotalCargo = 0, Pagado = 1, Activo = 0 WHERE Id = ?");
+                $consulta4->bind_param('i', $idCargo);
+                $consulta4->execute();
             }
+        
+            $consulta5 = mysqli_prepare($conexion, "UPDATE Alquiler SET Estado = 0 WHERE Id = ?;");
+            $consulta5->bind_param('i', $idAlquiler);
+            $consulta5->execute();
 
+            $consulta6 = mysqli_prepare($conexion, "SELECT IdVehiculo FROM Alquiler WHERE Id = ?;");
+            $consulta6->bind_param('i', $idAlquiler);
+            $consulta6->execute();
+
+            $resultado2 = mysqli_stmt_get_result($consulta6);
+            $registro2 = mysqli_fetch_assoc($resultado2);
+            $vehiculo = $registro2['IdVehiculo'];
+
+            $consulta7 = mysqli_prepare($conexion, "UPDATE Vehiculo SET Estado = true WHERE Id = ?;");
+            $consulta7->bind_param('i', $vehiculo);
+            $consulta7->execute();
+
+            mysqli_close($conexion);
         }
 
 

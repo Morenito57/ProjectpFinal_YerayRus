@@ -34,11 +34,19 @@
             }
         }elseif (isset($_POST['actualizar'])){
 
-            $id = $_POST['idCargo'];
-            
-            header("Location: Administrador_Cargos_Actualizacion.php?id=".urlencode($id));
-            
-            exit();
+                $permiso = $_POST['permiso'];
+    
+                if ($permiso == "1") {
+                    $idCargo = $_POST['idCargo'];
+                    $idAlquiler = $_POST['idAlquiler'];
+                    $fecha = $_POST['fechaDevolucion'];
+
+                    $cargoBL = new CargosNegocio();
+    
+                    $coche =  $cargoBL->entregaCocghe($idCargo, $idAlquiler, $fecha);
+                }else{
+                    echo '<script>alert("Error.");</script>';
+                }
         }
     }
 
@@ -242,6 +250,8 @@
 
         .Actualizar{
             background-color: rgb(61, 9, 9);
+            color: white;
+            padding: 4px;
         }
 
         .clase{
@@ -352,10 +362,12 @@
                                             <p class="accion">
                                                 <form method = "POST" action = "'.htmlspecialchars($_SERVER["PHP_SELF"]).'">
                                                     <input id="permiso" name="permiso" value="" type="hidden">
+                                                    <input id="fechaDevolucion" name="fechaDevolucion" value="" type="hidden">
 
-                                                    <input type="submit" id="actualizar" name="actualizar" class="Actualizar" value="🔁">
+                                                    <input type="submit" id="actualizar" name="actualizar" class="Actualizar" value="Entrega" onclick="entrgaCoche()">
 
                                                     <input id="idCargo" name="idCargo" value="'.$cargo->getId().'" type="hidden">
+                                                    <input id="idAlquiler" name="idAlquiler" value="'.$cargo->getAlquilerId().'" type="hidden">
                                                     <input id="estado" name="estado" value="'.$cargo->getActivo().'" type="hidden">
 
                                                     <input type="submit" id="eliminar" name="eliminar" class="Eliminar" value="➖" onclick="eliminarCargo()">
