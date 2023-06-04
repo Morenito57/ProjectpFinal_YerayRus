@@ -36,6 +36,19 @@
                 exit();
             }
 
+            $consultaCargos = mysqli_prepare($conexion, "SELECT COUNT(*) AS TotalCargos FROM Cargo JOIN Alquiler ON Cargo.Alquiler_id = Alquiler.Id JOIN Usuario ON Alquiler.IdUser = Usuario.NombreUsuario WHERE Cargo.Activo = 1 AND Usuario.NombreUsuario = ?;");
+            $consultaCargos->bind_param("s", $IdUser);
+            $consultaCargos->execute();
+
+            $resCargo = $consultaCargos->get_result();
+            $filaCargo = $resCargo->fetch_assoc();
+            $CargosActual = $filaCargo['TotalCargos'];
+
+            if ($CargosActual > 0) {
+                header("Location: Area_Personal_Historial_Alquileres_Usuario_Vista.php");
+                exit();
+            }
+
             $consulta = mysqli_prepare($conexion, "INSERT INTO Alquiler (IdUser, IdVehiculo, FechaInicio, FechaFinal, TotalDelPrecio, Estado) VALUES (?,?,?,?,?,?);");
             $consulta->bind_param("sissii", $IdUser, $IdVehiculo, $FechaInicio, $FechaFinal, $TotalDelPrecio, $estado);
             $consulta->execute();
