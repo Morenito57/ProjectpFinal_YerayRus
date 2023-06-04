@@ -32,10 +32,16 @@ function redirigirPagina(){
   }
 }
 
-  function eliminarCargo(){
+function eliminarCargo(){
+    let estado = document.getElementById("estado").value;
     var confirmation = confirm('¿Estás seguro que quieres eliminar estos datos?');
     if (confirmation) {
-            document.getElementById('permiso').value = '1';
+      if(estado == 1 || estado == "1" || estado == null || estado == '/'){
+        alert("Este cargo no ha finalizado y no se puede borrar.");
+        document.getElementById('permiso').value = '0';
+      }else{
+        document.getElementById('permiso').value = '1';
+      }
     }else {
         document.getElementById('permiso').value = '0';
     }

@@ -1,4 +1,4 @@
-/<?php
+<?php
     ini_set('display_errors', 'On');
     ini_set('html_errors', 0);
     class CargosAccesoDatos{
@@ -31,7 +31,7 @@
             return $cargos;
         }
 
-        function obtenercargo($id){
+        function obtenerCargo($id){
 
             $conexion = mysqli_connect('localhost','root','');
 
@@ -59,7 +59,7 @@
             return $cargos;
         }
 
-        function eliminarcargo($id) {
+        function eliminarCargo($id) {
 
             $conexion = mysqli_connect('localhost','root','');
             if (mysqli_connect_errno())

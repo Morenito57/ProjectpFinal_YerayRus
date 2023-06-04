@@ -302,8 +302,25 @@
                                                 <td ><p class="dato">'.$cargo->getAlquilerId().'</p></td>
                                                 <td ><p class="dato">'.$cargo->getFechaDevuelto().'</p></td>
                                                 <td ><p class="dato">'.$cargo->getTotalCargo().'</p></td>
-                                                <td ><p class="dato">'.$cargo->getPagado().'</p></td>
-                                                <td ><p class="dato">'.$cargo->getActivo().'</p></td>
+                                                ';
+
+                                                if($cargo->getPagado() == 1){
+                                                    echo'<td ><p class="dato">Pagado</p></td>';
+                                                }else if($cargo->getPagado() === 0){
+                                                    echo'<td ><p class="dato">No Pagado</p></td>';
+                                                }else if($cargo->getPagado() === "" || $cargo->getPagado() === null){
+                                                    echo'<td ><p class="dato">No se puede pagar por ahora</p></td>';
+                                                }
+    
+                                                if($cargo->getActivo() == 1){
+                                                    echo'<td ><p class="dato">Activo</p></td>';
+                                                }else if($cargo->getActivo() == ""){
+                                                    echo'<td ><p class="dato">No hay por ahora</p></td>';
+                                                }
+                                                else if($cargo->getActivo() == 0){
+                                                    echo'<td ><p class="dato">No Activo</p></td>';
+                                                }
+                                                echo'
                                                 <td >
                                                     <p class="accion">
                                                         <form method = "POST">

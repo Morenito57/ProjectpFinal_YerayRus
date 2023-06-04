@@ -59,14 +59,14 @@
             return $listacargos;
         } 
 
-        function obtenercargo($id) {
+        function obtenerCargo($id) {
             $cargoDAL = new CargosAccesoDatos();
             $results = $cargoDAL->obtenercargo($id);
             $listacargos = array();
         
             foreach ($results as $cargos) {
                 $ocargoReglasNegocio = new CargosNegocio();
-                $ocargoReglasNegocio->init($cargos['Id'], $cargos['Alquiler_id'], $cargos['TotalCargo'],$cargos['Pagado'], $cargos['Activo']);
+                $ocargoReglasNegocio->init($cargos['Id'], $cargos['Alquiler_id'], $cargos['FechaDevuelto'], $cargos['TotalCargo'], $cargos['Pagado'], $cargos['Activo']);
                 array_push($listacargos, $ocargoReglasNegocio);
             }
             return $listacargos;
