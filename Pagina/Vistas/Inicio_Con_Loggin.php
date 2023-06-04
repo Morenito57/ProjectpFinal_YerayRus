@@ -288,7 +288,7 @@
                     <select class="opcionesOrden" id="opcionesOrden" onchange="redirigirPagina()">
                         <option value="" >Ordenar</option>
                         <?php
-                            $fullUrl = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
+                            $fullUrl = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[SERVER_NAME]$_SERVER[REQUEST_URI]";
 
                             $url_parts = parse_url($fullUrl);
 
