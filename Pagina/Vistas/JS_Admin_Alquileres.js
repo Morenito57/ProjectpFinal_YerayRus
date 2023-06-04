@@ -33,9 +33,15 @@ function redirigirPagina(){
 }
 
   function eliminarAlquiler(){
+    let estado = document.getElementById("estado").value;
     var confirmation = confirm('¿Estás seguro que quieres eliminar estos datos?');
     if (confirmation) {
-            document.getElementById('permiso').value = '1';
+      if(estado == 1 || estado == true || estado == "1" || estado == "true"){
+        alert("Esta activo no se puede eliminar.");
+        document.getElementById('permiso').value = '0';
+      }else{
+        document.getElementById('permiso').value = '1';
+      }
     }else {
         document.getElementById('permiso').value = '0';
     }

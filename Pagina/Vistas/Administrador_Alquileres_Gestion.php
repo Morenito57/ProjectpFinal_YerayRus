@@ -177,8 +177,9 @@
         h1{
             text-align: center;
             color: white;
-            margin-top: 30px;
             width: 90%;
+            margin-top: 30px;
+            margin-bottom: 30px;
             margin-left: 90px;
         }
 
@@ -220,8 +221,6 @@
         .accion{
             text-decoration: none;
             text-align: center;
-            padding: 0%;
-            margin: 0%;
         }
 
         .Gestionar{
@@ -230,13 +229,6 @@
             padding: 15px;
             background-color: rgb(61, 9, 9);
             color: white;
-        }
-
-        .clase{
-        }
-
-        .dato{
-            padding-left: 5px;
         }
 
         .imagenVehiculo{
@@ -250,6 +242,12 @@
 
         .Actualizar{
             background-color: rgb(61, 9, 9);
+        }
+
+        .clase{
+        }
+
+        .dato{
         }
 
     </style>
@@ -306,7 +304,6 @@
                 <div class="caja_area_personal">
                     <div class="contenido">
                             <h1>Gestion Alquileres</h1>
-                            <a class="añadir" href="Administrador_Alquileres_Crear.php">➕</a>
                             <table>
                                 <tr>
                                     <th><p class="clase">Id</p></th>
@@ -355,8 +352,9 @@
                                                     <input type="submit" id="actualizar" name="actualizar" class="Actualizar" value="🔁">
 
                                                     <input id="idAlquiler" name="idAlquiler" value="'.$alquiler->getIdAlquiler().'" type="hidden">
+                                                    <input id="estado" name="estado" value="'.$alquiler->getEstado().'" type="hidden">
 
-                                                    <input type="submit" id="eliminar" name="eliminar" class="Eliminar" value="➖" onclick="eliminarUser()">
+                                                    <input type="submit" id="eliminar" name="eliminar" class="Eliminar" value="➖" onclick="eliminarAlquiler()">
                                                 </form>
                                             <p>
                                         </td>

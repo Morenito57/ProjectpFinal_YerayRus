@@ -96,5 +96,10 @@
             return $listaAlquileres;
         } 
 
+        function eliminarAlquiler($id) {
+            $alquilerDAL = new AlquileresAccesoDatos();
+            $results = $alquilerDAL->eliminarAlquiler($id);
+            return $results;
+        }
     }
 ?>
