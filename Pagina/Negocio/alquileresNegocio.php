@@ -101,5 +101,11 @@
             $results = $alquilerDAL->eliminarAlquiler($id);
             return $results;
         }
+
+        function actualizarAlquiler($id, $estado) {
+            $alquilerDAL = new AlquileresAccesoDatos();
+            $results = $alquilerDAL->actualizarAlquiler($id, $estado);
+            return $results;
+        }
     }
 ?>

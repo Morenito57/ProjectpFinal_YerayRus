@@ -261,12 +261,6 @@
                         <option value="Administrador_TipoVehiculo.php">Tipo Vehiculo</option>
                     </select>
 
-                    <select class="opcionesOrden" id="opcionesOrden" name="opcionesOrden" onchange="redirigirPagina()">
-                        <option value="" >Ordenar</option>
-                        <option value="" >Edad</option>
-                        <option value="" >Ordenar</option>
-                    </select>
-
                 </div>
             </div>
             <div class="divRestoCuerpo">

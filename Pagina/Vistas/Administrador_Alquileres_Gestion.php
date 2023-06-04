@@ -36,7 +36,7 @@
 
             $id = $_POST['idAlquiler'];
             
-            header("Location: Administrador_Alquileres_Actualizacion.php?id=".urlencode($id));
+            header("Location: Administrador_Alquilerres_Actualizacion.php?id=".urlencode($id));
             
             exit();
         }
@@ -343,7 +343,16 @@
                                             <td ><p class="dato">'.$alquiler->getFechaInicio().'</p></td>
                                             <td ><p class="dato">'.$alquiler->getFechaFinal().'</p></td>
                                             <td ><p class="dato">'.$alquiler->getTotalDelPrecio().'</p></td>
-                                            <td ><p class="dato">'.$alquiler->getEstado().'</p></td>
+                                            ';
+                                            if($alquiler->getEstado() == 1){
+                                                echo'<td ><p class="dato">Activo</p></td>';
+                                            }else if($alquiler->getEstado() == ""){
+                                                echo'<td ><p class="dato">Cancelado</p></td>';
+                                            }
+                                            else if($alquiler->getEstado() == 0){
+                                                echo'<td ><p class="dato">No Activo</p></td>';
+                                            }
+                                            echo'
                                             <td class="accion">
                                             <p class="accion">
                                                 <form method = "POST" action = "'.htmlspecialchars($_SERVER["PHP_SELF"]).'">

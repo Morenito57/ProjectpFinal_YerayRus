@@ -154,8 +154,9 @@
         h1{
             text-align: center;
             color: white;
-            margin-top: 30px;
             width: 90%;
+            margin-top: 30px;
+            margin-bottom: 30px;
             margin-left: 90px;
         }
 
@@ -269,19 +270,12 @@
                         <option value="Administrador_TipoVehiculo.php">Tipo Vehiculo</option>
                     </select>
 
-                    <select class="opcionesOrden" id="opcionesOrden" name="opcionesOrden" onchange="redirigirPagina()">
-                        <option value="" >Ordenar</option>
-                        <option value="" >Edad</option>
-                        <option value="" >Ordenar</option>
-                    </select>
-
                 </div>
             </div>
             <div class="divRestoCuerpo">
                 <div class="caja_area_personal">
                     <div class="contenido">
                             <h1>Alquileres</h1>
-                            <a class="añadir" href="Administrador_Alquileres_Crear.php">➕</a>
                             <table>
                                 <tr>
                                     <th><p class="clase">Id</p></th>
@@ -322,7 +316,16 @@
                                             <td ><p class="dato">'.$alquiler->getFechaInicio().'</p></td>
                                             <td ><p class="dato">'.$alquiler->getFechaFinal().'</p></td>
                                             <td ><p class="dato">'.$alquiler->getTotalDelPrecio().'</p></td>
-                                            <td ><p class="dato">'.$alquiler->getEstado().'</p></td>
+                                            ';
+                                            if($alquiler->getEstado() == 1){
+                                                echo'<td ><p class="dato">Activo</p></td>';
+                                            }else if($alquiler->getEstado() == ""){
+                                                echo'<td ><p class="dato">Cancelado</p></td>';
+                                            }
+                                            else if($alquiler->getEstado() == 0){
+                                                echo'<td ><p class="dato">No Activo</p></td>';
+                                            }
+                                            echo'
                                             <td >
                                                 <p class="accion">
                                                     <form method = "POST">

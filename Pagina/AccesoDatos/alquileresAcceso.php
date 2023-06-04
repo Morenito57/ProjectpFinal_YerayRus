@@ -85,6 +85,34 @@
 
         }
 
+        function actualizarAlquiler($id, $estado) {
+
+            $conexion = mysqli_connect('localhost','root','');
+            if (mysqli_connect_errno())
+            {
+                    echo "Error al conectar a MySQL: ". mysqli_connect_error();
+            }
+            mysqli_select_db($conexion, 'LegendaryMotorsport');
+
+            $id = mysqli_real_escape_string($conexion, $id);
+
+            if ($estado !== '') {
+                if ($estado === Null || $estado == "Null" || $estado == "null" || $estado === null) {
+                    $estado = mysqli_real_escape_string($conexion, $estado);
+                    $consulta1 = mysqli_prepare($conexion,"UPDATE Alquiler SET Estado = Null WHERE Id = ?;");
+                    $consulta1->bind_param("i",$id);
+                    $consulta1->execute();
+                }else{
+                    $estado = mysqli_real_escape_string($conexion, $estado);
+                    $consulta1 = mysqli_prepare($conexion,"UPDATE Alquiler SET Estado = ? WHERE Id = ?;");
+                    $consulta1->bind_param("si",$estado,$id);
+                    $consulta1->execute();
+                }
+
+            }
+
+        }
+
 
     }
 ?>
