@@ -232,7 +232,8 @@
                                                 <input type="submit" name="eliminar" class="boton_area" value="Eliminar Cuenta">
                                             ';
                                         ?>
-                                        <input type="submit" name="deslogearse" class="boton_area" value="Deslogearse">
+                                        <input type="submit" name="deslogearse" class="boton_area" value="Cerrar Sesion">
+
                                     </form>
                                     <img class="logo_area" src="imagenes/Logo.png"> 
                     </div>

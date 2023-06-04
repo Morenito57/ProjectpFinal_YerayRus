@@ -73,6 +73,12 @@
             } else {
                 echo '<script>alert("Error.");</script>';
             }  
+        }elseif(isset($_POST['factura'])) { 
+
+            $idAlquiler = $_POST['IdAlquiler'];
+
+            header("Location: Factura_Alquiler_Usuario.php?idAlquiler=".urlencode($idAlquiler));
+
         }
     }
 
@@ -235,8 +241,7 @@
 
         .acciones{
             height: 100%;
-            width: 47%;
-            padding: 15px;
+            width: 30%;
             text-align: center;
             background-color: rgb(61, 9, 9);
             display: inline;
@@ -269,7 +274,8 @@
                                                 <input type="submit" name="eliminar" class="boton_area" value="Eliminar Cuenta">
                                             ';
                                         ?>
-                                        <input type="submit" name="deslogearse" class="boton_area" value="Deslogearse">
+                                        <input type="submit" name="deslogearse" class="boton_area" value="Cerrar Sesion">
+
                                     </form>
                                     <img class="logo_area" src="imagenes/Logo.png"> 
 
@@ -405,6 +411,7 @@
                                                             <input id="TotalCargo" name="TotalCargo" value="'.$Alquiler->getTotalCargo().'" type="hidden">
 
                                                             <input id="pagarCargo" type="submit" name="pagarCargo" class="acciones" value="💲" onclick="pagarCargos()">
+                                                            <input id="factura" type="submit" name="factura" class="acciones" value="🧾">
                                                         </form>
                                                     </p>
                                                 </td>

@@ -39,6 +39,13 @@
             header("Location: Administrador_Alquileres_Actualizacion.php?id=".urlencode($id));
             
             exit();
+        }elseif(isset($_POST['factura'])) { 
+
+            $idAlquiler = $_POST['idAlquiler'];
+            $idUser = $_POST['idUser'];
+
+            header("Location: Factura_Alquiler_Admin.php?idUser=".urlencode($idUser)."&idAlquiler=".urlencode($idAlquiler));
+
         }
     }
 
@@ -357,6 +364,7 @@
                                             <p class="accion">
                                                 <form method = "POST" action = "'.htmlspecialchars($_SERVER["PHP_SELF"]).'">
                                                     <input id="permiso" name="permiso" value="" type="hidden">
+                                                    <input id="idUser" name="idUser" value="'.$alquiler->getIdUser().'" type="hidden">
 
                                                     <input type="submit" id="actualizar" name="actualizar" class="Actualizar" value="🔁">
 
@@ -364,7 +372,8 @@
                                                     <input id="estado" name="estado" value="'.$alquiler->getEstado().'" type="hidden">
 
                                                     <input type="submit" id="eliminar" name="eliminar" class="Eliminar" value="➖" onclick="eliminarAlquiler()">
-                                                </form>
+                                                    <input id="factura" type="submit" name="factura" class="Actualizar" value="🧾">
+                                                    </form>
                                             <p>
                                         </td>
                                             </tr>

@@ -82,7 +82,7 @@
             $consulta6->bind_param("is", $TotalDelPrecio, $IdUser);
             $consulta6->execute();
 
-            return header("Location: Inicio_Con_Loggin.php");
+            return header("Location: Factura_Alquiler_Usuario.php?idAlquiler=".urlencode($alquiler_id));
         }
 
         function obtener(){
