@@ -1,10 +1,32 @@
+<?php
+    session_start();
+
+    ini_set('display_errors', 'On');
+    ini_set('html_errors', 0);
+
+    $usuario = $_SESSION['usuario'];
+
+    if (!isset($_SESSION['usuario'])) {
+        header("Location: loginVista.php");
+    }
+
+    if($_SERVER["REQUEST_METHOD"]=="POST") {
+        if(isset($_POST['Gestionar'])) {
+
+            $id = $_POST['idCargo'];
+
+            header("Location: Administrador_Cargos_Gestion.php?id=".urlencode($id));
+        }
+    }
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Legendary MOTORSPORT</title>
     <style>
         *{
             padding: 0%;
@@ -132,8 +154,9 @@
         h1{
             text-align: center;
             color: white;
-            margin-top: 30px;
             width: 90%;
+            margin-top: 30px;
+            margin-bottom: 30px;
             margin-left: 90px;
         }
 
@@ -147,7 +170,6 @@
 
         table{
             width: 99%;
-            height: 100%;
             border: 2px solid rgb(173, 32, 32);
             margin: auto;
             border-collapse: collapse;
@@ -155,42 +177,54 @@
         }
 
         tr{
-            width: 100%;
-            height: 100%;
             border: 2px solid rgb(173, 32, 32);
         }
 
         th{
-            width: 8%;
-            height: 30px;
+            width: 6%;
+            height: 35px;
             border: 2px solid rgb(173, 32, 32);
             background-color: rgb(77, 5, 5);
             color: white;
         }
 
         td{
-            width: 8%;
+            width: 6%;
             height: 30px;
             border: 2px solid rgb(173, 32, 32);
             color: white;
-            padding-left: 5px;
         }
 
         .accion{
             text-decoration: none;
             text-align: center;
+            padding: 0%;
+            margin: 0%;
+        }
+
+        .Gestionar{
+            height: 100%;
+            width: 100%;
+            padding: 15px;
+            background-color: rgb(61, 9, 9);
+            color: white;
         }
 
         .clase{
         }
 
         .dato{
+            padding-left: 5px;
+        }
+
+        .imagenVehiculo{
+            height: 100px;
+            width: 100%;
         }
 
     </style>
 </head>
 <body>
-    <title>Legendary MOTORSPORT</title>
     <div class="divPrincipal">
         <div class="divCabezera">
             <img class="portada" src="imagenes/Portada.png"> 
@@ -198,66 +232,91 @@
         <div class="divCuerpo">
             <div class="divCabezeraCuerpo">
                 <div class="menu">
+
                     <label for="busqueda" class="lupa">🔎</label>
-                    <input type="text" id="busqueda" onkeyup="obtenerDatos()" placeholder="Busca">
+                    <select class="opcionesBuscador" id="opcionesTablaBuscador">
+                        <option value=""></option>
+                        <option value="Id">Id</option>
+                        <option value="Alquiler_id">Alquiler_id</option>
+                        <option value="FechaDevuelto">FechaDevuelto</option>
+                        <option value="TotalCargo">TotalCargo</option>
+                        <option value="Pagado">Pagado</option>
+                        <option value="Activo">Activo</option>
+                    </select>
+                    <input type="text" id="busqueda" onkeyup="obtenerDatosCargos()" placeholder="Busca">
                     <select class="opcionesBuscador" id="opcionesBuscador" onchange="redirigirPagina()">
                         <option value=""></option>
                     </select>
+
                     <select class="pestaña" id="pestañaUsuarios" name="pestañaUsuarios" onchange="redirigirPagina()">
                         <option value="">Usuarios</option>
+                        <option value="Administrador_Usuarios.php">Usuarios All</option>
                     </select>
                     <select class="pestaña" id="pestañaAlquileres" name="pestañaAlquileres" onchange="redirigirPagina()">
                         <option value="">Alquileres</option>
-                        <option value="">Extras</option>
+                        <option value="Administrador_Alquileres.php">Alquileres All</option>
+                        <option value="Administrador_Extras.php">Extras</option>
                         <option value="Administrador_Seguros.php">Seguros</option>
-<option value="Administrador_Cargos.php">Cargos</option>
+                        <option value="Administrador_Cargos.php">Cargos</option>
                     </select>
                     <select class="pestaña" id="pestañaVehiculos" name="pestañaVehiculos" onchange="redirigirPagina()">
                         <option value="">Vehiculos</option>
-                        <option value="">Tipo Vehiculo</option>
+                        <option value="Administrador_Vehiculos.php">Vehiculos All</option>
+                        <option value="Administrador_TipoVehiculo.php">Tipo Vehiculo</option>
                     </select>
-                    <select class="opcionesOrden" id="opcionesOrden" name="opcionesOrden" onchange="redirigirPagina()">
-                        <option value="" >Ordenar</option>
-                    </select>
+
                 </div>
             </div>
             <div class="divRestoCuerpo">
                 <div class="caja_area_personal">
                     <div class="contenido">
-                        <h1>Alquileres</h1>
-                        <a class="añadir" href="a">➕</a>
-                        <form method = "POST" action = "'.htmlspecialchars($_SERVER['PHP_SELF']).'">
+                            <h1>Cargos</h1>
                             <table>
                                 <tr>
                                     <th><p class="clase">Id</p></th>
-                                    <th><p class="clase">Id User</p></th>
-                                    <th><p class="clase">Id Vehiculo</p></th>
-                                    <th><p class="clase">Fecha Inicio </p></th>
-                                    <th><p class="clase">Fecha Final</p></th> 
-                                    <th><p class="clase">Precio Total</p></th>
-                                    <th><p class="clase">Seguro Id </p></th> 
-                                    <th><p class="clase">Seguro</p></th> 
-                                    <th><p class="clase">Extra Id </p></th> 
-                                    <th><p class="clase">Extra</p></th>
-                                    <th><p class="clase">Activo</p></th> 
+                                    <th><p class="clase">Alquiler_id</p></th>
+                                    <th><p class="clase">Fecha Devuelto</p></th>
+                                    <th><p class="clase">TotalCargo</p></th>
+                                    <th><p class="clase">Pagado</p></th>
+                                    <th><p class="clase">Activo</p></th>
                                     <th><p class="clase">Acciones</p></th>
                                 </tr>
-                                <tr>
-                                    <td ><p class="dato"></p></td>
-                                    <td ><p class="dato"></p></td>
-                                    <td ><p class="dato"></p></td>
-                                    <td ><p class="dato"></p></td>
-                                    <td ><p class="dato"></p></td>
-                                    <td ><p class="dato"></p></td>
-                                    <td ><p class="dato"></p></td>
-                                    <td ><p class="dato"></p></td>
-                                    <td ><p class="dato"></p></td>
-                                    <td ><p class="dato"></p></td>
-                                    <td ><p class="dato"></p></td>
-                                    <td class="accion"><a class="accion" href="c">🔁</a><a class="accion" href="b">➖</a></td>
-                                </tr>
+
+                                <?php
+                                    require ("../Negocio/cargosNegocio.php");
+
+                                    ini_set('display_errors', 'On');
+                                    ini_set('html_errors', 0);
+
+                                    $cargoBL = new CargosNegocio();
+                                             
+                                    $cargos = $cargoBL->obtener();
+
+                                    for ($i = 0; $i < count($cargos); $i++) {
+
+                                        $cargo = $cargos[$i];
+
+                                        echo'
+                                            <tr>
+                                                <td ><p class="dato">'.$cargo->getId().'</p></td>
+                                                <td ><p class="dato">'.$cargo->getAlquilerId().'</p></td>
+                                                <td ><p class="dato">'.$cargo->getFechaDevuelto().'</p></td>
+                                                <td ><p class="dato">'.$cargo->getTotalCargo().'</p></td>
+                                                <td ><p class="dato">'.$cargo->getPagado().'</p></td>
+                                                <td ><p class="dato">'.$cargo->getActivo().'</p></td>
+                                                <td >
+                                                    <p class="accion">
+                                                        <form method = "POST">
+                                                            <input id="idCargo" name="idCargo" value="'.$cargo->getId().'" type="hidden">
+                                                            <input type="submit" name="Gestionar" class="Gestionar" value="Gestionar">
+                                                        </form>
+                                                    </p>
+                                                </td>
+                                            </tr>
+                                        ';
+                                    }
+                                ?>
                             </table>
-                        </form>
                     </div>
                 </div>
             </div>
@@ -266,5 +325,6 @@
         </div>
         </div>
     </div>
+    <script src="JS_Admin_Cargos.js"></script>
 </body>
 </html>
