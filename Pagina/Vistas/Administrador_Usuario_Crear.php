@@ -232,7 +232,7 @@
                                             <p class="datos_guardados">Contraseña: <span class="datosUser"></span></p>
                                         </td>
                                         <td class="td_datos_input">
-                                            <input type="password" class="inputs" id="clave" name="clave" placeholder="Contraseña" pattern="^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d\s]+$" required>
+                                            <input type="password" class="inputs" id="clave" name="clave" placeholder="Contraseña" maxlength="10" pattern="^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d\s]+$" required>
                                         </td>
                                     </tr>
                                     <tr class="tr_datos">

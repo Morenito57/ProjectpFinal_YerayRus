@@ -142,9 +142,9 @@
                 <div class="caja_inicio_sesion">
                     <form method = "POST" action = "<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
                         <h1>Inicia Sesion</h1>
-                        <input type="text" class="usuario" id="usuario" name ="usuario" placeholder="Usuario">
+                        <input type="text" class="usuario" id="usuario" name="usuario" placeholder="Nombre de Usuario" pattern="[A-Za-z0-9\s]+" required>
                         <br>
-                        <input type="password" class="contrasena" id = "clave" name ="clave" placeholder="Contraseña">
+                        <input type="password" class="contrasena" id="clave" name="clave" placeholder="Contraseña" maxlength="10" pattern="^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d\s]+$" required>
                         <br>
                         <input type="submit" class="boton" value="Enviar">
                     </form>

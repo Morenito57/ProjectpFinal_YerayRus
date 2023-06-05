@@ -6,12 +6,38 @@
         }
 
         function insertar($usuario, $clave, $nombre, $apellidos, $fechaNacimiento, $direccion, $DNI, $telefono, $email, $otro) {
+
             $conexion = mysqli_connect('localhost','root','');
+
             if (mysqli_connect_errno()) {
                 echo "Error al conectar a MySQL: ". mysqli_connect_error();
             }
-            
+        
             mysqli_select_db($conexion, 'LegendaryMotorsport');
+
+            $usuario = mysqli_real_escape_string($conexion, $usuario);
+            $clave = mysqli_real_escape_string($conexion, $clave);
+            $nombre = mysqli_real_escape_string($conexion, $nombre);
+            $apellidos = mysqli_real_escape_string($conexion, $apellidos);
+            $fechaNacimiento = mysqli_real_escape_string($conexion, $fechaNacimiento);
+            $direccion = mysqli_real_escape_string($conexion, $direccion);
+            $DNI = mysqli_real_escape_string($conexion, $DNI);
+            $telefono = mysqli_real_escape_string($conexion, $telefono);
+            $email = mysqli_real_escape_string($conexion, $email);
+            $otro = mysqli_real_escape_string($conexion, $otro);
+
+
+            $consulta = mysqli_prepare($conexion, "SELECT COUNT(*) FROM Usuario WHERE NombreUsuario COLLATE utf8mb4_general_ci = ?;");
+            $consulta->bind_param("s", $usuario);
+            $consulta->execute();
+            $result = $consulta->get_result();
+            $row = $result->fetch_row();
+            if ($row[0] > 0) {
+                echo "<script type='text/javascript'>alert('Este nombre de usuario ya existe, por favor elige otro.');</script>";
+                echo "<script type='text/javascript'>window.location.href = 'loginVista.php';</script>";
+                mysqli_close($conexion);
+                exit();
+            }
 
             $consulta1 = mysqli_prepare($conexion, "INSERT INTO DatosPersonales(Nombre, Apellidos, FechaNacimiento, Direccion, DNI) VALUES (?,?,?,?,?);");
             $consulta1->bind_param("sssss", $nombre, $apellidos, $fechaNacimiento, $direccion, $DNI);
@@ -32,7 +58,9 @@
             $hash = password_hash($clave, PASSWORD_DEFAULT);
             $consulta3->bind_param("siiiss", $usuario, $DatosPersonales_id, $DatosContacto_id, $saldo, $hash, $tipoUsuario);
             $res = $consulta3->execute();
-            
+
+            header("Location: loginVista.php");
+            mysqli_close($conexion);
             return $res;
         }
 
@@ -46,6 +74,9 @@
 
             mysqli_select_db($conexion, 'LegendaryMotorsport');
 
+            $usuario = mysqli_real_escape_string($conexion, $usuario);
+            $clave = mysqli_real_escape_string($conexion, $clave);
+
             $consulta = mysqli_prepare($conexion, "SELECT NombreUsuario, Clave, TipoDeUsuario, Activo FROM Usuario WHERE NombreUsuario = ?;");
 
             $sanitized_usuario = mysqli_real_escape_string($conexion, $usuario);       
@@ -55,10 +86,12 @@
             $res = $consulta->get_result();
 
             if ($res->num_rows==0) {
+                mysqli_close($conexion);
                 return 'NOT_FOUND';
             }
 
             if ($res->num_rows>1) {
+                mysqli_close($conexion);
                 return 'NOT_FOUND';
             }
 
@@ -66,22 +99,28 @@
             $x = $myrow['Clave'];
 
             if (!$myrow['Activo']) {
+                mysqli_close($conexion);
                 return 'NOT_FOUND';
             }
         
             if (password_verify($clave, $x)) {
                 return $myrow['TipoDeUsuario'];
             } else {
+                mysqli_close($conexion);
                 return 'NOT_FOUND';
             }
         }
 
         function obtenerUsuario($usuario){
+
             $conexion = mysqli_connect('localhost','root','');
+
             if (mysqli_connect_errno()) {
                 echo "Error al conectar a MySQL: ". mysqli_connect_error();
             }
-            
+
+            $usuario = mysqli_real_escape_string($conexion, $usuario);
+
             mysqli_select_db($conexion, 'LegendaryMotorsport');
             $consulta1 = mysqli_prepare($conexion, "SELECT Usuario.NombreUsuario AS Usuario, Usuario.Clave AS Clave, Usuario.Saldo AS Saldo, Usuario.TipoDeUsuario AS TipoUsuario, Usuario.Activo as Activo, DatosPersonales.Nombre AS Nombre, DatosPersonales.Apellidos AS Apellidos, DatosPersonales.FechaNacimiento AS FechaNacimiento, DatosPersonales.Direccion AS Direccion, DatosPersonales.DNI AS DNI, DatosContacto.Telefono AS Telefono, DatosContacto.Email AS Email, DatosContacto.Otro AS Otro, Usuario.IdDatosContacto as IdDatosContacto, Usuario.IdDatosPersonales as IdDatosPersonales FROM Usuario INNER JOIN DatosPersonales ON Usuario.IdDatosPersonales = DatosPersonales.Id INNER JOIN DatosContacto ON Usuario.IdDatosContacto = DatosContacto.Id WHERE Usuario.NombreUsuario like (?);");
             $consulta1->bind_param("s", $usuario);
@@ -96,11 +135,15 @@
     
             }
 
+            mysqli_close($conexion);
+
             return $usuarios;
         }
 
         function obtenerAllUsuario(){
+
             $conexion = mysqli_connect('localhost','root','');
+
             if (mysqli_connect_errno()) {
                 echo "Error al conectar a MySQL: ". mysqli_connect_error();
             }
@@ -117,6 +160,8 @@
                 array_push($usuarios,$myrow);
     
             }
+
+            mysqli_close($conexion);
 
             return $usuarios;
         }
@@ -190,7 +235,9 @@
                 $consulta5->execute();
             }
                     
-            return header("Location: Area_Personal_Datos_Usuario_Vista.php");;
+            header("Location: Area_Personal_Datos_Usuario_Vista.php");
+            mysqli_close($conexion);
+            return $res;
         }
 
         function actualizarSalsoUsuario($usuarioOriginal, $saldo) {
@@ -207,6 +254,7 @@
             $consulta1->bind_param("is",$saldo,$usuarioOriginal);
             $res = $consulta1->execute();
 
+            mysqli_close($conexion);
             return $res;
 
         }
@@ -224,6 +272,8 @@
             $consulta = mysqli_prepare($conexion, "UPDATE Usuario SET Activo = False WHERE NombreUsuario = ?;");
             $consulta->bind_param("s", $usuarioOriginal);
             $res = $consulta->execute();
+
+            mysqli_close($conexion);
 
             return $res;
         }
@@ -253,6 +303,7 @@
             $consulta1->execute();
 
             mysqli_query($conexion, "SET FOREIGN_KEY_CHECKS=1;");
+            mysqli_close($conexion);
             exit();
 
         }
@@ -378,6 +429,9 @@
             $consulta14->bind_param("si",$otro,$IdDatosContacto);
             $consulta14->execute();
         }
+        mysqli_close($conexion);
+        exit();
+
     }
 
     function insertarAdmin($usuario, $saldo, $clave, $tipoDeUsuario, $activo, $nombre, $apellidos, $fechaNacimiento, $direccion, $DNI, $telefono, $email, $otro) {
@@ -406,6 +460,8 @@
         $res = $consulta3->execute();
         
         header("Location: Administrador_Usuarios.php");
+        mysqli_close($conexion);
+        exit();
     }
     
 }

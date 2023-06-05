@@ -5,7 +5,6 @@
         $usuarioBL = new UsuarioReglasNegocio();
 
         $perfil =  $usuarioBL->insertar($_POST['usuario'], $_POST['clave'], $_POST['nombre'], $_POST['apellidos'], $_POST['fechaNacimiento'], $_POST['direccion'], $_POST['DNI'], $_POST['telefono'], $_POST['email'], $_POST['otro']);
-        header("Location: loginVista.php");
     }
 ?>
 <!DOCTYPE html>
@@ -206,7 +205,7 @@
                                     <p class="datos_guardados">Contraseña: </p>
                                 </td>
                                 <td class="td_datos_input">
-                                    <input type="password" class="inputs" id="clave" name="clave" placeholder="Contraseña" pattern="^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d\s]+$" required>
+                                    <input type="password" class="inputs" id="clave" name="clave" placeholder="Contraseña" maxlength="10" pattern="^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d\s]+$" required>
                                 </td>
                             </tr>
                             <tr class="tr_datos">
