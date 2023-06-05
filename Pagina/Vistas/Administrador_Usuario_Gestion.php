@@ -264,23 +264,23 @@
                     <label for="busqueda" class="lupa">🔎</label>
                     <select class="opcionesBuscador" id="opcionesTablaBuscador">
                         <option value=""></option>
-                        <option value="NombreUsuario">Usuario</option>
-                        <option value="Clave">Clave</option>
-                        <option value="Saldo">Saldo</option>
-                        <option value="TipoDeUsuario">Tipo</option>
-                        <option value="Activo">Activo</option>
-                        <option value="IdDatosContacto">Id Contacto</option>
-                        <option value="Telefono">Telefono</option>
-                        <option value="Email">Email</option>
-                        <option value="Otro">Otro</option>
-                        <option value="IdDatosPersonales">Id Datos Per</option>
-                        <option value="Nombre">Nombre</option>
-                        <option value="Apellidos">Apellidos</option>
-                        <option value="FechaNacimiento">Nacimiento</option>
-                        <option value="Direccion">Direccio</option>
-                        <option value="DNI">DNI</option>
+                        <option value="Usuario.NombreUsuario">Usuario</option>
+                        <option value="Usuario.Clave">Clave</option>
+                        <option value="Usuario.Saldo">Saldo</option>
+                        <option value="Usuario.TipoDeUsuario">Tipo</option>
+                        <option value="Usuario.Activo">Activo</option>
+                        <option value="Usuario.IdDatosContacto">Id Contacto</option>
+                        <option value="DatosContacto.Telefono">Telefono</option>
+                        <option value="DatosContacto.Email">Email</option>
+                        <option value="DatosContacto.Otro">Otro</option>
+                        <option value="Usuario.IdDatosPersonales">Id Datos Per</option>
+                        <option value="DatosPersonales.Nombre">Nombre</option>
+                        <option value="DatosPersonales.Apellidos">Apellidos</option>
+                        <option value="DatosPersonales.FechaNacimiento">Nacimiento</option>
+                        <option value="DatosPersonales.Direccion">Direccio</option>
+                        <option value="DatosPersonales.DNI">DNI</option>
                     </select>
-                    <input type="text" id="busqueda" onkeyup="obtenerDatos()" placeholder="Busca">
+                    <input type="text" id="busqueda" onkeyup="obtenerUsuario()" placeholder="Busca">
                     <select class="opcionesBuscador" id="opcionesBuscador" onchange="redirigirPagina()">
                         <option value=""></option>
                     </select>
@@ -294,7 +294,7 @@
                         <option value="Administrador_Alquileres.php">Alquileres All</option>
                         <option value="Administrador_Extras.php">Extras</option>
                         <option value="Administrador_Seguros.php">Seguros</option>
-<option value="Administrador_Cargos.php">Cargos</option>
+                        <option value="Administrador_Cargos.php">Cargos</option>
                     </select>
                     <select class="pestaña" id="pestañaVehiculos" name="pestañaVehiculos" onchange="redirigirPagina()">
                         <option value="">Vehiculos</option>
@@ -387,6 +387,6 @@
         </div>
         </div>
     </div>
-    <script src="JS_Admin_User.js"></script>
+    <script src="js/JS_Admin.js"></script>
 </body>
 </html>

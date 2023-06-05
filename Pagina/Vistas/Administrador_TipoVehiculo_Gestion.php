@@ -263,7 +263,7 @@
                         <option value="Id">Id</option>
                         <option value="TipoVehiculo">Tipo Vehiculo</option>
                     </select>
-                    <input type="text" id="busqueda" onkeyup="obtenerDatos()" placeholder="Busca">
+                    <input type="text" id="busqueda" onkeyup="obtenerTipoVehiculo()" placeholder="Busca">
                     <select class="opcionesBuscador" id="opcionesBuscador" onchange="redirigirPagina()">
                         <option value=""></option>
                     </select>
@@ -277,7 +277,7 @@
                         <option value="Administrador_Alquileres.php">Alquileres All</option>
                         <option value="Administrador_Extras.php">Extras</option>
                         <option value="Administrador_Seguros.php">Seguros</option>
-<option value="Administrador_Cargos.php">Cargos</option>
+                        <option value="Administrador_Cargos.php">Cargos</option>
                     </select>
                     <select class="pestaña" id="pestañaVehiculos" name="pestañaVehiculos" onchange="redirigirPagina()">
                         <option value="">Vehiculos</option>
@@ -342,6 +342,6 @@
         </div>
         </div>
     </div>
-    <script src="JS_Admin_TipoVehiculo.js"></script>
+    <script src="js/JS_Admin.js"></script>
 </body>
 </html>

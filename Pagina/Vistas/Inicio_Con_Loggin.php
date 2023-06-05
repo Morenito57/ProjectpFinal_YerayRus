@@ -281,7 +281,7 @@
             <div class="divRestoCuerpo">
                 <div class="divOrdenar">
                     <label for="busqueda" class="lupa">🔎</label>
-                    <input type="text" class="busqueda" onkeyup="obtenerDatos()" placeholder="Busca">
+                    <input type="text" class="busqueda" id="busqueda" name="busqueda" onkeyup="obtenerDatos()" placeholder="Busca">
                     <select class="opcionesBuscador" id="opcionesBuscador" onchange="redirigirPagina()">
                         <option value=""></option>
                     </select>
@@ -386,46 +386,13 @@
             <div class="pestanas">
                 <a class="botonPestanas" id="anterior" href=""><--</a>
                 <a class="botonPestanas" id="siguiente" href="">--></a>
-
-                <script>
-
-                    var urlActual = window.location.href;
-
-                    var paginaActual = parseInt(getQueryStringValue("pagina"));
-
-                    var totalDatosVehiculos = <?php echo count($datosVehiculos); ?>;
-
-                    if (isNaN(paginaActual)) {
-                        paginaActual = 1;
-                    }
-
-                    if (paginaActual > 1) {
-                        document.getElementById("anterior").href = updateQueryStringParameter(urlActual, "pagina", paginaActual - 1);
-                    }
-                    
-                    if(paginaActual < totalDatosVehiculos/9){
-                    document.getElementById("siguiente").href = updateQueryStringParameter(urlActual, "pagina", paginaActual + 1);
-                    }
-                    
-                    function getQueryStringValue(key) {
-                        var urlParams = new URLSearchParams(window.location.search);
-                        return urlParams.get(key);
-                    }
-
-                    function updateQueryStringParameter(uri, key, value) {
-                        var re = new RegExp("([?&])" + key + "=.*?(&|$)", "i");
-                        var separator = uri.indexOf("?") !== -1 ? "&" : "?";
-                        if (uri.match(re)) {
-                        return uri.replace(re, "$1" + key + "=" + value + "$2");
-                        } else {
-                        return uri + separator + key + "=" + value;
-                        }
-                    }
-                </script>
-
             </div>
         </div>
     </div>
-    <script src="Inicio_Con_Loggin.js"></script>
+    
+    <script>
+        var totalDatosVehiculosPhp = <?php echo count($datosVehiculos); ?>;                  
+    </script>
+    <script src="js/Inicio_Con_Loggin.js"></script>
 </body>
 </html> 

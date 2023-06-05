@@ -304,31 +304,8 @@
         </div>
     </div>
     <script>
-                            document.getElementById('diasAlquiler').addEventListener('input', actualizarTexto);
-                            document.getElementById('extras').addEventListener('change', actualizarTexto);
-                            document.getElementById('seguros').addEventListener('change', actualizarTexto);
-
-                            function actualizarTexto() {
-                                var precioAlquiler = "<?php echo $precio; ?>";
-
-                                var precioDiasAlquiler = document.getElementById('diasAlquiler').value;
-
-                                var extrasSelect = document.getElementById('extras');
-                                var precioExtras = Array.from(extrasSelect.options).filter(option => option.selected).reduce((prev, option) => prev + Number(option.getAttribute('data-precio') || 0), 0);
-
-                                var segurosSelect = document.getElementById('seguros');
-                                var precioSeguros = Array.from(segurosSelect.options).filter(option => option.selected).reduce((prev, option) => prev + Number(option.getAttribute('data-precio') || 0), 0);
-
-                                precioAlquiler = Number(precioAlquiler);
-                                precioDiasAlquiler = Number(precioDiasAlquiler);
-
-                                var preciosDias = precioDiasAlquiler * precioAlquiler;
-                                var precioTotal = preciosDias + precioExtras + precioSeguros;
-                                var textoDinamico = document.getElementById('textoDinamico');
-                                var totalDelPrecio = document.getElementById('TotalDelPrecio');
-                                totalDelPrecio.value = precioTotal;
-                                textoDinamico.textContent = "Precio total es: " + precioTotal;
-                            }
-        </script>
+        var precioAlquiler = <?php echo $precio; ?>;
+    </script>
+    <script src="js/JS_CompraVehiculo.js"></script>
 </body>
 </html>

@@ -264,7 +264,7 @@
                         <option value="Extra">Extra</option>
                         <option value="Precio">Precio</option>
                     </select>
-                    <input type="text" id="busqueda" onkeyup="obtenerDatos()" placeholder="Busca">
+                    <input type="text" id="busqueda" onkeyup="obtenerDatosExtras()" placeholder="Busca">
                     <select class="opcionesBuscador" id="opcionesBuscador" onchange="redirigirPagina()">
                         <option value=""></option>
                     </select>
@@ -278,7 +278,7 @@
                         <option value="Administrador_Alquileres.php">Alquileres All</option>
                         <option value="Administrador_Extras.php">Extras</option>
                         <option value="Administrador_Seguros.php">Seguros</option>
-<option value="Administrador_Cargos.php">Cargos</option>
+                        <option value="Administrador_Cargos.php">Cargos</option>
                     </select>
                     <select class="pestaña" id="pestañaVehiculos" name="pestañaVehiculos" onchange="redirigirPagina()">
                         <option value="">Vehiculos</option>
@@ -327,7 +327,7 @@
 
                                                             <input id="idExtra" name="idExtra" value="'.$extra->getId().'" type="hidden">
 
-                                                            <input type="submit" id="eliminar" name="eliminar" class="Eliminar" value="➖" onclick="eliminarUser()">
+                                                            <input type="submit" id="eliminar" name="eliminar" class="Eliminar" value="➖" onclick="eliminarExtra()">
                                                         </form>
                                                     <p>
                                                 </td>
@@ -344,6 +344,6 @@
         </div>
         </div>
     </div>
-    <script src="JS_Admin_Extras.js"></script>
+    <script src="js/JS_Admin.js"></script>
 </body>
 </html>

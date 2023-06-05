@@ -366,6 +366,6 @@
         </div>
         </div>
     </div>
-    <script src="JS_Admin_Cargos.js"></script>
+    <script src="js/JS_Admin.js"></script>
 </body>
 </html>
