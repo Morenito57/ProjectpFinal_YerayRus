@@ -87,6 +87,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron&display=swap" rel="stylesheet">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Legendary MOTORSPORT</title>
@@ -248,10 +249,40 @@
             font-size: 15px;
         }
 
+        .divDinero {
+            position: fixed;
+            top: 0;
+            right: 0;
+            height: 100px;
+            z-index: 1;
+        }
+
+        .dinero{
+            color: green;
+            text-align: center;
+            font-size: 35px;
+            font-weight: 1000;
+            margin: 25px auto;
+            font-family: 'Orbitron', sans-serif;
+            background-color: rgb(77, 5, 5);
+            border: 5px solid rgb(173, 32, 32);
+            padding-left: 10px;
+            padding-right: 10px;
+        }
+
     </style>
 </head>
 <body>
     <div class="divPrincipal">
+        <div class="divDinero">
+            <?php
+                ini_set('display_errors', 'On');
+                ini_set('html_errors', 0);
+                $usuarioBL = new UsuarioReglasNegocio();
+                $datosUsuario = $usuarioBL->obtenerUsuario($usuarioOriginal);               
+                echo'<p class="dinero">'.$datosUsuario[0]->getSaldo().'€</p>';               
+            ?>
+        </div>
         <div class="divCabezera">
             <img class="portada" src="imagenes/Portada.png"> 
         </div>
