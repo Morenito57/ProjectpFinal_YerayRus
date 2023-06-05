@@ -17,7 +17,7 @@
 
             mysqli_select_db($conexion, 'LegendaryMotorsport');
 
-$consulta = mysqli_prepare($conexion, "SELECT Alquiler.Id AS IdAlquiler, Alquiler.IdUser as IdUser, Alquiler.IdVehiculo as IdVehiculo, Cargo.Id AS IdCargo, GROUP_CONCAT(DISTINCT Seguros.Id) AS IdSeguros, GROUP_CONCAT(DISTINCT Extras.Id) AS IdExtras, Alquiler.FechaInicio as FechaInicio, Alquiler.FechaFinal as FechaFinal, Alquiler.TotalDelPrecio as TotalDelPrecio, Alquiler.Estado AS Estado FROM Alquiler LEFT JOIN Alquiler_Seguro ON Alquiler.Id = Alquiler_Seguro.Alquiler_id LEFT JOIN Cargo ON Alquiler.Id = Cargo.Alquiler_id LEFT JOIN Seguros ON Alquiler_Seguro.Seguro_id = Seguros.Id LEFT JOIN Alquiler_Extra ON Alquiler.Id = Alquiler_Extra.Alquiler_id LEFT JOIN Extras ON Alquiler_Extra.Extra_id = Extras.Id GROUP BY Alquiler.Id, Cargo.Id;");
+            $consulta = mysqli_prepare($conexion, "SELECT Alquiler.Id AS IdAlquiler, Alquiler.IdUser as IdUser, Alquiler.IdVehiculo as IdVehiculo, Cargo.Id AS IdCargo, GROUP_CONCAT(DISTINCT Seguros.Id) AS IdSeguros, GROUP_CONCAT(DISTINCT Extras.Id) AS IdExtras, Alquiler.FechaInicio as FechaInicio, Alquiler.FechaFinal as FechaFinal, Alquiler.TotalDelPrecio as TotalDelPrecio, Alquiler.Estado AS Estado FROM Alquiler LEFT JOIN Alquiler_Seguro ON Alquiler.Id = Alquiler_Seguro.Alquiler_id LEFT JOIN Cargo ON Alquiler.Id = Cargo.Alquiler_id LEFT JOIN Seguros ON Alquiler_Seguro.Seguro_id = Seguros.Id LEFT JOIN Alquiler_Extra ON Alquiler.Id = Alquiler_Extra.Alquiler_id LEFT JOIN Extras ON Alquiler_Extra.Extra_id = Extras.Id GROUP BY Alquiler.Id, Cargo.Id;");
             $consulta->execute();
             $result = $consulta->get_result();
     
@@ -29,6 +29,8 @@ $consulta = mysqli_prepare($conexion, "SELECT Alquiler.Id AS IdAlquiler, Alquile
     
             }
             return $alquileres;
+            mysqli_close($conexion);
+            exit();
         }
 
         function obtenerAlquiler($id){
@@ -44,7 +46,7 @@ $consulta = mysqli_prepare($conexion, "SELECT Alquiler.Id AS IdAlquiler, Alquile
 
             $id = mysqli_real_escape_string($conexion, $id);
 
-$consulta = mysqli_prepare($conexion, "SELECT Alquiler.Id AS IdAlquiler, Alquiler.IdUser as IdUser, Alquiler.IdVehiculo as IdVehiculo, Cargo.Id AS IdCargo, GROUP_CONCAT(DISTINCT Seguros.Id) AS IdSeguros, GROUP_CONCAT(DISTINCT Extras.Id) AS IdExtras, Alquiler.FechaInicio as FechaInicio, Alquiler.FechaFinal as FechaFinal, Alquiler.TotalDelPrecio as TotalDelPrecio, Alquiler.Estado AS Estado FROM Alquiler LEFT JOIN Alquiler_Seguro ON Alquiler.Id = Alquiler_Seguro.Alquiler_id LEFT JOIN Cargo ON Alquiler.Id = Cargo.Alquiler_id LEFT JOIN Seguros ON Alquiler_Seguro.Seguro_id = Seguros.Id LEFT JOIN Alquiler_Extra ON Alquiler.Id = Alquiler_Extra.Alquiler_id LEFT JOIN Extras ON Alquiler_Extra.Extra_id = Extras.Id where Alquiler.Id = ? GROUP BY Alquiler.Id, Cargo.Id;");
+            $consulta = mysqli_prepare($conexion, "SELECT Alquiler.Id AS IdAlquiler, Alquiler.IdUser as IdUser, Alquiler.IdVehiculo as IdVehiculo, Cargo.Id AS IdCargo, GROUP_CONCAT(DISTINCT Seguros.Id) AS IdSeguros, GROUP_CONCAT(DISTINCT Extras.Id) AS IdExtras, Alquiler.FechaInicio as FechaInicio, Alquiler.FechaFinal as FechaFinal, Alquiler.TotalDelPrecio as TotalDelPrecio, Alquiler.Estado AS Estado FROM Alquiler LEFT JOIN Alquiler_Seguro ON Alquiler.Id = Alquiler_Seguro.Alquiler_id LEFT JOIN Cargo ON Alquiler.Id = Cargo.Alquiler_id LEFT JOIN Seguros ON Alquiler_Seguro.Seguro_id = Seguros.Id LEFT JOIN Alquiler_Extra ON Alquiler.Id = Alquiler_Extra.Alquiler_id LEFT JOIN Extras ON Alquiler_Extra.Extra_id = Extras.Id where Alquiler.Id = ? GROUP BY Alquiler.Id, Cargo.Id;");
             $consulta->bind_param('i', $id);
             $consulta->execute();
             $result = $consulta->get_result();
@@ -57,6 +59,8 @@ $consulta = mysqli_prepare($conexion, "SELECT Alquiler.Id AS IdAlquiler, Alquile
     
             }
             return $alquileres;
+            mysqli_close($conexion);
+            exit();
         }
 
         function eliminarAlquiler($id) {
@@ -110,7 +114,8 @@ $consulta = mysqli_prepare($conexion, "SELECT Alquiler.Id AS IdAlquiler, Alquile
                 }
 
             }
-
+            mysqli_close($conexion);
+            exit();
         }
 
 

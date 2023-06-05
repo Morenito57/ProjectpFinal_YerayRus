@@ -29,6 +29,8 @@
     
             }
             return $cargos;
+            mysqli_close($conexion);
+            exit();
         }
 
         function obtenerCargo($id){
@@ -57,6 +59,8 @@
     
             }
             return $cargos;
+            mysqli_close($conexion);
+            exit();
         }
 
         function eliminarCargo($id) {
@@ -142,8 +146,7 @@
             $consulta7->execute();
 
             mysqli_close($conexion);
+            exit();
         }
-
-
     }
 ?>

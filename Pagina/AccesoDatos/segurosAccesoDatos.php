@@ -27,6 +27,8 @@
     
             }
             return $seguros;
+            mysqli_close($conexion);
+            exit();
         }
 
         function obtenerSeguro($id){
@@ -55,6 +57,8 @@
     
             }
             return $seguros;
+            mysqli_close($conexion);
+            exit();
         }
 
         function eliminarSeguro($id){
@@ -107,7 +111,8 @@
                 $consulta2->bind_param("ii",$precio,$id);
                 $consulta2->execute();
             }
-
+            mysqli_close($conexion);
+            exit();
         }
 
         function crearSeguro($seguro, $precio) {

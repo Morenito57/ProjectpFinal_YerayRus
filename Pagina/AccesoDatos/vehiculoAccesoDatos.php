@@ -79,8 +79,9 @@
                 {
                     array_push($vehiculos,$myrow);
                 }
-           
                 return $vehiculos;
+                mysqli_close($conexion);
+                exit();
         }
 
         function obtenerVehiculoConcreto($id){
@@ -90,6 +91,8 @@
                     echo "Error al conectar a MySQL: ". mysqli_connect_error();
             }
             mysqli_select_db($conexion, 'LegendaryMotorsport');
+
+            $id = mysqli_real_escape_string($conexion, $id);
 
             $consulta = mysqli_prepare($conexion, "SELECT Vehiculo.Id as Id, IdTipoVehiculo, Imagen, Marca, Nombre, Matricula, Caballos, Kilometros, Plazas, Año, Precio, Estado, Descripcion, TipoVehiculo.TipoVehiculo as TipoVehiculo FROM Vehiculo INNER JOIN TipoVehiculo ON Vehiculo.IdTipoVehiculo = TipoVehiculo.Id where Vehiculo.Id = (?);");
             $consulta->bind_param("i",$id);
@@ -104,6 +107,8 @@
     
             }
             return $vehiculos;
+            mysqli_close($conexion);
+            exit();
         }
 
         function eliminarVehiculo($Vehiculo){
@@ -115,6 +120,8 @@
             }
     
             mysqli_select_db($conexion, 'LegendaryMotorsport');
+
+            $Vehiculo = mysqli_real_escape_string($conexion, $Vehiculo);
     
             mysqli_query($conexion, "SET FOREIGN_KEY_CHECKS=0;");
     
@@ -123,6 +130,9 @@
             $consulta1->execute();
     
             mysqli_query($conexion, "SET FOREIGN_KEY_CHECKS=1;");
+
+            mysqli_close($conexion);
+
             exit();
 
         }
@@ -214,6 +224,8 @@
                 $consulta12->bind_param("ii",$idTipoVehiculo,$idVehiculo);
                 $consulta12->execute();
             }
+            mysqli_close($conexion);
+            exit();
         }
 
         function insertarVehiculoAdmin($nombre, $imagen, $marca, $matricula, $año, $caballos, $kilometros, $plazas, $estado, $precio, $descripcion, $idTipoVehiculo) {

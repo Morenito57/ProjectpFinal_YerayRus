@@ -27,6 +27,8 @@
     
             }
             return $tipos;
+            mysqli_close($conexion);
+            exit();
         }
 
         function obtenerTipoVehiculo($idDecodificado){
@@ -55,6 +57,8 @@
     
             }
             return $tipos;
+            mysqli_close($conexion);
+            exit();
         }
 
         function eliminarTipoVehiculo($idDecodificado){
@@ -94,11 +98,15 @@
             mysqli_select_db($conexion, 'LegendaryMotorsport');
 
             if ($tipoVehiculo !== null && $tipoVehiculo !== '') {
+                $id = mysqli_real_escape_string($conexion, $id);
                 $tipoVehiculo = mysqli_real_escape_string($conexion, $tipoVehiculo);
                 $consulta1 = mysqli_prepare($conexion,"UPDATE TipoVehiculo SET TipoVehiculo = ? WHERE Id = ?;");
                 $consulta1->bind_param("si",$tipoVehiculo,$id);
                 $consulta1->execute();
             }
+
+            mysqli_close($conexion);
+            exit();
         
         }
 

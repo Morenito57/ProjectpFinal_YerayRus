@@ -18,6 +18,7 @@
 
             $estado = true;
 
+            $IdUser = mysqli_real_escape_string($conexion, $IdUser);
             $IdVehiculo = mysqli_real_escape_string($conexion, $IdVehiculo);
             $FechaInicio = mysqli_real_escape_string($conexion, $FechaInicio);
             $FechaFinal = mysqli_real_escape_string($conexion, $FechaFinal);
@@ -33,6 +34,7 @@
 
             if ($saldoActual < $TotalDelPrecio) {
                 header("Location: Area_Personal_Saldo_Usuario_Vista.php");
+                mysqli_close($conexion);
                 exit();
             }
 
@@ -46,6 +48,7 @@
 
             if ($CargosActual > 0) {
                 header("Location: Area_Personal_Historial_Alquileres_Usuario_Vista.php");
+                mysqli_close($conexion);
                 exit();
             }
 
@@ -83,6 +86,8 @@
             $consulta6->execute();
 
             return header("Location: Factura_Alquiler_Usuario.php?idAlquiler=".urlencode($alquiler_id));
+            mysqli_close($conexion);
+            exit();
         }
 
         function obtener(){
@@ -112,6 +117,8 @@
     
             }
             return $alquileres;
+            mysqli_close($conexion);
+            exit();
         }
 
         function actualizarAlquiler($usuario, $IdAlquiler, $FechaFinal, $TotalPago) {
@@ -125,6 +132,7 @@
 
             mysqli_select_db($conexion, 'LegendaryMotorsport');
 
+            $usuario = mysqli_real_escape_string($conexion, $usuario);
             $IdAlquiler = mysqli_real_escape_string($conexion, $IdAlquiler);
             $FechaFinal = mysqli_real_escape_string($conexion, $FechaFinal);
             $TotalPago = mysqli_real_escape_string($conexion, $TotalPago);
@@ -139,6 +147,7 @@
 
             if ($saldoActual < $TotalPago) {
                 header("Location: Area_Personal_Saldo_Usuario_Vista.php");
+                mysqli_close($conexion);
                 exit();
             }
 
@@ -155,7 +164,8 @@
             $consulta4->execute();
 
             header("Location: Area_Personal_Gestion_Alquiler_Usuario_Vista.php?id=".urlencode($IdAlquiler));
-
+            mysqli_close($conexion);
+            exit();
         }
 
         function obtenerAlquiler($id) {
@@ -168,6 +178,8 @@
             }
 
             mysqli_select_db($conexion, 'LegendaryMotorsport');
+
+            $id = mysqli_real_escape_string($conexion, $id);
 
             $consulta = mysqli_prepare($conexion, "SELECT Alquiler.Id AS IdAlquiler, Vehiculo.Nombre AS NombreVehiculo, Vehiculo.Precio AS PrecioVehiculo, Alquiler.FechaInicio, Alquiler.FechaFinal, Cargo.FechaDevuelto, GROUP_CONCAT(DISTINCT Seguros.Seguro) AS Seguros, GROUP_CONCAT(DISTINCT Extras.Extra) AS Extras, Alquiler.TotalDelPrecio, Cargo.Id AS IdCargo, Cargo.TotalCargo, Alquiler.Estado AS ActivoAlquiler, Cargo.Pagado, Cargo.Activo AS ActivoCargo FROM Alquiler LEFT JOIN Vehiculo ON Alquiler.IdVehiculo = Vehiculo.Id LEFT JOIN Cargo ON Alquiler.Id = Cargo.Alquiler_id LEFT JOIN Alquiler_Seguro ON Alquiler.Id = Alquiler_Seguro.Alquiler_id LEFT JOIN Seguros ON Alquiler_Seguro.Seguro_id = Seguros.Id LEFT JOIN Alquiler_Extra ON Alquiler.Id = Alquiler_Extra.Alquiler_id LEFT JOIN Extras ON Alquiler_Extra.Extra_id = Extras.Id WHERE Alquiler.Id = ? GROUP BY Alquiler.Id, Cargo.FechaDevuelto, Cargo.Id;");
             
@@ -183,6 +195,7 @@
     
             }
             return $alquileres;
+            mysqli_close($conexion);
             exit();
         }
 
@@ -196,6 +209,12 @@
 
             mysqli_select_db($conexion, 'LegendaryMotorsport');
 
+            $usuario = mysqli_real_escape_string($conexion, $usuario);
+            $idAlquiler = mysqli_real_escape_string($conexion, $idAlquiler);
+            $idCargo = mysqli_real_escape_string($conexion, $idCargo);
+            $totalPago = mysqli_real_escape_string($conexion, $totalPago);
+
+
             $consultaSaldo = mysqli_prepare($conexion, "SELECT Saldo FROM Usuario WHERE NombreUsuario = ?;");
             $consultaSaldo->bind_param("s", $usuario);
             $consultaSaldo->execute();
@@ -206,6 +225,7 @@
 
             if ($saldoActual < $totalPago) {
                 header("Location: Area_Personal_Saldo_Usuario_Vista.php");
+                mysqli_close($conexion);
                 exit();
             }
 
@@ -221,37 +241,8 @@
             $consulta4->bind_param("i", $idAlquiler);
             $consulta4->execute();
             
+            mysqli_close($conexion);
             exit();
-
         }
-
-        /*function actualizacionCargos($idAlquiler, $idCargo){
-
-            $conexion = mysqli_connect('localhost','root','');
-
-            if (mysqli_connect_errno())
-            {
-                echo "Error al conectar a MySQL: ". mysqli_connect_error();
-            }
-        
-            mysqli_select_db($conexion, 'LegendaryMotorsport');
-        
-            $fechaActual = date('Y-m-d');
-        
-            $consulta = mysqli_prepare($conexion, "SELECT Id, TotalDelPrecio FROM Alquiler WHERE FechaFinal > ? AND Estado = TRUE;");
-            $consulta->bind_param("s", $fechaActual);
-            $consulta->execute();
-            $result = $consulta->get_result();
-            $alquileres = $result->fetch_all(MYSQLI_ASSOC);
-        
-            foreach ($alquileres as $alquiler) {
-                $totalCargo = $alquiler['TotalDelPrecio'] * 2;
-                $consulta = mysqli_prepare($conexion, "UPDATE Cargo SET TotalCargo = ?, Activo = TRUE, Pagado = FALSE WHERE Alquiler_id = ? AND Activo = FALSE AND Pagado = FALSE;");
-                $consulta->bind_param("ii", $totalCargo, $alquiler['Id']);
-                $consulta->execute();
-            }
-        }*/
-
-
     }
 ?>

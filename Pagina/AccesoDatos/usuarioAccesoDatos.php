@@ -86,28 +86,32 @@
             $res = $consulta->get_result();
 
             if ($res->num_rows==0) {
-                mysqli_close($conexion);
                 return 'NOT_FOUND';
+                mysqli_close($conexion);
+                exit();
             }
 
             if ($res->num_rows>1) {
-                mysqli_close($conexion);
                 return 'NOT_FOUND';
+                mysqli_close($conexion);
+                exit();
             }
 
             $myrow = $res->fetch_assoc();
             $x = $myrow['Clave'];
 
             if (!$myrow['Activo']) {
-                mysqli_close($conexion);
                 return 'NOT_FOUND';
+                mysqli_close($conexion);
+                exit();
             }
         
             if (password_verify($clave, $x)) {
                 return $myrow['TipoDeUsuario'];
             } else {
-                mysqli_close($conexion);
                 return 'NOT_FOUND';
+                mysqli_close($conexion);
+                exit();
             }
         }
 
@@ -135,9 +139,9 @@
     
             }
 
-            mysqli_close($conexion);
-
             return $usuarios;
+            mysqli_close($conexion);
+            exit();
         }
 
         function obtenerAllUsuario(){
@@ -161,9 +165,9 @@
     
             }
 
-            mysqli_close($conexion);
-
             return $usuarios;
+            mysqli_close($conexion);
+            exit();
         }
 
         function actualizarUsuario($usuarioOriginal,$usuario, $clave, $nombre, $apellidos, $fechaNacimiento, $direccion, $DNI, $telefono, $email, $otro, $IdDatosContacto, $IdDatosPersonales) {
@@ -236,8 +240,9 @@
             }
                     
             header("Location: Area_Personal_Datos_Usuario_Vista.php");
-            mysqli_close($conexion);
             return $res;
+            mysqli_close($conexion);
+            exit();
         }
 
         function actualizarSalsoUsuario($usuarioOriginal, $saldo) {
@@ -254,8 +259,9 @@
             $consulta1->bind_param("is",$saldo,$usuarioOriginal);
             $res = $consulta1->execute();
 
-            mysqli_close($conexion);
             return $res;
+            mysqli_close($conexion);
+            exit();
 
         }
 
@@ -273,9 +279,9 @@
             $consulta->bind_param("s", $usuarioOriginal);
             $res = $consulta->execute();
 
-            mysqli_close($conexion);
-
             return $res;
+            mysqli_close($conexion);
+            exit();
         }
 
         function eliminarUsuario($Usuario, $idDatosContacto, $idDatosPersonales) {

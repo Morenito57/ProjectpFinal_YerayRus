@@ -33,6 +33,8 @@
     
             }
             return $facturas;
+            mysqli_close($conexion);
+            exit();
         }
     }
 ?>

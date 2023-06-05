@@ -27,6 +27,8 @@
     
             }
             return $extras;
+            mysqli_close($conexion);
+            exit();
         }
 
         function obtenerExtra($id){
@@ -106,7 +108,8 @@
                 $consulta2->bind_param("ii",$precio,$id);
                 $consulta2->execute();
             }
-
+            mysqli_close($conexion);
+            exit();
         }
 
         function crearExtra($extra, $precio) {
@@ -129,7 +132,5 @@
             mysqli_close($conexion);
             exit();
         }
-
-
     }
 ?>
