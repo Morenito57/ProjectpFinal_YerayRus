@@ -386,13 +386,13 @@
                                                     echo'
                                                         <td ><p class="dato verde">Activo</p></td>
                                                     ';                                                
+                                                }else if($Alquiler->getActivoCargo() == ""){
+                                                    echo'
+                                                        <td ><p class="dato">Cancelado</p></td>
+                                                    ';
                                                 }else if($Alquiler->getActivoAlquiler() == 0){
                                                     echo'
                                                         <td ><p class="dato">Finalizado</p></td>
-                                                    ';
-                                                }else if($Alquiler->getActivoCargo() == null){
-                                                    echo'
-                                                        <td ><p class="dato">En proceso</p></td>
                                                     ';
                                                 }
 
@@ -401,13 +401,13 @@
                                                     echo'
                                                         <td ><p class="dato rojo">Tiene</p></td>
                                                     ';                                                
+                                                }else if($Alquiler->getActivoCargo() == ""){
+                                                    echo'
+                                                        <td ><p class="dato verde">No hay por ahora.</p></td>
+                                                    ';
                                                 }else if($Alquiler->getActivoCargo() == 0){
                                                     echo'
                                                         <td ><p class="dato verde">No tiene</p></td>
-                                                    ';
-                                                }else if($Alquiler->getActivoCargo() == null){
-                                                    echo'
-                                                        <td ><p class="dato verde">No hay por ahora.</p></td>
                                                     ';
                                                 }
 
