@@ -294,38 +294,40 @@
 
                             parse_str($url_parts['query'], $query_params);
 
-                            if(!array_key_exists('orden', $query_params)) {
-                                if(empty($query_params)){
+                            $base_url = $url_parts['scheme'] . '://' . $url_parts['host'] . ':' . $_SERVER['SERVER_PORT'] . $url_parts['path'];
 
-                                    echo('
+                            if (!array_key_exists('orden', $query_params)) {
+                                if (empty($query_params)) {
+                                    echo ('
                                         <option value="Inicio_Con_Loggin.php">Por defecto</option>
-                                        <option value="Inicio_Con_Loggin.php?orden=1">Ordenar por precio + a -</option>
-                                        <option value="Inicio_Con_Loggin.php?orden=2">Ordenar por precio - a +</option>                            
+                                        <option value="' . $base_url . '?orden=1">Ordenar por precio + a -</option>
+                                        <option value="' . $base_url . '?orden=2">Ordenar por precio - a +</option>                            
                                     ');
                                 } else {
-                                    echo('
+                                    $query_string = http_build_query($query_params);
+                                    echo ('
                                         <option value="Inicio_Con_Loggin.php">Por defecto</option>
-                                        <option value="'.$fullUrl.'&orden=1">Ordenar por precio + a -</option>
-                                        <option value="'.$fullUrl.'&orden=2">Ordenar por precio - a +</option>                            
+                                        <option value="' . $base_url . '?' . $query_string . '&orden=1">Ordenar por precio + a -</option>
+                                        <option value="' . $base_url . '?' . $query_string . '&orden=2">Ordenar por precio - a +</option>                            
                                     ');
                                 }
                             } else {
-                                $query_params['orden'] = 1; 
+                                $query_params['orden'] = 1;
 
-                                $new_query_str = http_build_query($query_params);
+                                $query_string = http_build_query($query_params);
+                                $new_url = $base_url . '?' . $query_string;
 
-                                $new_url = $url_parts['scheme'] . '://' . $url_parts['host'] . $url_parts['path'] . '?' . $new_query_str;
-
-                                echo('
+                                echo ('
                                     <option value="Inicio_Con_Loggin.php">Por defecto</option>
-                                    <option value="'.$new_url.'">Ordenar por precio + a -</option>');
+                                    <option value="' . $new_url . '">Ordenar por precio + a -</option>
+                                ');
 
-                                $query_params['orden'] = 2; 
+                                $query_params['orden'] = 2;
 
-                                $new_query_str = http_build_query($query_params);
-                                $new_url = $url_parts['scheme'] . '://' . $url_parts['host'] . $url_parts['path'] . '?' . $new_query_str;
+                                $query_string = http_build_query($query_params);
+                                $new_url = $base_url . '?' . $query_string;
 
-                                echo('<option value="'.$new_url.'">Ordenar por precio - a +</option>'); 
+                                echo ('<option value="' . $new_url . '">Ordenar por precio - a +</option>');
                             }
                         ?>
                     </select>
