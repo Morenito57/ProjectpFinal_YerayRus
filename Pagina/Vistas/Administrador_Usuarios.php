@@ -237,9 +237,6 @@
             margin-bottom: 50px;
         }
 
-        .cerrarSesion{
-        }
-
     </style>
 </head>
 <body>

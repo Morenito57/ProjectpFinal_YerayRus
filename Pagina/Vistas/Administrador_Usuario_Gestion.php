@@ -19,7 +19,15 @@
 
     if($_SERVER["REQUEST_METHOD"]=="POST") {
 
-        if (isset($_POST['eliminar'])) {
+        if(isset($_POST['deslogearse'])) {  
+
+            require ("../Negocio/usuarioReglasNegocio.php");
+
+            $usuarioBL = new UsuarioReglasNegocio();
+    
+            $perfil =  $usuarioBL->deslogearse();
+
+        }elseif (isset($_POST['eliminar'])) {
 
             $permiso = $_POST['permiso'];
             if ($permiso == "1") {
@@ -225,6 +233,20 @@
         .dato{
         }
 
+        .boton_area{
+            text-decoration: none;
+            padding-top: 10px;
+            padding-bottom: 10px;
+            padding-right: 10px;
+            padding-left: 10px;
+            float: right;
+            color: white;
+            font-size: 25px;
+            border: 5px solid rgb(173, 32, 32); 
+            background-color: rgb(61, 9, 9); 
+            margin-bottom: 50px;
+        }
+
     </style>
 </head>
 <body>
@@ -233,6 +255,9 @@
             <img class="portada" src="imagenes/Portada.png"> 
         </div>
         <div class="divCuerpo">
+        <form class="cerrarSesion" method = "POST" action = "<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
+                <input type="submit" name="deslogearse" class="boton_area" value="Cerrar Sesion">
+            </form>
             <div class="divCabezeraCuerpo">
                 <div class="menu">
 

@@ -16,6 +16,13 @@
             $id = $_POST['idUsuario'];
 
             header("Location: Administrador_Vehiculo_Gestion.php?id=".urlencode($id));
+        }elseif(isset($_POST['deslogearse'])) {  
+
+            require ("../Negocio/usuarioReglasNegocio.php");
+
+            $usuarioBL = new UsuarioReglasNegocio();
+    
+            $perfil =  $usuarioBL->deslogearse();
         }
     }
 
@@ -221,6 +228,20 @@
             width: 100%;
         }
 
+        .boton_area{
+            text-decoration: none;
+            padding-top: 10px;
+            padding-bottom: 10px;
+            padding-right: 10px;
+            padding-left: 10px;
+            float: right;
+            color: white;
+            font-size: 25px;
+            border: 5px solid rgb(173, 32, 32); 
+            background-color: rgb(61, 9, 9); 
+            margin-bottom: 50px;
+        }
+
     </style>
 </head>
 <body>
@@ -229,6 +250,9 @@
             <img class="portada" src="imagenes/Portada.png"> 
         </div>
         <div class="divCuerpo">
+        <form class="cerrarSesion" method = "POST" action = "<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
+                <input type="submit" name="deslogearse" class="boton_area" value="Cerrar Sesion">
+            </form>
             <div class="divCabezeraCuerpo">
                 <div class="menu">
 
