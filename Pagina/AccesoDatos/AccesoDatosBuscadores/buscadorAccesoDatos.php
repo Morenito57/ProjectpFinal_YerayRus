@@ -9,7 +9,8 @@ $conexion = mysqli_connect('localhost','root','');
              $letra = $_GET['letra'];
 
              if($letra != ""){
-                $consulta = mysqli_prepare($conexion, "SELECT Id, Nombre FROM Vehiculo where Estado = 1 and (Nombre LIKE '" . $letra . "%');");
+                $consulta = mysqli_prepare($conexion, "SELECT Id, Nombre FROM Vehiculo where Estado = 1 and (Nombre LIKE ?);");
+                mysqli_stmt_bind_param($consulta, "s", $letra);
                 $consulta->execute();
                $result = $consulta->get_result();
        
@@ -22,4 +23,6 @@ $conexion = mysqli_connect('localhost','root','');
              }else{
                 echo json_encode("");
              }
+             mysqli_close($conexion);
+            exit();
 ?>

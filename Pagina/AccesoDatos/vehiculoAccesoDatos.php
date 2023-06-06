@@ -31,16 +31,16 @@
 
                 if($tipoVehiculo >= 1 && $tipoVehiculo <= $total){
                     if($orden == 1){
-                        $consulta = mysqli_prepare($conexion, "SELECT Vehiculo.Id as Id, IdTipoVehiculo, Imagen, Marca, Nombre, Matricula, Caballos, Kilometros, Plazas, Año, Precio, Estado, Descripcion, TipoVehiculo.TipoVehiculo as TipoVehiculo FROM Vehiculo INNER JOIN TipoVehiculo ON Vehiculo.IdTipoVehiculo = TipoVehiculo.Id where IdTipoVehiculo = ? order by Precio DESC;");
+                        $consulta = mysqli_prepare($conexion, "SELECT Vehiculo.Id as Id, IdTipoVehiculo, Imagen, Marca, Nombre, Matricula, Caballos, Kilometros, Plazas, Año, Precio, Estado, Descripcion, TipoVehiculo.TipoVehiculo as TipoVehiculo FROM Vehiculo LEFT JOIN TipoVehiculo ON Vehiculo.IdTipoVehiculo = TipoVehiculo.Id where IdTipoVehiculo = ? order by Precio DESC;");
                         mysqli_stmt_bind_param($consulta, 'i', $tipoVehiculo);
                     }else if($orden == 2){
-                        $consulta = mysqli_prepare($conexion, "SELECT Vehiculo.Id as Id, IdTipoVehiculo, Imagen, Marca, Nombre, Matricula, Caballos, Kilometros, Plazas, Año, Precio, Estado, Descripcion, TipoVehiculo.TipoVehiculo as TipoVehiculo FROM Vehiculo INNER JOIN TipoVehiculo ON Vehiculo.IdTipoVehiculo = TipoVehiculo.Id where IdTipoVehiculo = ? order by Precio;");
+                        $consulta = mysqli_prepare($conexion, "SELECT Vehiculo.Id as Id, IdTipoVehiculo, Imagen, Marca, Nombre, Matricula, Caballos, Kilometros, Plazas, Año, Precio, Estado, Descripcion, TipoVehiculo.TipoVehiculo as TipoVehiculo FROM Vehiculo LEFT JOIN TipoVehiculo ON Vehiculo.IdTipoVehiculo = TipoVehiculo.Id where IdTipoVehiculo = ? order by Precio;");
                         mysqli_stmt_bind_param($consulta, 'i', $tipoVehiculo);
                     }else{
-                        $consulta = mysqli_prepare($conexion, "SELECT Vehiculo.Id as Id, IdTipoVehiculo, Imagen, Marca, Nombre, Matricula, Caballos, Kilometros, Plazas, Año, Precio, Estado, Descripcion, TipoVehiculo.TipoVehiculo as TipoVehiculo FROM Vehiculo INNER JOIN TipoVehiculo ON Vehiculo.IdTipoVehiculo = TipoVehiculo.Id;");
+                        $consulta = mysqli_prepare($conexion, "SELECT Vehiculo.Id as Id, IdTipoVehiculo, Imagen, Marca, Nombre, Matricula, Caballos, Kilometros, Plazas, Año, Precio, Estado, Descripcion, TipoVehiculo.TipoVehiculo as TipoVehiculo FROM Vehiculo LEFT JOIN TipoVehiculo ON Vehiculo.IdTipoVehiculo = TipoVehiculo.Id;");
                     }
                 }else{
-                    $consulta = mysqli_prepare($conexion, "SELECT Vehiculo.Id as Id, IdTipoVehiculo, Imagen, Marca, Nombre, Matricula, Caballos, Kilometros, Plazas, Año, Precio, Estado, Descripcion, TipoVehiculo.TipoVehiculo as TipoVehiculo FROM Vehiculo INNER JOIN TipoVehiculo ON Vehiculo.IdTipoVehiculo = TipoVehiculo.Id;");
+                    $consulta = mysqli_prepare($conexion, "SELECT Vehiculo.Id as Id, IdTipoVehiculo, Imagen, Marca, Nombre, Matricula, Caballos, Kilometros, Plazas, Año, Precio, Estado, Descripcion, TipoVehiculo.TipoVehiculo as TipoVehiculo FROM Vehiculo LEFT JOIN TipoVehiculo ON Vehiculo.IdTipoVehiculo = TipoVehiculo.Id;");
                 }
             }else if($tipoVehiculo){
            
@@ -51,23 +51,23 @@
                     $total = $columna['total'];
            
                     if($tipoVehiculo >= 1 && $tipoVehiculo <= $total){
-                        $consulta = mysqli_prepare($conexion, "SELECT Vehiculo.Id as Id, IdTipoVehiculo, Imagen, Marca, Nombre, Matricula, Caballos, Kilometros, Plazas, Año, Precio, Estado, Descripcion, TipoVehiculo.TipoVehiculo as TipoVehiculo FROM Vehiculo INNER JOIN TipoVehiculo ON Vehiculo.IdTipoVehiculo = TipoVehiculo.Id WHERE IdTipoVehiculo = ?");
+                        $consulta = mysqli_prepare($conexion, "SELECT Vehiculo.Id as Id, IdTipoVehiculo, Imagen, Marca, Nombre, Matricula, Caballos, Kilometros, Plazas, Año, Precio, Estado, Descripcion, TipoVehiculo.TipoVehiculo as TipoVehiculo FROM Vehiculo LEFT JOIN TipoVehiculo ON Vehiculo.IdTipoVehiculo = TipoVehiculo.Id WHERE IdTipoVehiculo = ?");
                         mysqli_stmt_bind_param($consulta, 'i', $tipoVehiculo);
                     } else {
-                        $consulta = mysqli_prepare($conexion, "SELECT Vehiculo.Id as Id, IdTipoVehiculo, Imagen, Marca, Nombre, Matricula, Caballos, Kilometros, Plazas, Año, Precio, Estado, Descripcion, TipoVehiculo.TipoVehiculo as TipoVehiculo FROM Vehiculo INNER JOIN TipoVehiculo ON Vehiculo.IdTipoVehiculo = TipoVehiculo.Id");
+                        $consulta = mysqli_prepare($conexion, "SELECT Vehiculo.Id as Id, IdTipoVehiculo, Imagen, Marca, Nombre, Matricula, Caballos, Kilometros, Plazas, Año, Precio, Estado, Descripcion, TipoVehiculo.TipoVehiculo as TipoVehiculo FROM Vehiculo LEFT JOIN TipoVehiculo ON Vehiculo.IdTipoVehiculo = TipoVehiculo.Id");
                     }  
 
 
             }else if($orden){
                     if($orden == 1){
-                        $consulta = mysqli_prepare($conexion, "SELECT Vehiculo.Id as Id, IdTipoVehiculo, Imagen, Marca, Nombre, Matricula, Caballos, Kilometros, Plazas, Año, Precio, Estado, Descripcion, TipoVehiculo.TipoVehiculo as TipoVehiculo FROM Vehiculo INNER JOIN TipoVehiculo ON Vehiculo.IdTipoVehiculo = TipoVehiculo.Id order by Precio DESC;");
+                        $consulta = mysqli_prepare($conexion, "SELECT Vehiculo.Id as Id, IdTipoVehiculo, Imagen, Marca, Nombre, Matricula, Caballos, Kilometros, Plazas, Año, Precio, Estado, Descripcion, TipoVehiculo.TipoVehiculo as TipoVehiculo FROM Vehiculo LEFT JOIN TipoVehiculo ON Vehiculo.IdTipoVehiculo = TipoVehiculo.Id order by Precio DESC;");
                     }else if($orden == 2){
-                        $consulta = mysqli_prepare($conexion, "SELECT Vehiculo.Id as Id, IdTipoVehiculo, Imagen, Marca, Nombre, Matricula, Caballos, Kilometros, Plazas, Año, Precio, Estado, Descripcion, TipoVehiculo.TipoVehiculo as TipoVehiculo FROM Vehiculo INNER JOIN TipoVehiculo ON Vehiculo.IdTipoVehiculo = TipoVehiculo.Id order by Precio;");
+                        $consulta = mysqli_prepare($conexion, "SELECT Vehiculo.Id as Id, IdTipoVehiculo, Imagen, Marca, Nombre, Matricula, Caballos, Kilometros, Plazas, Año, Precio, Estado, Descripcion, TipoVehiculo.TipoVehiculo as TipoVehiculo FROM Vehiculo LEFT JOIN TipoVehiculo ON Vehiculo.IdTipoVehiculo = TipoVehiculo.Id order by Precio;");
                     }else{
-                        $consulta = mysqli_prepare($conexion, "SELECT Vehiculo.Id as Id, IdTipoVehiculo, Imagen, Marca, Nombre, Matricula, Caballos, Kilometros, Plazas, Año, Precio, Estado, Descripcion, TipoVehiculo.TipoVehiculo as TipoVehiculo FROM Vehiculo INNER JOIN TipoVehiculo ON Vehiculo.IdTipoVehiculo = TipoVehiculo.Id;");
+                        $consulta = mysqli_prepare($conexion, "SELECT Vehiculo.Id as Id, IdTipoVehiculo, Imagen, Marca, Nombre, Matricula, Caballos, Kilometros, Plazas, Año, Precio, Estado, Descripcion, TipoVehiculo.TipoVehiculo as TipoVehiculo FROM Vehiculo LEFT JOIN TipoVehiculo ON Vehiculo.IdTipoVehiculo = TipoVehiculo.Id;");
                     }
             }else{
-                    $consulta = mysqli_prepare($conexion, "SELECT Vehiculo.Id as Id, IdTipoVehiculo, Imagen, Marca, Nombre, Matricula, Caballos, Kilometros, Plazas, Año, Precio, Estado, Descripcion, TipoVehiculo.TipoVehiculo as TipoVehiculo FROM Vehiculo INNER JOIN TipoVehiculo ON Vehiculo.IdTipoVehiculo = TipoVehiculo.Id;");
+                    $consulta = mysqli_prepare($conexion, "SELECT Vehiculo.Id as Id, IdTipoVehiculo, Imagen, Marca, Nombre, Matricula, Caballos, Kilometros, Plazas, Año, Precio, Estado, Descripcion, TipoVehiculo.TipoVehiculo as TipoVehiculo FROM Vehiculo LEFT JOIN TipoVehiculo ON Vehiculo.IdTipoVehiculo = TipoVehiculo.Id;");
             }
            
                 mysqli_stmt_execute($consulta);
@@ -94,7 +94,7 @@
 
             $id = mysqli_real_escape_string($conexion, $id);
 
-            $consulta = mysqli_prepare($conexion, "SELECT Vehiculo.Id as Id, IdTipoVehiculo, Imagen, Marca, Nombre, Matricula, Caballos, Kilometros, Plazas, Año, Precio, Estado, Descripcion, TipoVehiculo.TipoVehiculo as TipoVehiculo FROM Vehiculo INNER JOIN TipoVehiculo ON Vehiculo.IdTipoVehiculo = TipoVehiculo.Id where Vehiculo.Id = (?);");
+            $consulta = mysqli_prepare($conexion, "SELECT Vehiculo.Id as Id, IdTipoVehiculo, Imagen, Marca, Nombre, Matricula, Caballos, Kilometros, Plazas, Año, Precio, Estado, Descripcion, TipoVehiculo.TipoVehiculo as TipoVehiculo FROM Vehiculo LEFT JOIN TipoVehiculo ON Vehiculo.IdTipoVehiculo = TipoVehiculo.Id where Vehiculo.Id = (?);");
             $consulta->bind_param("i",$id);
             $consulta->execute();
             $result = $consulta->get_result();
