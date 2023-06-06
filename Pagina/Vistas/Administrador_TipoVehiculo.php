@@ -337,6 +337,6 @@
         </div>
         </div>
     </div>
-    <script src="js/Inicio_Con_Loggin.js"></script>
+    <script src="js/JS_Admin.js"></script>
 </body>
 </html>

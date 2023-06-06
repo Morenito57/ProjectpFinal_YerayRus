@@ -15,12 +15,12 @@
             }
        
             mysqli_select_db($conexion, 'LegendaryMotorsport');
-           
+
             $tipoVehiculo = filter_input(INPUT_GET, 'tipoVehiculo', FILTER_SANITIZE_NUMBER_INT);
-            $tipoVehiculo = intval($tipoVehiculo);
+            $tipoVehiculo = urldecode(intval($tipoVehiculo));
                  
             $orden = filter_input(INPUT_GET, 'orden', FILTER_SANITIZE_NUMBER_INT);
-            $orden = intval($orden);
+            $orden = urldecode(intval($orden));
        
             if($tipoVehiculo && $orden){
                 $consultaCount = mysqli_prepare($conexion, "SELECT COUNT(*) as total FROM TipoVehiculo");

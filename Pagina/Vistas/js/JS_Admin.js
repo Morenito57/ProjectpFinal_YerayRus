@@ -130,7 +130,7 @@ function entrgaCoche(){
     let campo = document.getElementById("opcionesTablaBuscador").value;
 
     let xhr = new XMLHttpRequest();
-    let url = "../AccesoDatos/AccesoDatosBuscadores/buscadorAdminAlquileresAccesoDatos.php?letra=" + letra + "&campo=" + campo;
+    let url = "../AccesoDatos/AccesoDatosBuscadores/buscadorAdminAlquileresAccesoDatos.php?letra=" + decodeURIComponent(letra) + "&" + decodeURIComponent(campo) + "=" + campo;
   
     xhr.onreadystatechange = function() {
       if (xhr.readyState === 4 && xhr.status === 200) {
@@ -163,7 +163,7 @@ function entrgaCoche(){
     let campo = document.getElementById("opcionesTablaBuscador").value;
 
     let xhr = new XMLHttpRequest();
-    let url = "../AccesoDatos/AccesoDatosBuscadores/buscadorAdminVehiculosAccesoDatos.php?letra=" + letra + "&campo=" + campo;
+    let url = "../AccesoDatos/AccesoDatosBuscadores/buscadorAdminVehiculosAccesoDatos.php?letra=" + decodeURIComponent(letra) + "&" + decodeURIComponent(campo) + "=" + campo;
   
     xhr.onreadystatechange = function() {
       if (xhr.readyState === 4 && xhr.status === 200) {
@@ -199,7 +199,7 @@ function entrgaCoche(){
     let campo = document.getElementById("opcionesTablaBuscador").value;
 
     let xhr = new XMLHttpRequest();
-    let url = "../AccesoDatos/AccesoDatosBuscadores/buscadorAdminDatosUsuario.php?letra=" + letra + "&campo=" + campo;
+    let url = "../AccesoDatos/AccesoDatosBuscadores/buscadorAdminDatosUsuario.php?letra=" + decodeURIComponent(letra) + "&" + decodeURIComponent(campo) + "=" + campo;
   
     xhr.onreadystatechange = function() {
       if (xhr.readyState === 4 && xhr.status === 200) {
@@ -232,7 +232,7 @@ function entrgaCoche(){
     let campo = document.getElementById("opcionesTablaBuscador").value;
 
     let xhr = new XMLHttpRequest();
-    let url = "../AccesoDatos/AccesoDatosBuscadores/buscadorAdminTipoVehiculosAccesoDatos.php?letra=" + letra + "&campo=" + campo;
+    let url = "../AccesoDatos/AccesoDatosBuscadores/buscadorAdminTipoVehiculosAccesoDatos.php?letra=" + decodeURIComponent(letra) + "&" + decodeURIComponent(campo) + "=" + campo;
   
     xhr.onreadystatechange = function() {
       if (xhr.readyState === 4 && xhr.status === 200) {
@@ -265,7 +265,7 @@ function entrgaCoche(){
     let campo = document.getElementById("opcionesTablaBuscador").value;
 
     let xhr = new XMLHttpRequest();
-    let url = "../AccesoDatos/AccesoDatosBuscadores/buscadorAdminSegurosAccesoDatos.php?letra=" + letra + "&campo=" + campo;
+    let url = "../AccesoDatos/AccesoDatosBuscadores/buscadorAdminSegurosAccesoDatos.php?letra=" + decodeURIComponent(letra) + "&" + decodeURIComponent(campo) + "=" + campo;
   
     xhr.onreadystatechange = function() {
       if (xhr.readyState === 4 && xhr.status === 200) {
@@ -298,7 +298,7 @@ function entrgaCoche(){
     let campo = document.getElementById("opcionesTablaBuscador").value;
 
     let xhr = new XMLHttpRequest();
-    let url = "../AccesoDatos/AccesoDatosBuscadores/buscadorAdminExtrasAccesoDatos.php?letra=" + letra + "&campo=" + campo;
+    let url = "../AccesoDatos/AccesoDatosBuscadores/buscadorAdminExtrasAccesoDatos.php?letra=" + decodeURIComponent(letra) + "&" + decodeURIComponent(campo) + "=" + campo;
   
     xhr.onreadystatechange = function() {
       if (xhr.readyState === 4 && xhr.status === 200) {
@@ -331,7 +331,7 @@ function entrgaCoche(){
     let campo = document.getElementById("opcionesTablaBuscador").value;
 
     let xhr = new XMLHttpRequest();
-    let url = "../AccesoDatos/AccesoDatosBuscadores/buscadorAdminCargosAccesoDatos.php?letra=" + letra + "&campo=" + campo;
+    let url = "../AccesoDatos/AccesoDatosBuscadores/buscadorAdminCargosAccesoDatos.php?letra=" + decodeURIComponent(letra) + "&" + decodeURIComponent(campo) + "=" + campo;
   
     xhr.onreadystatechange = function() {
       if (xhr.readyState === 4 && xhr.status === 200) {

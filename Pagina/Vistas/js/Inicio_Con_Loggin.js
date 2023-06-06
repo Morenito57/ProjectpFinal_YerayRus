@@ -4,7 +4,7 @@ function obtenerDatos() {
   let letra = document.getElementById("busqueda").value;
 
   let xhr = new XMLHttpRequest();
-  let url = "../AccesoDatos/AccesoDatosBuscadores/buscadorAccesoDatos.php?letra=" + letra;
+  let url = "../AccesoDatos/AccesoDatosBuscadores/buscadorAccesoDatos.php?letra=" + decodeURIComponent(letra);
 
   xhr.onreadystatechange = function() {
     if (xhr.readyState === 4 && xhr.status === 200) {
@@ -21,7 +21,7 @@ function obtenerDatos() {
 
       for(let vehiculo of vehiculos){
         let option = document.createElement("option");
-        option.value = "pantallaCompra_Loggin.php?id="+vehiculo.Id;
+        option.value = "pantallaCompra_Loggin.php?id="+decodeURIComponent(vehiculo.Id);
         option.innerHTML = vehiculo.Nombre;
         select.appendChild(option);
       }
@@ -65,7 +65,7 @@ function redirigirPagina(){
 
 var urlActual = window.location.href;
 
-var paginaActual = parseInt(getQueryStringValue("pagina"));
+var paginaActual = parseInt(obtenerValor("pagina"));
 
 var totalDatosVehiculos = totalDatosVehiculosPhp;
 
@@ -74,19 +74,19 @@ if (isNaN(paginaActual)) {
 }
 
 if (paginaActual > 1) {
-    document.getElementById("anterior").href = updateQueryStringParameter(urlActual, "pagina", paginaActual - 1);
+    document.getElementById("anterior").href = actualizarParametro(urlActual, "pagina", paginaActual - 1);
 }
 
 if(paginaActual < totalDatosVehiculos/9){
-document.getElementById("siguiente").href = updateQueryStringParameter(urlActual, "pagina", paginaActual + 1);
+document.getElementById("siguiente").href = actualizarParametro(urlActual, "pagina", paginaActual + 1);
 }
 
-function getQueryStringValue(key) {
+function obtenerValor(key) {
     var urlParams = new URLSearchParams(window.location.search);
     return urlParams.get(key);
 }
 
-function updateQueryStringParameter(uri, key, value) {
+function actualizarParametro(uri, key, value) {
     var re = new RegExp("([?&])" + key + "=.*?(&|$)", "i");
     var separator = uri.indexOf("?") !== -1 ? "&" : "?";
     if (uri.match(re)) {

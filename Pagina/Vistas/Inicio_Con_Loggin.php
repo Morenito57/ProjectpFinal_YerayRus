@@ -257,7 +257,7 @@
                       $datosTipoVehiculos = $tipoVehiculosBL->obtener();
                       echo "<option value=Inicio_Con_Loggin.php>Todos</option>";
                       foreach($datosTipoVehiculos as $datosTipoVehiculo){
-                        echo "<option value=Inicio_Con_Loggin.php?tipoVehiculo=".$datosTipoVehiculo->getId().">".$datosTipoVehiculo->getTipoVehiculo()."</option>";
+                        echo "<option value=Inicio_Con_Loggin.php?tipoVehiculo=".urldecode($datosTipoVehiculo->getId()).">".$datosTipoVehiculo->getTipoVehiculo()."</option>";
                       }
                 ?>
                 </select>
@@ -286,18 +286,18 @@
                                     echo ('
                                         <option value="Inicio_Con_Loggin.php">Por defecto</option>
                                         <option value="' . $base_url . '?orden='.urlencode(1).'">Ordenar por precio + a -</option>
-                                        <option value="' . $base_url . '?orden=2">Ordenar por precio - a +</option>                            
+                                        <option value="' . $base_url . '?orden='.urlencode(2).'">Ordenar por precio - a +</option>                            
                                     ');
                                 } else {
                                     $query_string = http_build_query($query_params);
                                     echo ('
                                         <option value="Inicio_Con_Loggin.php">Por defecto</option>
-                                        <option value="' . $base_url . '?' . $query_string . '&orden=1">Ordenar por precio + a -</option>
-                                        <option value="' . $base_url . '?' . $query_string . '&orden=2">Ordenar por precio - a +</option>                            
+                                        <option value="' . $base_url . '?' . $query_string . '&orden='.urlencode(1).'">Ordenar por precio + a -</option>
+                                        <option value="' . $base_url . '?' . $query_string . '&orden='.urlencode(2).'">Ordenar por precio - a +</option>                            
                                     ');
                                 }
                             } else {
-                                $query_params['orden'] = 1;
+                                $query_params['orden'] = urlencode(1);
 
                                 $query_string = http_build_query($query_params);
                                 $new_url = $base_url . '?' . $query_string;
@@ -307,7 +307,7 @@
                                     <option value="' . $new_url . '">Ordenar por precio + a -</option>
                                 ');
 
-                                $query_params['orden'] = 2;
+                                $query_params['orden'] = urlencode(2);
 
                                 $query_string = http_build_query($query_params);
                                 $new_url = $base_url . '?' . $query_string;
@@ -330,7 +330,6 @@
 
                         for ($i=0; $i < count($datosVehiculos); $i++) { 
                             if ($datosVehiculos[$i]->getEstado() == false) {
-                                // Elimina el elemento del array
                                 unset($datosVehiculos[$i]);
                             }
                         }
