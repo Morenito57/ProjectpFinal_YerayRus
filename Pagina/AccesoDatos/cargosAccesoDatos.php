@@ -105,8 +105,8 @@
             $fecha = mysqli_real_escape_string($conexion, $fecha);
             $fecha = date('Y-m-d', strtotime($fecha));
 
-            $consulta1 = mysqli_prepare($conexion, "UPDATE Cargo JOIN Alquiler ON Cargo.Alquiler_id = Alquiler.Id SET Cargo.Activo = 1, Cargo.Pagado = 0 WHERE CURDATE() > Alquiler.FechaFinal AND Cargo.FechaDevuelto IS NULL AND Alquiler.Id = ?;");
-            $consulta1->bind_param('i', $idAlquiler);
+            $consulta1 = mysqli_prepare($conexion, "UPDATE Cargo SET Activo = 1, Pagado = 0 WHERE Id = ?;");
+            $consulta1->bind_param('i', $idCargo);
             $consulta1->execute();
 
             $consulta2 = mysqli_prepare($conexion, "UPDATE Cargo SET FechaDevuelto = ? WHERE Alquiler_id = ?;");
@@ -143,13 +143,13 @@
             $registro2 = mysqli_fetch_assoc($resultado2);
             $vehiculo = $registro2['IdVehiculo'];
 
-            $consulta7 = mysqli_prepare($conexion, "UPDATE Vehiculo SET Estado = true WHERE Id = ?;");
+            $consulta7 = mysqli_prepare($conexion, "UPDATE Vehiculo SET Estado = 1 WHERE Id = ?;");
             $consulta7->bind_param('i', $vehiculo);
             $consulta7->execute();
 
             echo "<script type='text/javascript'>alert('Se ha entregado con exito.');</script>";
 
-            echo "<script type='text/javascript'>window.location.href = 'Administrador_Cargos.php';</script>";
+            echo "<script type='text/javascript'>window.location.href = 'Administrador_cargos.php';</script>";
 
             mysqli_close($conexion);
             exit();

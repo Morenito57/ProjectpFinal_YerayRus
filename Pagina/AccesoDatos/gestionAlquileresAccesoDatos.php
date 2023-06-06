@@ -47,7 +47,7 @@
             $filaCargo = $resCargo->fetch_assoc();
             $CargosActual = $filaCargo['TotalCargos'];
 
-            if ($CargosActual > 0) {
+            if ($CargosActual >= 1) {
                 echo "<script type='text/javascript'>alert('Tienes cargos activos, pagalos y podras alquilar.');</script>";
                 echo "<script type='text/javascript'>window.location.href = 'Area_Personal_Historial_Alquileres_Usuario_Vista.php';</script>";
                 mysqli_close($conexion);

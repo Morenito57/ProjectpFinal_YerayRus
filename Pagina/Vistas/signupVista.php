@@ -60,7 +60,7 @@
 
         .caja_inicio_sesion{
             width: 80%;
-            height: 100%;
+            height: 130%;
             background-color: rgb(61, 9, 9);
             margin: 0 auto;
             border: 5px solid rgb(173, 32, 32);
