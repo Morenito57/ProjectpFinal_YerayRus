@@ -6,8 +6,8 @@
             }
             mysqli_select_db($conexion, 'LegendaryMotorsport');
 
-            $letra = urldecode($_GET['letra']);
-            $campo = urldecode($_GET['campo']);
+            $letra = $_GET['letra'];
+            $campo = $_GET['campo'];
 
             $columnas_permitidas = ["Id", "Extra", "Precio"];
             if (!in_array($campo, $columnas_permitidas)) {
