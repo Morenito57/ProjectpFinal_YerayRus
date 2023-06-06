@@ -23,9 +23,19 @@
         body{
             background-color: rgb(77, 5, 5);
         } 
+
+        html, body {
+            height: 100%;
+        }
+
+        .portada{
+            width: 100%;
+            height: 100%;
+        }
+
         .divPrincipal{
-            width: 1910px;
-            height: 1300px;
+            width: 100%;
+            height: 100%;
         }
         .divCabezera{
             width: 100%;
@@ -35,7 +45,6 @@
         .divCuerpo{
             width: 100%;
             height: 100%;
-            padding: 10px;
         }
         .divCabezeraCuerpo{
             padding: 20px;

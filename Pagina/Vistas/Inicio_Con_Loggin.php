@@ -20,24 +20,28 @@
             padding: 0%;
             margin: 0%;
         }
+
+        html, body {
+            height: 100%;
+        }
+
         body{
             background-color: rgb(77, 5, 5);
         } 
+
         .divPrincipal{
-            width: 1910px;
-            height: 1000px;
+            width: 100%;
+            height: 100%;
         }
+        
         .divCabezera{
-            width: 101%;
+            width: 100%;
             height: 480px;
-            padding: 0%;
-            margin: 0%;
             border-bottom: 5px solid rgb(173, 32, 32);
         }
         .divCuerpo{
             width: 100%;
             height: 100%;
-            padding: 10px;
         }
         .divCabezeraCuerpo{
             text-align: center;
@@ -49,16 +53,7 @@
             width: 100%;
             height: 100%;
         }
-        .botonCategoria{
-            margin-right: 40px;
-            padding: 20px;
-            padding-left: 40px;
-            padding-right: 40px;
-            background-color: rgb(61, 9, 9);
-            border: 3px solid rgb(173, 32, 32);
-            text-decoration: none;
-            color: white;
-        }
+
         .divRestoCuerpo{
             margin: auto;
             margin-top: 20px;
@@ -81,18 +76,7 @@
             width: 100%;
             height: 5%;
         }
-        .botonOrdenar{
-            float: right;
-            padding-top: 15px;
-            padding-bottom: 15px;
-            padding-left: 40px;
-            padding-right: 40px;
-            margin-right: 50px;
-            background-color: rgb(61, 9, 9);
-            text-decoration: none;
-            color: white;
-            border: 3px solid rgb(173, 32, 32);
-        }
+
         .anuncio{
             width: 29%;
             height: 30%;
@@ -100,6 +84,7 @@
             margin: 25px;
             border: 4px solid black;
         }
+
         .fotoAnuncio{
             width: 100%;
             height: 85%;
@@ -300,7 +285,7 @@
                                 if (empty($query_params)) {
                                     echo ('
                                         <option value="Inicio_Con_Loggin.php">Por defecto</option>
-                                        <option value="' . $base_url . '?orden=1">Ordenar por precio + a -</option>
+                                        <option value="' . $base_url . '?orden='.urlencode(1).'">Ordenar por precio + a -</option>
                                         <option value="' . $base_url . '?orden=2">Ordenar por precio - a +</option>                            
                                     ');
                                 } else {
