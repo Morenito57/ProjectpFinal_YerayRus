@@ -58,7 +58,7 @@
             $hash = password_hash($clave, PASSWORD_DEFAULT);
             $consulta3->bind_param("siiiss", $usuario, $DatosPersonales_id, $DatosContacto_id, $saldo, $hash, $tipoUsuario);
             $res = $consulta3->execute();
-
+            echo "<script type='text/javascript'>alert('Se ha creado con exito el usuario.');</script>";
             header("Location: loginVista.php");
             mysqli_close($conexion);
             return $res;
@@ -166,7 +166,9 @@
             }
 
             return $usuarios;
+
             mysqli_close($conexion);
+
             exit();
         }
 
@@ -238,10 +240,16 @@
                 $consulta5->bind_param("isss",$telefono,$email,$otro,$IdDatosContacto);
                 $consulta5->execute();
             }
-                    
-            header("Location: Area_Personal_Datos_Usuario_Vista.php");
+
+
+            echo "<script type='text/javascript'>alert('Se ha efectuado la actualizacion con exito.');</script>";
+
+            echo "<script type='text/javascript'>window.location.href = 'Area_Personal_Datos_Usuario_Vista.php';</script>";
+
             return $res;
+
             mysqli_close($conexion);
+
             exit();
         }
 
@@ -259,8 +267,12 @@
             $consulta1->bind_param("is",$saldo,$usuarioOriginal);
             $res = $consulta1->execute();
 
+            echo "<script type='text/javascript'>alert('Se ha efectuado la transaccion con exito.');</script>";
+
             return $res;
+
             mysqli_close($conexion);
+
             exit();
 
         }
@@ -279,8 +291,14 @@
             $consulta->bind_param("s", $usuarioOriginal);
             $res = $consulta->execute();
 
+            echo "<script type='text/javascript'>alert('Se ha suspendido con exito.');</script>";
+
+            echo "<script type='text/javascript'>window.location.href = 'loginVista.php';</script>";
+
             return $res;
+
             mysqli_close($conexion);
+
             exit();
         }
 
@@ -309,6 +327,11 @@
             $consulta1->execute();
 
             mysqli_query($conexion, "SET FOREIGN_KEY_CHECKS=1;");
+
+            echo "<script type='text/javascript'>alert('Se ha suspendido con exito.');</script>";
+
+            echo "<script type='text/javascript'>window.location.href = 'Administrador_Usuarios.php';</script>";
+
             mysqli_close($conexion);
             exit();
 
@@ -317,7 +340,9 @@
     function deslogearse() {
         session_unset();
         session_destroy();
-        header("Location: loginVista.php");
+        echo "<script type='text/javascript'>alert('Ha cerrado sesion con exito.');</script>";
+
+        echo "<script type='text/javascript'>window.location.href = 'loginVista.php';</script>";
         exit();
     }
 
@@ -435,7 +460,13 @@
             $consulta14->bind_param("si",$otro,$IdDatosContacto);
             $consulta14->execute();
         }
+
+        echo "<script type='text/javascript'>alert('Se ha actualizado los datos con exito.');</script>";
+
+        echo "<script type='text/javascript'>window.location.href = 'Administrador_Usuarios.php';</script>";
+
         mysqli_close($conexion);
+
         exit();
 
     }
@@ -464,8 +495,11 @@
         $hash = password_hash($clave, PASSWORD_DEFAULT);
         $consulta3->bind_param("siiissi", $usuario, $DatosPersonales_id, $DatosContacto_id, $saldo, $hash, $tipoDeUsuario, $activo);
         $res = $consulta3->execute();
+
+        echo "<script type='text/javascript'>alert('Se ha insertado los datos con exito.');</script>";
+
+        echo "<script type='text/javascript'>window.location.href = 'Administrador_Usuarios.php';</script>";
         
-        header("Location: Administrador_Usuarios.php");
         mysqli_close($conexion);
         exit();
     }

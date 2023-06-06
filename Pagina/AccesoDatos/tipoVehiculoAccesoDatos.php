@@ -81,7 +81,9 @@
     
             mysqli_query($conexion, "SET FOREIGN_KEY_CHECKS=1;");
 
-            header("Location: Administrador_TipoVehiculo.php");
+            echo "<script type='text/javascript'>alert('Se ha eliminado con exito.');</script>";
+
+            echo "<script type='text/javascript'>window.location.href = 'Administrador_TipoVehiculo.php';</script>";
 
             mysqli_close($conexion);
             exit();
@@ -105,7 +107,12 @@
                 $consulta1->execute();
             }
 
+            echo "<script type='text/javascript'>alert('Se ha eliminado con exito.');</script>";
+
+            echo "<script type='text/javascript'>window.location.href = 'Administrador_TipoVehiculo.php';</script>";
+
             mysqli_close($conexion);
+
             exit();
         
         }
@@ -124,8 +131,12 @@
 
             $consulta1 = mysqli_prepare($conexion, "INSERT INTO TipoVehiculo(TipoVehiculo) VALUES (?);");
             $consulta1->bind_param("s", $tipoVehiculo);
-            $consulta1->execute();    
-            header("Location: Administrador_TipoVehiculo.php");
+            $consulta1->execute(); 
+            
+            echo "<script type='text/javascript'>alert('Se ha eliminado con exito.');</script>";
+
+            echo "<script type='text/javascript'>window.location.href = 'Administrador_TipoVehiculo.php';</script>";
+
             mysqli_close($conexion);
             exit();
         }

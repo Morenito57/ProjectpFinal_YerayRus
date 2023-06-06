@@ -33,7 +33,8 @@
             $saldoActual = $filaSaldo['Saldo'];
 
             if ($saldoActual < $TotalDelPrecio) {
-                header("Location: Area_Personal_Saldo_Usuario_Vista.php");
+                echo "<script type='text/javascript'>alert('No tienes dinero suficiente ingresa en tu cuenta.');</script>";
+                echo "<script type='text/javascript'>window.location.href = 'Area_Personal_Saldo_Usuario_Vista.php';</script>";
                 mysqli_close($conexion);
                 exit();
             }
@@ -47,7 +48,8 @@
             $CargosActual = $filaCargo['TotalCargos'];
 
             if ($CargosActual > 0) {
-                header("Location: Area_Personal_Historial_Alquileres_Usuario_Vista.php");
+                echo "<script type='text/javascript'>alert('Tienes cargos activos, pagalos y podras alquilar.');</script>";
+                echo "<script type='text/javascript'>window.location.href = 'Area_Personal_Historial_Alquileres_Usuario_Vista.php';</script>";
                 mysqli_close($conexion);
                 exit();
             }
@@ -85,6 +87,7 @@
             $consulta6->bind_param("is", $TotalDelPrecio, $IdUser);
             $consulta6->execute();
 
+            echo "<script type='text/javascript'>alert('Se ha efectuado el alquiler con exito.');</script>";
             return header("Location: Factura_Alquiler_Usuario.php?idAlquiler=".urlencode($alquiler_id));
             mysqli_close($conexion);
             exit();
@@ -146,7 +149,11 @@
             $saldoActual = $filaSaldo['Saldo'];
 
             if ($saldoActual < $TotalPago) {
-                header("Location: Area_Personal_Saldo_Usuario_Vista.php");
+
+                echo "<script type='text/javascript'>alert('El saldo actual es insuficiente.');</script>";
+
+                echo "<script type='text/javascript'>window.location.href = 'Area_Personal_Saldo_Usuario_Vista.php';</script>";
+
                 mysqli_close($conexion);
                 exit();
             }
@@ -163,7 +170,10 @@
             $consulta4->bind_param("ii", $TotalPago, $IdAlquiler);
             $consulta4->execute();
 
-            header("Location: Area_Personal_Gestion_Alquiler_Usuario_Vista.php?id=".urlencode($IdAlquiler));
+            echo "<script type='text/javascript'>alert('El saldo actual es insuficiente.');</script>";
+
+            echo "<script type='text/javascript'>window.location.href = 'Area_Personal_Gestion_Alquiler_Usuario_Vista.php?id='".urlencode($IdAlquiler)."';</script>";
+
             mysqli_close($conexion);
             exit();
         }
@@ -224,7 +234,11 @@
             $saldoActual = $filaSaldo['Saldo'];
 
             if ($saldoActual < $totalPago) {
-                header("Location: Area_Personal_Saldo_Usuario_Vista.php");
+
+                echo "<script type='text/javascript'>alert('El saldo actual es insuficiente.');</script>";
+
+                echo "<script type='text/javascript'>window.location.href = 'Area_Personal_Saldo_Usuario_Vista.php';</script>";
+
                 mysqli_close($conexion);
                 exit();
             }
@@ -240,6 +254,10 @@
             $consulta4 = mysqli_prepare($conexion, "UPDATE Alquiler SET Estado = FALSE WHERE Id = ?;");
             $consulta4->bind_param("i", $idAlquiler);
             $consulta4->execute();
+
+            echo "<script type='text/javascript'>alert('El cargo a sido pagado.');</script>";
+
+            echo "<script type='text/javascript'>window.location.href = 'Area_Personal_Gestion_Alquiler_Usuario_Vista.php?id='".urlencode($IdAlquiler)."';</script>";
             
             mysqli_close($conexion);
             exit();

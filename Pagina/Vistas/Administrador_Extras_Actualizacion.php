@@ -23,8 +23,6 @@
 
         $perfil =  $TipoVehiculoBL->actualizarExtra( $_POST['idExtra'], $_POST['extra'], $_POST['precio']);
 
-        header("Location: Administrador_Extras.php");
-
     }
 
 ?>

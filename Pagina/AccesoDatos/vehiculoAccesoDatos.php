@@ -131,6 +131,9 @@
     
             mysqli_query($conexion, "SET FOREIGN_KEY_CHECKS=1;");
 
+            echo "<script type='text/javascript'>alert('El vehiculo a sido eliminado.');</script>";
+            echo "<script type='text/javascript'>window.location.href = 'Administrador_Vehiculos.php';</script>";
+
             mysqli_close($conexion);
 
             exit();
@@ -224,7 +227,13 @@
                 $consulta12->bind_param("ii",$idTipoVehiculo,$idVehiculo);
                 $consulta12->execute();
             }
+            
+            echo "<script type='text/javascript'>alert('El vehiculo a sido actualizado.');</script>";
+
+            echo "<script type='text/javascript'>window.location.href = 'Administrador_Vehiculos.php';</script>";
+
             mysqli_close($conexion);
+
             exit();
         }
 
@@ -257,7 +266,9 @@
             $consulta->bind_param("issssiiiiiis", $idTipoVehiculo, $imagen, $marca, $nombre, $matricula, $caballos, $kilometros, $plazas, $año, $precio, $estado, $descripcion);
             $consulta->execute();
 
-            header("Location: Administrador_Vehiculos.php");
+            echo "<script type='text/javascript'>alert('El vehiculo a sido insertado correctamente.');</script>";
+
+            echo "<script type='text/javascript'>window.location.href = 'Administrador_Vehiculos.php';</script>";
 
             mysqli_close($conexion);
 

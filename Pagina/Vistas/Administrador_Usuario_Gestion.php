@@ -36,9 +36,9 @@
                 $idDatosPersonal = intval($_POST['idDatosPersonales']); 
 
                 $usuarioBL = new UsuarioReglasNegocio();
+                
                 $perfil =  $usuarioBL->eliminarUsuario($Usuario, $idDatosContactos, $idDatosPersonal);
 
-                header("Location: Administrador_Usuarios.php");
             }else{
                 echo '<script>alert("Error.");</script>';
             }

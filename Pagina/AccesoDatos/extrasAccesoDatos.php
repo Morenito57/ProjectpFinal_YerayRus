@@ -77,7 +77,9 @@
     
             mysqli_query($conexion, "SET FOREIGN_KEY_CHECKS=1;");
 
-            header("Location: Administrador_Extras.php");
+            echo "<script type='text/javascript'>alert('Se ha eliminado con exito.');</script>";
+
+            echo "<script type='text/javascript'>window.location.href = 'Administrador_Extras.php';</script>";
 
             mysqli_close($conexion);
             exit();
@@ -108,6 +110,11 @@
                 $consulta2->bind_param("ii",$precio,$id);
                 $consulta2->execute();
             }
+
+            echo "<script type='text/javascript'>alert('Se ha actualizado con exito.');</script>";
+
+            echo "<script type='text/javascript'>window.location.href = 'Administrador_Extras.php';</script>";
+
             mysqli_close($conexion);
             exit();
         }
@@ -128,7 +135,11 @@
             $consulta1 = mysqli_prepare($conexion, "INSERT INTO Extras(Extra, Precio) VALUES (?,?);");
             $consulta1->bind_param("si", $extra, $precio);
             $consulta1->execute();    
-            header("Location: Administrador_Extras.php");
+
+            echo "<script type='text/javascript'>alert('Se ha creado con exito.');</script>";
+
+            echo "<script type='text/javascript'>window.location.href = 'Administrador_Extras.php';</script>";
+
             mysqli_close($conexion);
             exit();
         }

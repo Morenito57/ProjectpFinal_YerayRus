@@ -81,7 +81,9 @@
     
             mysqli_query($conexion, "SET FOREIGN_KEY_CHECKS=1;");
 
-            header("Location: Administrador_Seguros.php");
+            echo "<script type='text/javascript'>alert('Se ha eliminado con exito.');</script>";
+
+            echo "<script type='text/javascript'>window.location.href = 'Administrador_Seguros.php';</script>";
 
             mysqli_close($conexion);
             exit();
@@ -111,6 +113,11 @@
                 $consulta2->bind_param("ii",$precio,$id);
                 $consulta2->execute();
             }
+
+            echo "<script type='text/javascript'>alert('Se ha actualizado con exito con exito.');</script>";
+
+            echo "<script type='text/javascript'>window.location.href = 'Administrador_Seguros.php';</script>";
+
             mysqli_close($conexion);
             exit();
         }
@@ -131,7 +138,11 @@
             $consulta1 = mysqli_prepare($conexion, "INSERT INTO Seguros(Seguro, Precio) VALUES (?,?);");
             $consulta1->bind_param("si", $seguro, $precio);
             $consulta1->execute();    
-            header("Location: Administrador_Seguros.php");
+
+            echo "<script type='text/javascript'>alert('Se ha actualizado con exito con exito.');</script>";
+
+            echo "<script type='text/javascript'>window.location.href = 'Administrador_Seguros.php';</script>";
+
             mysqli_close($conexion);
             exit();
         }

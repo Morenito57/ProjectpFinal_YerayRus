@@ -26,14 +26,6 @@
 
             $usuarioBL = new UsuarioReglasNegocio();
             $datosUsuario = $usuarioBL->suspenderUsuario($usuarioOriginal); 
-            header("Location: loginVista.php");
-
-        }elseif(isset($_POST['actualizar_dinero'])) {
-            $Dinero = intval($_POST['saldo']);
-    
-            $usuarioBL = new GestionAlquileresNegocio();
-    
-            $perfil =  $usuarioBL->actualizarSalsoUsuario($usuarioOriginal, $Dinero);
 
         }elseif(isset($_POST['deslogearse'])) {  
 

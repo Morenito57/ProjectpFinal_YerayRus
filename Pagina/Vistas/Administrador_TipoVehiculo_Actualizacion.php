@@ -23,7 +23,6 @@
 
         $perfil =  $TipoVehiculoBL->actualizarTipoVehiculoComoAdmin( $_POST['idTipoVehiculo'], $_POST['tipoVehiculo']);
 
-        header("Location: Administrador_TipoVehiculo.php");
     }
 
 ?>

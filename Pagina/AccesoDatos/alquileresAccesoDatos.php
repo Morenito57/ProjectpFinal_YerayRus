@@ -82,7 +82,9 @@
     
             mysqli_query($conexion, "SET FOREIGN_KEY_CHECKS=1;");
 
-            header("Location: Administrador_Alquileres.php");
+            echo "<script type='text/javascript'>alert('Se ha eliminado con exito.');</script>";
+
+            echo "<script type='text/javascript'>window.location.href = 'Administrador_Alquileres.php';</script>";
 
             mysqli_close($conexion);
             exit();
@@ -114,6 +116,11 @@
                 }
 
             }
+
+            echo "<script type='text/javascript'>alert('El saldo actual es insuficiente.');</script>";
+
+            echo "<script type='text/javascript'>window.location.href = 'Administrador_Alquileres.php';</script>";
+
             mysqli_close($conexion);
             exit();
         }

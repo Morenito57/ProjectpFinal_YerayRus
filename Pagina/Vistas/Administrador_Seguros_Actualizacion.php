@@ -23,8 +23,6 @@
 
         $perfil =  $TipoVehiculoBL->actualizarSeguro( $_POST['idSeguro'], $_POST['seguro'], $_POST['precio']);
 
-        header("Location: Administrador_Seguros.php");
-
     }
 
 ?>

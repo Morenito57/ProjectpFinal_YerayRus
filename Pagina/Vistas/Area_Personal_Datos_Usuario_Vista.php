@@ -24,7 +24,6 @@
 
             $usuariosBL = new UsuarioReglasNegocio();
             $datosUsuario = $usuariosBL->suspenderUsuario($usuarioOriginal); 
-            header("Location: loginVista.php");
 
         }elseif(isset($_POST['deslogearse'])) {  
 

@@ -23,8 +23,6 @@
 
         $perfil =  $TipoVehiculoBL->actualizarAlquiler( $_POST['idAlquiler'], $_POST['estado']);
 
-        header("Location: Administrador_Alquileres.php");
-
     }
 
 ?>

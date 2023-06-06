@@ -82,7 +82,9 @@
     
             mysqli_query($conexion, "SET FOREIGN_KEY_CHECKS=1;");
 
-            header("Location: Administrador_cargos.php");
+            echo "<script type='text/javascript'>alert('Se ha eliminado con exito.');</script>";
+
+            echo "<script type='text/javascript'>window.location.href = 'Administrador_cargos.php';</script>";
 
             mysqli_close($conexion);
             exit();
@@ -144,6 +146,10 @@
             $consulta7 = mysqli_prepare($conexion, "UPDATE Vehiculo SET Estado = true WHERE Id = ?;");
             $consulta7->bind_param('i', $vehiculo);
             $consulta7->execute();
+
+            echo "<script type='text/javascript'>alert('Se ha entregado con exito.');</script>";
+
+            echo "<script type='text/javascript'>window.location.href = 'Administrador_Cargos.php';</script>";
 
             mysqli_close($conexion);
             exit();
