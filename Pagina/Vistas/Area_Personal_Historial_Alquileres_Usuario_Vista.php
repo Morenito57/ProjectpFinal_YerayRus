@@ -136,10 +136,10 @@
         }
 
         .logo_area{
-            width: 100%;
-            height: 19%;
+            width: 70%;
+            height: 15%;
             display: block;  
-            background-color: rgb(61, 9, 9); 
+            margin: auto;
         }
 
         .divPie{

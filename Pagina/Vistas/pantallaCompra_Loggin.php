@@ -8,6 +8,13 @@
         header("Location: loginVista.php");
     }
 
+    if (isset($_GET['id'])) {
+        $id = intval($_GET['id']);
+    } else { 
+        header("Location: Inicio_Con_Loggin.php");
+
+    }
+
     if($_SERVER['REQUEST_METHOD']=='POST') {
 
         $gestionBL = new GestionAlquileresNegocio();
@@ -81,14 +88,14 @@
         .anuncio{
             background-color: rgb(61, 9, 9);
             width: 65%;
-            height: 100%;
+            height: 130%;
             border: 5px solid rgb(173, 32, 32);
             margin: 0 auto;
             padding-left: 80px;
             padding-top: 75px;
             padding-bottom: 35px;
-
         }
+        
         .fotoAnuncio{
             width: 60%;
             height: 100%;
@@ -219,7 +226,6 @@
 
                             $vehiculosBL = new VehiculosReglasNegocio();
                             
-                            $id = intval($_GET['id']);
 
                             $datosVehiculos = $vehiculosBL->obtenerVehiculoConcreto($id);
                             foreach($datosVehiculos as $vehiculo){ 

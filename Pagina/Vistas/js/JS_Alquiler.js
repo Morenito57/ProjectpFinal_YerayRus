@@ -3,8 +3,10 @@ function pagarCargos() {
     var cargoActivo = cargoActivoPhp;
     var valorCargo = valorCargoPhp;
     var fechaDevuelto = fechaDevueltoPhp;
-
-    if(cargoActivo == true){
+    if(cargoActivo == 0 || cargoActivo == '0'){
+        alert("No tienes cargos por pagar.");
+        document.getElementById('permisoParaPagar').value = '0';
+    }else if(cargoActivo == 1 || cargoActivo == '1'){
         var confirmation = confirm('Estas apunto de pagar su cargo por valor de ' + valorCargo +'€, asegurese de pagar si solo a entregado el vehixulo.');
         if (confirmation) {
             if (fechaDevuelto === null || fechaDevuelto === "" || fechaDevuelto === "null") {
@@ -14,9 +16,6 @@ function pagarCargos() {
                 document.getElementById('permisoParaPagar').value = '1';
             }
         }
-    }else{
-        alert("No tienes cargos por pagar.");
-        document.getElementById('permisoParaPagar').value = '0';
     }
 }
 

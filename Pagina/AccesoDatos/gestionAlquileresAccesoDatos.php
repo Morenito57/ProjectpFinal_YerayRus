@@ -8,7 +8,7 @@
 
         function insertarAlquiler($IdUser, array $IdSeguro, array $IdExtra, $IdVehiculo, $FechaInicio, $FechaFinal, $TotalDelPrecio){
 
-            $conexion = mysqli_connect('localhost','root','');
+            $conexion = mysqli_connect('localhost','root','1234');
             if (mysqli_connect_errno())
             {
                     echo "Error al conectar a MySQL: ". mysqli_connect_error();
@@ -88,14 +88,15 @@
             $consulta6->execute();
 
             echo "<script type='text/javascript'>alert('Se ha efectuado el alquiler con exito.');</script>";
-            return header("Location: Factura_Alquiler_Usuario.php?idAlquiler=".urlencode($alquiler_id));
+            echo "<script type='text/javascript'>window.location.href = 'Factura_Alquiler_Usuario.php?idAlquiler=".urlencode($alquiler_id)."';</script>";
+
             mysqli_close($conexion);
             exit();
         }
 
         function obtener(){
 
-            $conexion = mysqli_connect('localhost','root','');
+            $conexion = mysqli_connect('localhost','root','1234');
 
             if (mysqli_connect_errno())
             {
@@ -126,7 +127,7 @@
 
         function actualizarAlquiler($usuario, $IdAlquiler, $FechaFinal, $TotalPago) {
 
-            $conexion = mysqli_connect('localhost','root','');
+            $conexion = mysqli_connect('localhost','root','1234');
 
             if (mysqli_connect_errno())
             {
@@ -180,7 +181,7 @@
 
         function obtenerAlquiler($id) {
 
-            $conexion = mysqli_connect('localhost','root','');
+            $conexion = mysqli_connect('localhost','root','1234');
 
             if (mysqli_connect_errno())
             {
@@ -211,7 +212,7 @@
 
         function actualizarCargo($usuario, $idAlquiler, $idCargo, $totalPago){
 
-            $conexion = mysqli_connect('localhost','root','');
+            $conexion = mysqli_connect('localhost','root','1234');
 
             if (mysqli_connect_errno()) {
                 echo "Error al conectar a MySQL: " . mysqli_connect_error();
@@ -257,7 +258,7 @@
 
             echo "<script type='text/javascript'>alert('El cargo a sido pagado.');</script>";
 
-            echo "<script type='text/javascript'>window.location.href = 'Area_Personal_Gestion_Alquiler_Usuario_Vista.php?id='".urlencode($IdAlquiler)."';</script>";
+            echo "<script type='text/javascript'>window.location.href = 'Area_Personal_Historial_Alquileres_Usuario_Vista.php';</script>";
             
             mysqli_close($conexion);
             exit();

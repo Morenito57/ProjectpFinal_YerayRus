@@ -7,7 +7,7 @@
 
         function insertar($usuario, $clave, $nombre, $apellidos, $fechaNacimiento, $direccion, $DNI, $telefono, $email, $otro) {
 
-            $conexion = mysqli_connect('localhost','root','');
+            $conexion = mysqli_connect('localhost','root','1234');
 
             if (mysqli_connect_errno()) {
                 echo "Error al conectar a MySQL: ". mysqli_connect_error();
@@ -59,14 +59,16 @@
             $consulta3->bind_param("siiiss", $usuario, $DatosPersonales_id, $DatosContacto_id, $saldo, $hash, $tipoUsuario);
             $res = $consulta3->execute();
             echo "<script type='text/javascript'>alert('Se ha creado con exito el usuario.');</script>";
-            header("Location: loginVista.php");
+            echo "<script type='text/javascript'>window.location.href = 'loginVista.php';</script>";
+
+
             mysqli_close($conexion);
             return $res;
         }
 
         function verificar($usuario,$clave) {
 
-            $conexion = mysqli_connect('localhost','root','');
+            $conexion = mysqli_connect('localhost','root','1234');
 
             if (mysqli_connect_errno()) {
                 echo "Error al conectar a MySQL: ". mysqli_connect_error();
@@ -117,7 +119,7 @@
 
         function obtenerUsuario($usuario){
 
-            $conexion = mysqli_connect('localhost','root','');
+            $conexion = mysqli_connect('localhost','root','1234');
 
             if (mysqli_connect_errno()) {
                 echo "Error al conectar a MySQL: ". mysqli_connect_error();
@@ -146,7 +148,7 @@
 
         function obtenerAllUsuario(){
 
-            $conexion = mysqli_connect('localhost','root','');
+            $conexion = mysqli_connect('localhost','root','1234');
 
             if (mysqli_connect_errno()) {
                 echo "Error al conectar a MySQL: ". mysqli_connect_error();
@@ -173,7 +175,7 @@
         }
 
         function actualizarUsuario($usuarioOriginal,$usuario, $clave, $nombre, $apellidos, $fechaNacimiento, $direccion, $DNI, $telefono, $email, $otro, $IdDatosContacto, $IdDatosPersonales) {
-            $conexion = mysqli_connect('localhost','root','');
+            $conexion = mysqli_connect('localhost','root','1234');
             if (mysqli_connect_errno()) {
                 echo "Error al conectar a MySQL: ". mysqli_connect_error();
             }
@@ -255,7 +257,7 @@
 
         function actualizarSalsoUsuario($usuarioOriginal, $saldo) {
 
-            $conexion = mysqli_connect('localhost','root','');
+            $conexion = mysqli_connect('localhost','root','1234');
 
             if (mysqli_connect_errno()) {
                 echo "Error al conectar a MySQL: ". mysqli_connect_error();
@@ -279,7 +281,7 @@
 
         function suspenderUsuario($usuarioOriginal) {
 
-            $conexion = mysqli_connect('localhost','root','');
+            $conexion = mysqli_connect('localhost','root','1234');
 
             if (mysqli_connect_errno()) {
                 echo "Error al conectar a MySQL: ". mysqli_connect_error();
@@ -304,7 +306,7 @@
 
         function eliminarUsuario($Usuario, $idDatosContacto, $idDatosPersonales) {
 
-            $conexion = mysqli_connect('localhost','root','');
+            $conexion = mysqli_connect('localhost','root','1234');
 
             if (mysqli_connect_errno()) {
                 echo "Error al conectar a MySQL: ". mysqli_connect_error();
@@ -347,7 +349,8 @@
     }
 
     function actualizarUsuarioComoAdmin($usuarioOriginal, $usuario, $saldo, $clave, $tipoDeUsuario, $activo, $nombre, $apellidos, $fechaNacimiento, $direccion, $DNI, $telefono, $email, $otro, $IdDatosContacto, $IdDatosPersonales) {
-        $conexion = mysqli_connect('localhost','root','');
+        $conexion = mysqli_connect('localhost','root','1234');
+
         if (mysqli_connect_errno()) {
             echo "Error al conectar a MySQL: ". mysqli_connect_error();
         }
@@ -472,7 +475,8 @@
     }
 
     function insertarAdmin($usuario, $saldo, $clave, $tipoDeUsuario, $activo, $nombre, $apellidos, $fechaNacimiento, $direccion, $DNI, $telefono, $email, $otro) {
-        $conexion = mysqli_connect('localhost','root','');
+        $conexion = mysqli_connect('localhost','root','1234');
+
         if (mysqli_connect_errno()) {
             echo "Error al conectar a MySQL: ". mysqli_connect_error();
         }

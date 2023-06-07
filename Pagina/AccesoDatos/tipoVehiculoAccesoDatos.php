@@ -7,7 +7,7 @@
         }
 
         function obtener(){
-            $conexion = mysqli_connect('localhost','root','');
+            $conexion = mysqli_connect('localhost','root','1234');
             if (mysqli_connect_errno())
             {
                     echo "Error al conectar a MySQL: ". mysqli_connect_error();
@@ -33,7 +33,7 @@
 
         function obtenerTipoVehiculo($idDecodificado){
 
-            $conexion = mysqli_connect('localhost','root','');
+            $conexion = mysqli_connect('localhost','root','1234');
 
             if (mysqli_connect_errno())
             {
@@ -63,7 +63,7 @@
 
         function eliminarTipoVehiculo($idDecodificado){
 
-            $conexion = mysqli_connect('localhost','root','');
+            $conexion = mysqli_connect('localhost','root','1234');
     
             if (mysqli_connect_errno()) {
                 echo "Error al conectar a MySQL: ". mysqli_connect_error();
@@ -91,7 +91,7 @@
 
         function actualizarTipoVehiculoComoAdmin($id, $tipoVehiculo) {
         
-            $conexion = mysqli_connect('localhost','root','');
+            $conexion = mysqli_connect('localhost','root','1234');
     
             if (mysqli_connect_errno()) {
                 echo "Error al conectar a MySQL: ". mysqli_connect_error();
@@ -119,7 +119,7 @@
 
         function creacionTipoVehiculo($tipoVehiculo) {
         
-            $conexion = mysqli_connect('localhost','root','');
+            $conexion = mysqli_connect('localhost','root','1234');
     
             if (mysqli_connect_errno()) {
                 echo "Error al conectar a MySQL: ". mysqli_connect_error();

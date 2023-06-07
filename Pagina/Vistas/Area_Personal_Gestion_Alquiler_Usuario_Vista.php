@@ -13,13 +13,13 @@
         $idDecodificado = urldecode($id);
     } else {
         header("Location: Area_Personal_Historial_Alquileres_Usuario_Vista.php");
+
     }
 
     $usuarioOriginal = $_SESSION['usuario'];
 
     if (!isset($_SESSION['usuario'])) {
-        header("Location: loginVista.php");
-    }
+header("Location: loginVista.php");    }
 
     if($_SERVER["REQUEST_METHOD"]=="POST") {
         if(isset($_POST['eliminar'])) {
@@ -180,10 +180,10 @@
         }
 
         .logo_area{
-            width: 100%;
-            height: 19%;
+            width: 70%;
+            height: 15%;
             display: block;  
-            background-color: rgb(61, 9, 9); 
+            margin: auto;
         }
 
         .divPie{
@@ -466,7 +466,7 @@
         var precioVehiculoDiaPhp = "<?php echo $Alquiler->getPrecioVehiculo(); ?>";
         var fechaActualPhp = new Date("<?php echo date('Y-m-d'); ?>");
 
-        var cargoActivoPhp = Boolean("<?php echo $Alquiler->getActivoCargo(); ?>");
+        var cargoActivoPhp = Boolean(parseInt("<?php echo $Alquiler->getActivoCargo(); ?>"));
         var valorCargoPhp = "<?php echo $Alquiler->getTotalCargo(); ?>";
         var fechaDevueltoPhp = "<?php echo $Alquiler->getFechaDevuelto(); ?>";
 

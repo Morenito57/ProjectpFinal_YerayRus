@@ -7,7 +7,8 @@
     ini_set('html_errors', 0);
 
     if (!isset($_SESSION['usuario'])) {
-        header("Location: loginVista.php");
+header("Location: loginVista.php");
+
     }
 
     if($_SERVER["REQUEST_METHOD"]=="POST") {

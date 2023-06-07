@@ -1,5 +1,6 @@
 <?php
-$conexion = mysqli_connect('localhost','root','');
+$conexion = mysqli_connect('localhost','root','1234');
+
             if (mysqli_connect_errno())
             {
                     echo "Error al conectar a MySQL: ". mysqli_connect_error();
@@ -10,7 +11,8 @@ $conexion = mysqli_connect('localhost','root','');
 
              if($letra != ""){
                 $consulta = mysqli_prepare($conexion, "SELECT Id, Nombre FROM Vehiculo where Estado = 1 and (Nombre LIKE ?);");
-                mysqli_stmt_bind_param($consulta, "s", $letra);
+                $letra = $letra . '%';
+                $consulta->bind_param("s", $letra);
                 $consulta->execute();
                $result = $consulta->get_result();
        

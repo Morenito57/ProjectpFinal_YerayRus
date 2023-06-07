@@ -7,7 +7,7 @@
         }
 
         function obtener(){
-            $conexion = mysqli_connect('localhost','root','');
+            $conexion = mysqli_connect('localhost','root','1234');
             if (mysqli_connect_errno())
             {
                     echo "Error al conectar a MySQL: ". mysqli_connect_error();
@@ -32,7 +32,7 @@
         }
 
         function obtenerExtra($id){
-            $conexion = mysqli_connect('localhost','root','');
+            $conexion = mysqli_connect('localhost','root','1234');
             if (mysqli_connect_errno())
             {
                     echo "Error al conectar a MySQL: ". mysqli_connect_error();
@@ -60,7 +60,7 @@
 
         function eliminarExtra($id) {
 
-            $conexion = mysqli_connect('localhost','root','');
+            $conexion = mysqli_connect('localhost','root','1234');
             if (mysqli_connect_errno())
             {
                     echo "Error al conectar a MySQL: ". mysqli_connect_error();
@@ -88,7 +88,7 @@
 
         function actualizarExtra($id, $extra, $precio) {
 
-            $conexion = mysqli_connect('localhost','root','');
+            $conexion = mysqli_connect('localhost','root','1234');
             if (mysqli_connect_errno())
             {
                     echo "Error al conectar a MySQL: ". mysqli_connect_error();
@@ -121,7 +121,7 @@
 
         function crearExtra($extra, $precio) {
         
-            $conexion = mysqli_connect('localhost','root','');
+            $conexion = mysqli_connect('localhost','root','1234');
         
             if (mysqli_connect_errno()) {
                 echo "Error al conectar a MySQL: ". mysqli_connect_error();

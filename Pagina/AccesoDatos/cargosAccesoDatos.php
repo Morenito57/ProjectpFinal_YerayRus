@@ -8,7 +8,7 @@
 
         function obtener(){
 
-            $conexion = mysqli_connect('localhost','root','');
+            $conexion = mysqli_connect('localhost','root','1234');
 
             if (mysqli_connect_errno())
             {
@@ -35,7 +35,7 @@
 
         function obtenerCargo($id){
 
-            $conexion = mysqli_connect('localhost','root','');
+            $conexion = mysqli_connect('localhost','root','1234');
 
             if (mysqli_connect_errno())
             {
@@ -65,7 +65,7 @@
 
         function eliminarCargo($id) {
 
-            $conexion = mysqli_connect('localhost','root','');
+            $conexion = mysqli_connect('localhost','root','1234');
             if (mysqli_connect_errno())
             {
                     echo "Error al conectar a MySQL: ". mysqli_connect_error();
@@ -93,7 +93,7 @@
 
         function entregaCocghe($idCargo, $idAlquiler, $fecha) {
 
-            $conexion = mysqli_connect('localhost','root','');
+            $conexion = mysqli_connect('localhost','root','1234');
             if (mysqli_connect_errno())
             {
                     echo "Error al conectar a MySQL: ". mysqli_connect_error();
@@ -122,8 +122,8 @@
             $fechaFinal = $registro['FechaFinal'];
 
             if ($fecha > $fechaFinal){
-                $consulta4 = mysqli_prepare($conexion, "UPDATE Cargo JOIN (SELECT Alquiler.Id, (DATEDIFF(?, Alquiler.FechaFinal) * 2) * (Vehiculo.Precio + (IFNULL(SUM(Seguros.Precio), 0) + IFNULL(SUM(Extras.Precio), 0))) AS Total FROM Alquiler JOIN Vehiculo ON Alquiler.IdVehiculo = Vehiculo.Id LEFT JOIN Alquiler_Seguro ON Alquiler.Id = Alquiler_Seguro.Alquiler_id LEFT JOIN Seguros ON Alquiler_Seguro.Seguro_id = Seguros.Id LEFT JOIN Alquiler_Extra ON Alquiler.Id = Alquiler_Extra.Alquiler_id LEFT JOIN Extras ON Alquiler_Extra.Extra_id = Extras.Id WHERE Alquiler.Id = ?) subquery ON Cargo.Alquiler_id = subquery.Id SET Cargo.TotalCargo = subquery.Total WHERE Cargo.Alquiler_id = ?;");
-                $consulta4->bind_param('sii', $fecha, $idAlquiler, $idAlquiler);
+                $consulta4 = mysqli_prepare($conexion, "UPDATE Cargo JOIN (SELECT Alquiler.Id, Cargo.FechaDevuelto, (DATEDIFF(Cargo.FechaDevuelto, Alquiler.FechaFinal) * 2) * (Vehiculo.Precio + (IFNULL(SUM(Seguros.Precio), 0) + IFNULL(SUM(Extras.Precio), 0))) AS Total FROM Alquiler JOIN Vehiculo ON Alquiler.IdVehiculo = Vehiculo.Id LEFT JOIN Alquiler_Seguro ON Alquiler.Id = Alquiler_Seguro.Alquiler_id LEFT JOIN Seguros ON Alquiler_Seguro.Seguro_id = Seguros.Id LEFT JOIN Alquiler_Extra ON Alquiler.Id = Alquiler_Extra.Alquiler_id LEFT JOIN Extras ON Alquiler_Extra.Extra_id = Extras.Id JOIN Cargo ON Cargo.Alquiler_id = Alquiler.Id WHERE Alquiler.Id = ? GROUP BY Alquiler.Id, Cargo.FechaDevuelto) subquery ON Cargo.Alquiler_id = subquery.Id SET Cargo.TotalCargo = subquery.Total WHERE Cargo.Alquiler_id = ?;");
+                $consulta4->bind_param('ii', $idAlquiler, $idAlquiler);
                 $consulta4->execute();
             }else{
                 $consulta4 = mysqli_prepare($conexion, "UPDATE Cargo SET TotalCargo = 0, Pagado = 1, Activo = 0 WHERE Id = ?");

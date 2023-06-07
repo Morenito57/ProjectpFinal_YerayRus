@@ -8,7 +8,7 @@
 
         function obtener(){
 
-            $conexion = mysqli_connect('localhost','root','');
+            $conexion = mysqli_connect('localhost','root','1234');
 
             if (mysqli_connect_errno())
             {
@@ -35,7 +35,7 @@
 
         function obtenerAlquiler($id){
 
-            $conexion = mysqli_connect('localhost','root','');
+            $conexion = mysqli_connect('localhost','root','1234');
 
             if (mysqli_connect_errno())
             {
@@ -65,7 +65,7 @@
 
         function eliminarAlquiler($id) {
 
-            $conexion = mysqli_connect('localhost','root','');
+            $conexion = mysqli_connect('localhost','root','1234');
             if (mysqli_connect_errno())
             {
                     echo "Error al conectar a MySQL: ". mysqli_connect_error();
@@ -93,7 +93,7 @@
 
         function actualizarAlquiler($id, $estado) {
 
-            $conexion = mysqli_connect('localhost','root','');
+            $conexion = mysqli_connect('localhost','root','1234');
             if (mysqli_connect_errno())
             {
                     echo "Error al conectar a MySQL: ". mysqli_connect_error();
