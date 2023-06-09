@@ -8,13 +8,6 @@
         header("Location: loginVista.php");
     }
 
-    if (isset($_GET['id'])) {
-        $id = intval($_GET['id']);
-    } else { 
-        header("Location: Inicio_Con_Loggin.php");
-
-    }
-
     if($_SERVER['REQUEST_METHOD']=='POST') {
 
         $gestionBL = new GestionAlquileresNegocio();
