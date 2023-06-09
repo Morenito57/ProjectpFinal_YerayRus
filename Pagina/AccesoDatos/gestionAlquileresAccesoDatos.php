@@ -8,7 +8,7 @@
 
         function insertarAlquiler($IdUser, array $IdSeguro, array $IdExtra, $IdVehiculo, $FechaInicio, $FechaFinal, $TotalDelPrecio){
 
-            $conexion = mysqli_connect('localhost','root','1234');
+            $conexion = mysqli_connect('localhost','root','');
             if (mysqli_connect_errno())
             {
                     echo "Error al conectar a MySQL: ". mysqli_connect_error();
@@ -39,7 +39,8 @@
                 exit();
             }
 
-            $consultaCargos = mysqli_prepare($conexion, "SELECT COUNT(*) AS TotalCargos FROM Cargo JOIN Alquiler ON Cargo.Alquiler_id = Alquiler.Id JOIN Usuario ON Alquiler.IdUser = Usuario.NombreUsuario WHERE Cargo.Activo = 1 AND Usuario.NombreUsuario = ?;");
+            $consultaCargos = mysqli_prepare($conexion, "SELECT COUNT(*) AS TotalCargos FROM Cargo JOIN Alquiler ON Cargo.Alquiler_id = 
+            Alquiler.Id JOIN Usuario ON Alquiler.IdUser = Usuario.NombreUsuario WHERE Cargo.Activo = 1 AND Usuario.NombreUsuario = ?;");
             $consultaCargos->bind_param("s", $IdUser);
             $consultaCargos->execute();
 
@@ -96,7 +97,7 @@
 
         function obtener(){
 
-            $conexion = mysqli_connect('localhost','root','1234');
+            $conexion = mysqli_connect('localhost','root','');
 
             if (mysqli_connect_errno())
             {
@@ -127,7 +128,7 @@
 
         function actualizarAlquiler($usuario, $IdAlquiler, $FechaFinal, $TotalPago) {
 
-            $conexion = mysqli_connect('localhost','root','1234');
+            $conexion = mysqli_connect('localhost','root','');
 
             if (mysqli_connect_errno())
             {
@@ -159,6 +160,21 @@
                 exit();
             }
 
+            $consultaCargos = mysqli_prepare($conexion, "SELECT COUNT(*) AS TotalCargos FROM Cargo JOIN Alquiler ON Cargo.Alquiler_id = Alquiler.Id JOIN Usuario ON Alquiler.IdUser = Usuario.NombreUsuario WHERE Cargo.Activo = 1 AND Usuario.NombreUsuario = ?;");
+            $consultaCargos->bind_param("s", $IdUser);
+            $consultaCargos->execute();
+
+            $resCargo = $consultaCargos->get_result();
+            $filaCargo = $resCargo->fetch_assoc();
+            $CargosActual = $filaCargo['TotalCargos'];
+
+            if ($CargosActual >= 1) {
+                echo "<script type='text/javascript'>alert('Tienes cargos activos, pagalos y podras alquilar.');</script>";
+                echo "<script type='text/javascript'>window.location.href = 'Area_Personal_Historial_Alquileres_Usuario_Vista.php';</script>";
+                mysqli_close($conexion);
+                exit();
+            }
+
             $consulta2 = mysqli_prepare($conexion, "UPDATE Usuario set Saldo = Saldo - (?) WHERE NombreUsuario = (?);");
             $consulta2->bind_param("is", $TotalPago, $usuario);
             $consulta2->execute();
@@ -171,7 +187,7 @@
             $consulta4->bind_param("ii", $TotalPago, $IdAlquiler);
             $consulta4->execute();
 
-            echo "<script type='text/javascript'>alert('El saldo actual es insuficiente.');</script>";
+            echo "<script type='text/javascript'>alert('La transaccion a sido exitosa.');</script>";
 
             echo "<script type='text/javascript'>window.location.href = 'Area_Personal_Gestion_Alquiler_Usuario_Vista.php?id='".urlencode($IdAlquiler)."';</script>";
 
@@ -181,7 +197,7 @@
 
         function obtenerAlquiler($id) {
 
-            $conexion = mysqli_connect('localhost','root','1234');
+            $conexion = mysqli_connect('localhost','root','');
 
             if (mysqli_connect_errno())
             {
@@ -212,7 +228,7 @@
 
         function actualizarCargo($usuario, $idAlquiler, $idCargo, $totalPago){
 
-            $conexion = mysqli_connect('localhost','root','1234');
+            $conexion = mysqli_connect('localhost','root','');
 
             if (mysqli_connect_errno()) {
                 echo "Error al conectar a MySQL: " . mysqli_connect_error();
