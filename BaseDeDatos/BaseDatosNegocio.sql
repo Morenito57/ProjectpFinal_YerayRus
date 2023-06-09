@@ -4,45 +4,45 @@ USE LegendaryMotorsport;
 
 CREATE TABLE DatosPersonales(
     Id INT auto_increment primary key,
-	Nombre varchar(10),
-	Apellidos varchar(15),
-	FechaNacimiento date,
-	Direccion varchar(50),
-	DNI varchar(9)
+	Nombre varchar(10) not null,
+	Apellidos varchar(15) not null,
+	FechaNacimiento date not null,
+	Direccion varchar(50) not null,
+	DNI varchar(9) not null
 );
 
 CREATE TABLE DatosContacto(
     Id INT auto_increment primary key,
-	Telefono int(9),
-	Email varchar(30),
-	Otro varchar(30)
+	Telefono int(9) not null,
+	Email varchar(30) not null,
+	Otro varchar(30) not null
 );
 
 CREATE TABLE TipoVehiculo(
     Id INT auto_increment primary key,
-	TipoVehiculo varchar(20)
+	TipoVehiculo varchar(20) not null
 );
 
 CREATE TABLE Seguros(
     Id INT auto_increment primary key,
-	Seguro varchar(50),
-	Precio int
+	Seguro varchar(50) not null,
+	Precio int not null
 );
 
 CREATE TABLE Extras(
     Id INT auto_increment primary key,
-	Extra varchar(50),
-	Precio int
+	Extra varchar(50) not null,
+	Precio int not null
 );
 
 CREATE TABLE Usuario(
     NombreUsuario varchar(50) primary key,
-	IdDatosContacto INT,
-	IdDatosPersonales INT,
-	Saldo int,
+	IdDatosContacto INT not null,
+	IdDatosPersonales INT not null,
+	Saldo int not null,
 	Clave varchar(255) not null,
-	TipoDeUsuario varchar(20),
-    Activo boolean default true,
+	TipoDeUsuario varchar(20) not null,
+    Activo boolean default true not null,
 	FOREIGN KEY (IdDatosContacto)
     	REFERENCES DatosContacto (Id),
 	FOREIGN KEY (IdDatosPersonales)
@@ -52,29 +52,29 @@ CREATE TABLE Usuario(
 
 CREATE TABLE Vehiculo(
     Id INT auto_increment primary key,
-	IdTipoVehiculo int,
-    Imagen varchar(50),
-    Marca varchar(20),
-	Nombre varchar(50),
-	Matricula varchar(15),
-	Caballos int,
-	Kilometros int,
-	Plazas int,
-	Año int,
-	Precio int,
-    Estado boolean,
-    Descripcion varchar(500),
+	IdTipoVehiculo int not null,
+    Imagen varchar(50) not null,
+    Marca varchar(20) not null,
+	Nombre varchar(50) not null,
+	Matricula varchar(15) not null,
+	Caballos int not null,
+	Kilometros int not null,
+	Plazas int not null,
+	Año int not null,
+	Precio int not null,
+    Estado boolean not null,
+    Descripcion varchar(500) not null,
 	FOREIGN KEY (IdTipoVehiculo)
     	REFERENCES TipoVehiculo (Id)
 );
 
 CREATE TABLE Alquiler(
     Id INT auto_increment primary key,
-	IdUser varchar(50),
-	IdVehiculo int,
-	FechaInicio date,
-	FechaFinal date,
-	TotalDelPrecio int,
+	IdUser varchar(50) not null,
+	IdVehiculo int not null,
+	FechaInicio date not null,
+	FechaFinal date not null,
+	TotalDelPrecio int not null,
     Estado boolean,
 	FOREIGN KEY (IdUser)
     	REFERENCES Usuario (NombreUsuario),
@@ -84,7 +84,7 @@ CREATE TABLE Alquiler(
 
 CREATE TABLE Cargo(
     Id INT auto_increment primary key,
-	Alquiler_id INT,
+	Alquiler_id INT not null,
 	FechaDevuelto date,
 	TotalCargo int,
     Pagado boolean,
@@ -94,16 +94,16 @@ CREATE TABLE Cargo(
 );
 
 CREATE TABLE Alquiler_Seguro (
-    Alquiler_id INT,
-    Seguro_id INT,
+    Alquiler_id INT not null,
+    Seguro_id INT not null,
     PRIMARY KEY (Alquiler_id, Seguro_id),
     FOREIGN KEY (Alquiler_id) REFERENCES Alquiler(Id),
     FOREIGN KEY (Seguro_id) REFERENCES Seguros(Id)
 );
 
 CREATE TABLE Alquiler_Extra (
-    Alquiler_id INT,
-    Extra_id INT,
+    Alquiler_id INT not null,
+    Extra_id INT not null,
     PRIMARY KEY (Alquiler_id, Extra_id),
     FOREIGN KEY (Alquiler_id) REFERENCES Alquiler(Id),
     FOREIGN KEY (Extra_id) REFERENCES Extras(Id)

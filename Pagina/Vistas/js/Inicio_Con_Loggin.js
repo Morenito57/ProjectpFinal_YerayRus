@@ -95,7 +95,7 @@ function redirigirPagina(){
 
 var urlActual = window.location.href;
 
-var paginaActual = parseInt(getQueryStringValue("pagina"));
+var paginaActual = parseInt(obtenerValorCadena("pagina"));
 
 var totalDatosVehiculos = totalDatosVehiculosPhp;
 
@@ -104,19 +104,19 @@ if (isNaN(paginaActual)) {
 }
 
 if (paginaActual > 1) {
-    document.getElementById("anterior").href = updateQueryStringParameter(urlActual, "pagina", paginaActual - 1);
+    document.getElementById("anterior").href = actualizarParámetroCadena(urlActual, "pagina", paginaActual - 1);
 }
 
 if(paginaActual < totalDatosVehiculos/9){
-document.getElementById("siguiente").href = updateQueryStringParameter(urlActual, "pagina", paginaActual + 1);
+document.getElementById("siguiente").href = actualizarParámetroCadena(urlActual, "pagina", paginaActual + 1);
 }
 
-function getQueryStringValue(key) {
+function obtenerValorCadena(key) {
     var urlParams = new URLSearchParams(window.location.search);
     return urlParams.get(key);
 }
 
-function updateQueryStringParameter(uri, key, value) {
+function actualizarParámetroCadena(uri, key, value) {
     var re = new RegExp("([?&])" + key + "=.*?(&|$)", "i");
     var separator = uri.indexOf("?") !== -1 ? "&" : "?";
     if (uri.match(re)) {

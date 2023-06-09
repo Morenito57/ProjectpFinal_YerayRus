@@ -7,7 +7,7 @@ function pagarCargos() {
         alert("No tienes cargos por pagar.");
         document.getElementById('permisoParaPagar').value = '0';
     }else if(cargoActivo == 1 || cargoActivo == '1'){
-        var confirmation = confirm('Estas apunto de pagar su cargo por valor de ' + valorCargo +'€, asegurese de pagar si solo a entregado el vehixulo.');
+        var confirmation = confirm('Estas apunto de pagar su cargo por valor de ' + valorCargo +'€, asegurese de pagar si solo a entregado el vehiculo.');
         if (confirmation) {
             if (fechaDevuelto === null || fechaDevuelto === "" || fechaDevuelto === "null") {
                 alert("No has entregado el vehiculo");

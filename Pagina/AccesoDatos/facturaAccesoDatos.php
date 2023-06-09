@@ -8,7 +8,7 @@
 
         function obtener($idUsuario, $idAlquiler){
 
-            $conexion = mysqli_connect('localhost','root','1234');
+            $conexion = mysqli_connect('localhost','root','');
 
             if (mysqli_connect_errno())
             {

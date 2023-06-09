@@ -8,7 +8,7 @@
 
         function obtener(){
 
-            $conexion = mysqli_connect('localhost','root','1234');
+            $conexion = mysqli_connect('localhost','root','');
            
             if (mysqli_connect_errno()) {
                 echo "Error al conectar a MySQL: ". mysqli_connect_error();
@@ -85,7 +85,7 @@
         }
 
         function obtenerVehiculoConcreto($id){
-            $conexion = mysqli_connect('localhost','root','1234');
+            $conexion = mysqli_connect('localhost','root','');
             if (mysqli_connect_errno())
             {
                     echo "Error al conectar a MySQL: ". mysqli_connect_error();
@@ -113,7 +113,7 @@
 
         function eliminarVehiculo($Vehiculo){
 
-            $conexion = mysqli_connect('localhost','root','1234');
+            $conexion = mysqli_connect('localhost','root','');
     
             if (mysqli_connect_errno()) {
                 echo "Error al conectar a MySQL: ". mysqli_connect_error();
@@ -142,7 +142,7 @@
 
         function actualizarVehiculoAdmin($idVehiculo, $nombre, $imagen, $marca, $matricula, $año, $caballos, $kilometros, $plazas, $estado, $precio, $descripcion, $idTipoVehiculo) {
         
-            $conexion = mysqli_connect('localhost','root','1234');
+            $conexion = mysqli_connect('localhost','root','');
             if (mysqli_connect_errno()) {
                 echo "Error al conectar a MySQL: ". mysqli_connect_error();
             }
@@ -239,7 +239,7 @@
 
         function insertarVehiculoAdmin($nombre, $imagen, $marca, $matricula, $año, $caballos, $kilometros, $plazas, $estado, $precio, $descripcion, $idTipoVehiculo) {
 
-            $conexion = mysqli_connect('localhost','root','1234');
+            $conexion = mysqli_connect('localhost','root','');
     
             if (mysqli_connect_errno()) {
                 echo "Error al conectar a MySQL: ". mysqli_connect_error();

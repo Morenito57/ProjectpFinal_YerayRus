@@ -7,7 +7,7 @@
         }
 
         function obtener(){
-            $conexion = mysqli_connect('localhost','root','1234');
+            $conexion = mysqli_connect('localhost','root','');
             if (mysqli_connect_errno())
             {
                     echo "Error al conectar a MySQL: ". mysqli_connect_error();
@@ -33,7 +33,7 @@
 
         function obtenerSeguro($id){
 
-            $conexion = mysqli_connect('localhost','root','1234');
+            $conexion = mysqli_connect('localhost','root','');
 
             if (mysqli_connect_errno())
             {
@@ -63,7 +63,7 @@
 
         function eliminarSeguro($id){
 
-            $conexion = mysqli_connect('localhost','root','1234');
+            $conexion = mysqli_connect('localhost','root','');
     
             if (mysqli_connect_errno()) {
                 echo "Error al conectar a MySQL: ". mysqli_connect_error();
@@ -91,7 +91,7 @@
 
         function actualizarSeguro($id, $seguro, $precio) {
 
-            $conexion = mysqli_connect('localhost','root','1234');
+            $conexion = mysqli_connect('localhost','root','');
             if (mysqli_connect_errno())
             {
                     echo "Error al conectar a MySQL: ". mysqli_connect_error();
@@ -124,7 +124,7 @@
 
         function crearSeguro($seguro, $precio) {
         
-            $conexion = mysqli_connect('localhost','root','1234');
+            $conexion = mysqli_connect('localhost','root','');
         
             if (mysqli_connect_errno()) {
                 echo "Error al conectar a MySQL: ". mysqli_connect_error();

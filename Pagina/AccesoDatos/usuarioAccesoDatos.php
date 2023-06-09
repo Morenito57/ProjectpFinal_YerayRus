@@ -7,7 +7,7 @@
 
         function insertar($usuario, $clave, $nombre, $apellidos, $fechaNacimiento, $direccion, $DNI, $telefono, $email, $otro) {
 
-            $conexion = mysqli_connect('localhost','root','1234');
+            $conexion = mysqli_connect('localhost','root','');
 
             if (mysqli_connect_errno()) {
                 echo "Error al conectar a MySQL: ". mysqli_connect_error();
@@ -68,7 +68,7 @@
 
         function verificar($usuario,$clave) {
 
-            $conexion = mysqli_connect('localhost','root','1234');
+            $conexion = mysqli_connect('localhost','root','');
 
             if (mysqli_connect_errno()) {
                 echo "Error al conectar a MySQL: ". mysqli_connect_error();
@@ -119,7 +119,7 @@
 
         function obtenerUsuario($usuario){
 
-            $conexion = mysqli_connect('localhost','root','1234');
+            $conexion = mysqli_connect('localhost','root','');
 
             if (mysqli_connect_errno()) {
                 echo "Error al conectar a MySQL: ". mysqli_connect_error();
@@ -148,7 +148,7 @@
 
         function obtenerAllUsuario(){
 
-            $conexion = mysqli_connect('localhost','root','1234');
+            $conexion = mysqli_connect('localhost','root','');
 
             if (mysqli_connect_errno()) {
                 echo "Error al conectar a MySQL: ". mysqli_connect_error();
@@ -175,7 +175,7 @@
         }
 
         function actualizarUsuario($usuarioOriginal,$usuario, $clave, $nombre, $apellidos, $fechaNacimiento, $direccion, $DNI, $telefono, $email, $otro, $IdDatosContacto, $IdDatosPersonales) {
-            $conexion = mysqli_connect('localhost','root','1234');
+            $conexion = mysqli_connect('localhost','root','');
             if (mysqli_connect_errno()) {
                 echo "Error al conectar a MySQL: ". mysqli_connect_error();
             }
@@ -257,7 +257,7 @@
 
         function actualizarSalsoUsuario($usuarioOriginal, $saldo) {
 
-            $conexion = mysqli_connect('localhost','root','1234');
+            $conexion = mysqli_connect('localhost','root','');
 
             if (mysqli_connect_errno()) {
                 echo "Error al conectar a MySQL: ". mysqli_connect_error();
@@ -281,7 +281,7 @@
 
         function suspenderUsuario($usuarioOriginal) {
 
-            $conexion = mysqli_connect('localhost','root','1234');
+            $conexion = mysqli_connect('localhost','root','');
 
             if (mysqli_connect_errno()) {
                 echo "Error al conectar a MySQL: ". mysqli_connect_error();
@@ -306,7 +306,7 @@
 
         function eliminarUsuario($Usuario, $idDatosContacto, $idDatosPersonales) {
 
-            $conexion = mysqli_connect('localhost','root','1234');
+            $conexion = mysqli_connect('localhost','root','');
 
             if (mysqli_connect_errno()) {
                 echo "Error al conectar a MySQL: ". mysqli_connect_error();
@@ -349,7 +349,7 @@
     }
 
     function actualizarUsuarioComoAdmin($usuarioOriginal, $usuario, $saldo, $clave, $tipoDeUsuario, $activo, $nombre, $apellidos, $fechaNacimiento, $direccion, $DNI, $telefono, $email, $otro, $IdDatosContacto, $IdDatosPersonales) {
-        $conexion = mysqli_connect('localhost','root','1234');
+        $conexion = mysqli_connect('localhost','root','');
 
         if (mysqli_connect_errno()) {
             echo "Error al conectar a MySQL: ". mysqli_connect_error();
@@ -475,7 +475,7 @@
     }
 
     function insertarAdmin($usuario, $saldo, $clave, $tipoDeUsuario, $activo, $nombre, $apellidos, $fechaNacimiento, $direccion, $DNI, $telefono, $email, $otro) {
-        $conexion = mysqli_connect('localhost','root','1234');
+        $conexion = mysqli_connect('localhost','root','');
 
         if (mysqli_connect_errno()) {
             echo "Error al conectar a MySQL: ". mysqli_connect_error();

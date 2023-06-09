@@ -8,7 +8,7 @@
 
         function obtener(){
 
-            $conexion = mysqli_connect('localhost','root','1234');
+            $conexion = mysqli_connect('localhost','root','');
 
             if (mysqli_connect_errno())
             {
@@ -35,7 +35,7 @@
 
         function obtenerCargo($id){
 
-            $conexion = mysqli_connect('localhost','root','1234');
+            $conexion = mysqli_connect('localhost','root','');
 
             if (mysqli_connect_errno())
             {
@@ -65,7 +65,7 @@
 
         function eliminarCargo($id) {
 
-            $conexion = mysqli_connect('localhost','root','1234');
+            $conexion = mysqli_connect('localhost','root','');
             if (mysqli_connect_errno())
             {
                     echo "Error al conectar a MySQL: ". mysqli_connect_error();
@@ -93,7 +93,7 @@
 
         function entregaCocghe($idCargo, $idAlquiler, $fecha) {
 
-            $conexion = mysqli_connect('localhost','root','1234');
+            $conexion = mysqli_connect('localhost','root','');
             if (mysqli_connect_errno())
             {
                     echo "Error al conectar a MySQL: ". mysqli_connect_error();
@@ -130,10 +130,6 @@
                 $consulta4->bind_param('i', $idCargo);
                 $consulta4->execute();
             }
-        
-            $consulta5 = mysqli_prepare($conexion, "UPDATE Alquiler SET Estado = 0 WHERE Id = ?;");
-            $consulta5->bind_param('i', $idAlquiler);
-            $consulta5->execute();
 
             $consulta6 = mysqli_prepare($conexion, "SELECT IdVehiculo FROM Alquiler WHERE Id = ?;");
             $consulta6->bind_param('i', $idAlquiler);
