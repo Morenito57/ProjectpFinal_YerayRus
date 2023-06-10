@@ -129,6 +129,10 @@
                 $consulta4 = mysqli_prepare($conexion, "UPDATE Cargo SET TotalCargo = 0, Pagado = 1, Activo = 0 WHERE Id = ?");
                 $consulta4->bind_param('i', $idCargo);
                 $consulta4->execute();
+
+                $consulta8 = mysqli_prepare($conexion, "UPDATE Alquiler SET Estado = FALSE WHERE Id = ?;");
+                $consulta8->bind_param("i", $idAlquiler);
+                $consulta8->execute();
             }
 
             $consulta6 = mysqli_prepare($conexion, "SELECT IdVehiculo FROM Alquiler WHERE Id = ?;");
