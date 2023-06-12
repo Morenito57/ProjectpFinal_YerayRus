@@ -10,21 +10,37 @@
 
     if($_SERVER['REQUEST_METHOD']=='POST') {
 
-        $gestionBL = new GestionAlquileresNegocio();
+        if(isset($_POST['boton'])) {
 
-        $IdUser = $_POST['IdUser'];
-        $IdVehiculo = intval($_POST['IdVehiculo']);
-        $IdSeguros = $_POST['seguros'];
-        $IdExtras = $_POST['extras'];
-        $FechaInicio = $_POST['FechaInicio'];
-        $diasAlquiler = $_POST['diasAlquiler'];
-        $TotalDelPrecio = intval($_POST['TotalDelPrecio']);
+            $permiso = $_POST['permiso'];
 
-        $seguro = is_array($IdSeguros) ? array_map('intval', $IdSeguros) : intval($IdSeguros);
-        $extra = is_array($IdExtras) ? array_map('intval', $IdExtras) : intval($IdExtras);
+            if($permiso == "1"){
 
-        $FechaFinal = date('Y-m-d', strtotime($FechaInicio . ' + '.$diasAlquiler.' days'));
-        $datosAlquiler = $gestionBL->insertarAlquiler($IdUser, $seguro, $extra, $IdVehiculo, $FechaInicio, $FechaFinal, $TotalDelPrecio);
+                $gestionBL = new GestionAlquileresNegocio();
+
+                $IdUser = $_POST['IdUser'];
+                $IdVehiculo = intval($_POST['IdVehiculo']);
+                $IdSeguros = $_POST['seguros'];
+                $IdExtras = $_POST['extras'];
+                $FechaInicio = $_POST['FechaInicio'];
+                $diasAlquiler = $_POST['diasAlquiler'];
+                $TotalDelPrecio = intval($_POST['TotalDelPrecio']);
+        
+                $seguro = is_array($IdSeguros) ? array_map('intval', $IdSeguros) : intval($IdSeguros);
+                $extra = is_array($IdExtras) ? array_map('intval', $IdExtras) : intval($IdExtras);
+        
+                $FechaInicio = date('Y-m-d', strtotime($FechaInicio));
+
+                $FechaFinal = date('Y-m-d', strtotime($FechaInicio . ' + '.$diasAlquiler.' days'));
+                $datosAlquiler = $gestionBL->insertarAlquiler($IdUser, $seguro, $extra, $IdVehiculo, $FechaInicio, $FechaFinal, $TotalDelPrecio);
+
+            }else{
+                echo '<script>alert("Error.");</script>';
+                header("Location: Inicio_Con_Loggin.php");
+            }
+        }
+
+
     }
 ?>
 <!DOCTYPE html>
@@ -219,8 +235,10 @@
 
                             $vehiculosBL = new VehiculosReglasNegocio();
                             
+                            $id = $_GET['id'];
+                            $idDecodificado = urldecode($id);
 
-                            $datosVehiculos = $vehiculosBL->obtenerVehiculoConcreto($id);
+                            $datosVehiculos = $vehiculosBL->obtenerVehiculoConcreto($idDecodificado);
                             foreach($datosVehiculos as $vehiculo){ 
 
                                 $precio = $vehiculo->getPrecio();
@@ -289,13 +307,13 @@
 
                                                 <input id="IdVehiculo" name="IdVehiculo" value="'.$vehiculo->getId().'" type="hidden">
 
-                                                <input id="FechaInicio" name="FechaInicio" value="'.date('Y-m-d').'" type="hidden">
+                                                <input id="FechaInicio" name="FechaInicio" value="" type="hidden">
 
                                                 <input id="TotalDelPrecio" name="TotalDelPrecio" value="" type="hidden">
 
+                                                <input id="permiso" name="permiso" value="" type="hidden">
 
-                                                <button class="boton" type="submit">Alquilar</button>
-
+                                                <input type="submit" id="boton" name="boton" class="boton"  value="Alquilar" onclick="Dia()">
                                             </form>
 
                                         </div>
